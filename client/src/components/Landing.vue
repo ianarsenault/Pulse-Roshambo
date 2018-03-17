@@ -1,5 +1,35 @@
 <template>
+
   <section class="hero is-dark is-fullheight">
+    <nav class="navbar is-transparent">
+      <div class="navbar-brand">
+        <a class="navbar-item" href="https://bulma.io">
+          <img src="https://bulma.io/images/bulma-logo.png" alt="Bulma: a modern CSS framework based on Flexbox" width="112" height="28">
+        </a>
+        <div class="navbar-burger burger" data-target="navbarExampleTransparentExample">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </div>
+
+        <div class="navbar-end">
+          <div class="navbar-item">
+            <div class="field is-grouped">
+              <p class="control">
+                <a class="button">
+                  <span class="icon">
+                    <i class="fas fa-plus"></i>
+                  </span>
+                  <span>New Player</span>
+                </a>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+
     <div class="hero-body">
       <div class="container">
         <div class="columns">
@@ -7,22 +37,19 @@
             <div class="card">
               <header class="card-header">
                 <p class="card-header-title is-centered">
-                  PI Fighter One
+                  PI Fighter One: {{ selected }}
                 </p>
               </header>
               <div class="card-content">
-                <div class="field">
-                  <div class="control has-icons-left has-icons-right">
-                    <input class="input is-success" type="text" placeholder="Enter Name" value="bulma">
-                    <span class="icon is-small is-left">
-                      <i class="fas fa-user"></i>
-                    </span>
-                    <span class="icon is-small is-right">
-                      <i class="fas fa-check"></i>
-                    </span>
-                  </div>
-                  <p class="help is-success">This username is available</p>
-                </div>
+                <b-autocomplete
+                  rounded
+                  v-model="name"
+                  :data="filteredDataArray"
+                  placeholder="e.g. Michael!!!!!"
+                  icon="magnify"
+                  @select="option => selected = option">
+                  <template slot="empty">No results found</template>
+                </b-autocomplete>
               </div>
             </div>
           </div>
@@ -35,30 +62,29 @@
             <div class="card">
               <header class="card-header">
                 <p class="card-header-title is-centered">
-                  PI Fighter Two
+                  PI Fighter One: {{ selected }}
                 </p>
               </header>
               <div class="card-content">
-                <div class="field">
-                  <div class="control has-icons-left has-icons-right">
-                    <input class="input is-success" type="text" placeholder="Enter Name" value="bulma">
-                    <span class="icon is-small is-left">
-                      <i class="fas fa-user"></i>
-                    </span>
-                    <span class="icon is-small is-right">
-                      <i class="fas fa-check"></i>
-                    </span>
-                  </div>
-                  <p class="help is-success">This username is available</p>
-                </div>
+                <b-autocomplete
+                  rounded
+                  v-model="name"
+                  :data="filteredDataArray"
+                  placeholder="e.g. Michael!!!!!"
+                  icon="magnify"
+                  @select="option => selected = option">
+                  <template slot="empty">No results found</template>
+                </b-autocomplete>
               </div>
             </div>
           </div>
 
 
         </div>
-        <div class="column">
-          <a class="button is-large is-fullwidth">Large</a>
+        <div class="columns is-centered">
+          <div class="column is-6">
+            <a class="button is-large is-fullwidth is-primary">Go</a>
+          </div>
         </div>
       </div>
     </div>
@@ -66,11 +92,43 @@
 </template>
 
 <script>
-  export  default {}
+  export default {
+    data() {
+      return {
+        data: [
+          'Ian',
+          'Jameson',
+          'Jay',
+          'Keys',
+          'Christian',
+          'Brad',
+          'Anne',
+          'Katy',
+          'Isabel'
+        ],
+        name: '',
+        selected: null
+      }
+    },
+    computed: {
+      filteredDataArray() {
+        return this.data.filter((option) => {
+          return option
+            .toString()
+            .toLowerCase()
+            .indexOf(this.name.toLowerCase()) >= 0
+        })
+      }
+    }
+  }
 </script>
 
 <style lang="css">
   @import url('https://fonts.googleapis.com/css?family=Quicksand');
+
+  body {
+    font-family: 'Quicksand', sans-serif;
+  }
 
   .hero.is-dark.is-fullheight {
     background: linear-gradient(
