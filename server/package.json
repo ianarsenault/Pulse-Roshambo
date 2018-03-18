@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "node ./bin/www",
+    "dev": "DEBUG=server:* nodemon ./bin/www",
     "dev:pc": "SET DEBUG=server:* & nodemon ./bin/www",
-    "dev:mac": "DEBUG=server:* nodemon ./bin/www",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
