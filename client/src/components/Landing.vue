@@ -15,16 +15,12 @@
 
         <div class="navbar-end">
           <div class="navbar-item">
-            <div class="field is-grouped">
-              <p class="control">
-                <a class="button">
-                  <span class="icon">
+            <router-link v-bind:to="{ name: 'NewPlayer' }" class="button">
+               <span class="icon">
                     <i class="fas fa-plus"></i>
-                  </span>
-                  <span>New Player</span>
-                </a>
-              </p>
-            </div>
+               </span>
+              <span>New Player</span>
+            </router-link>
           </div>
         </div>
       </div>
@@ -37,7 +33,7 @@
             <div class="card">
               <header class="card-header">
                 <p class="card-header-title is-centered">
-                  PI Fighter One: {{ selected }}
+                  PI Fighter One: {{ playerone }}
                 </p>
               </header>
               <div class="card-content">
@@ -47,8 +43,8 @@
                   :data="filteredDataArray"
                   placeholder="e.g. Michael!!!!!"
                   icon="magnify"
-                  @select="option => selected = option">
-                  <template slot="empty">No results found</template>
+                  @select="option => playerone = option">
+                  <template slot="empty">No results - Please Add New Player</template>
                 </b-autocomplete>
               </div>
             </div>
@@ -62,18 +58,18 @@
             <div class="card">
               <header class="card-header">
                 <p class="card-header-title is-centered">
-                  PI Fighter One: {{ selected }}
+                  PI Fighter Two: {{ playertwo }}
                 </p>
               </header>
               <div class="card-content">
                 <b-autocomplete
                   rounded
-                  v-model="name"
+                  v-model="name1"
                   :data="filteredDataArray"
                   placeholder="e.g. Michael!!!!!"
                   icon="magnify"
-                  @select="option => selected = option">
-                  <template slot="empty">No results found</template>
+                  @select="option => playertwo = option">
+                  <template slot="empty">No results - Please Add New Player</template>
                 </b-autocomplete>
               </div>
             </div>
@@ -107,7 +103,9 @@
           'Isabel'
         ],
         name: '',
-        selected: null
+        name1: '',
+        playerone: null,
+        playertwo: null
       }
     },
     computed: {
