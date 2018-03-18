@@ -46,10 +46,21 @@
                     <div class="field">
                       <label class="label">Name</label>
                       <div class="control">
-                        <input class="input" type="text" placeholder="">
+                        <input class="input" type="text" placeholder="Ian A">
                       </div>
                     </div>
-
+                    <div class="field">
+                      <label class="label">Nickname</label>
+                      <div class="control">
+                        <input class="input" type="text" placeholder="GorgonsMaze">
+                      </div>
+                    </div>
+                    <div class="field">
+                      <label class="label">Winner Saying</label>
+                      <div class="control">
+                        <input class="input" type="text" placeholder="Booyakasha!">
+                      </div>
+                    </div>
                   </form>
                   <!-- END LOGIN FORM -->
 

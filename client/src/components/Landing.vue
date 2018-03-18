@@ -30,7 +30,7 @@
       <div class="container">
         <div class="columns">
           <div class="column is-4 is-offset-1">
-            <div class="card">
+            <div class="card" v-bind:class="playerOneAdded">
               <header class="card-header">
                 <p class="card-header-title is-centered">
                   PI Fighter One: {{ playerone }}
@@ -39,8 +39,8 @@
               <div class="card-content">
                 <b-autocomplete
                   rounded
-                  v-model="name"
-                  :data="filteredDataArray"
+                  v-model="nameone"
+                  :data="filteredPlayerOneDataArray"
                   placeholder="e.g. Michael!!!!!"
                   icon="magnify"
                   @select="option => playerone = option">
@@ -55,7 +55,7 @@
           </div>
 
           <div class="column is-4">
-            <div class="card">
+            <div class="card" v-bind:class="playerTwoAdded">
               <header class="card-header">
                 <p class="card-header-title is-centered">
                   PI Fighter Two: {{ playertwo }}
@@ -64,8 +64,8 @@
               <div class="card-content">
                 <b-autocomplete
                   rounded
-                  v-model="name1"
-                  :data="filteredDataArray"
+                  v-model="nametwo"
+                  :data="filteredPlayerTwoDataArray"
                   placeholder="e.g. Michael!!!!!"
                   icon="magnify"
                   @select="option => playertwo = option">
@@ -77,9 +77,9 @@
 
 
         </div>
-        <div class="columns is-centered">
+        <div class="columns is-centered" v-if="(playerone && playertwo)">
           <div class="column is-6">
-            <a class="button is-large is-fullwidth is-primary">Go</a>
+            <a class="button is-large is-fullwidth is-primary">ROSHAMBO!</a>
           </div>
         </div>
       </div>
@@ -102,19 +102,33 @@
           'Katy',
           'Isabel'
         ],
-        name: '',
-        name1: '',
+        nameone: '',
+        nametwo: '',
         playerone: null,
         playertwo: null
       }
     },
     computed: {
-      filteredDataArray() {
+      playerOneAdded() {
+        return this.playerone ?  'player-added' : '';
+      },
+      playerTwoAdded() {
+        return this.playertwo ? 'player-added' : '';
+      },
+      filteredPlayerOneDataArray() {
         return this.data.filter((option) => {
           return option
             .toString()
             .toLowerCase()
-            .indexOf(this.name.toLowerCase()) >= 0
+            .indexOf(this.nameone.toLowerCase()) >= 0
+        })
+      },
+      filteredPlayerTwoDataArray() {
+        return this.data.filter((option) => {
+          return option
+            .toString()
+            .toLowerCase()
+            .indexOf(this.nametwo.toLowerCase()) >= 0
         })
       }
     }
@@ -146,5 +160,9 @@
   .versus {
     font-family: 'Quicksand', sans-serif;
     color: rgba(147, 147, 147, 0.62) !important;
+  }
+
+  .player-added {
+    box-shadow: 0 2px 3px rgba(15, 243, 43, 0.5), 0 0 0 1px rgb(25, 193, 86);
   }
 </style>
