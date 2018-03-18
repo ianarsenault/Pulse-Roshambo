@@ -1,4 +1,4 @@
-# client
+# Pulse-Roshambo Client
 
 > Roshambo Project for Production Incidents
 
