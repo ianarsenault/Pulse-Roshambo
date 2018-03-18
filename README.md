@@ -43,3 +43,10 @@ _____________________________________________
 - Allow for more player information (Profile Images, Bio, Other thangs)
 - Leaderboard
 - Host on heroku?
+
+
+-----------------------------------------------
+
+## Contributing
+
+Open an issue or a pull request to suggest changes or additions.
