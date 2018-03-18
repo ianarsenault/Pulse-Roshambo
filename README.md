@@ -25,20 +25,19 @@ $ npm install
 $ npm run dev
 ```
 
-For PC
-
-```sh
-$ npm run dev:pc
-```
-
 To run server
 
 ```sh
 $ cd server
 $ npm install
-$ npm start
+$ npm run dev
 ```
 
+For PC
+
+```sh
+$ npm run dev:pc
+```
 
 _____________________________________________
 
