@@ -9,15 +9,27 @@ A Web App for Tier 3 members to roshambo over fixing bugs && production incident
 
 ______________________________________________
 
+## Run Locally
+
+Clone repo
+
+```sh
+$ git clone https://github.com/ianarsenault/Pulse-Roshambo.git
+```
+
 To run client
 
 ```sh
+$ cd client
+$ npm install
 $ npm run dev
 ```
 
-to run server 
+To run server
 
 ```sh
+$ cd server
+$ npm install
 $ npm start
 ```
 
