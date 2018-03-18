@@ -38,7 +38,6 @@
               </header>
               <div class="card-content">
                 <b-autocomplete
-                  rounded
                   v-model="nameone"
                   :data="filteredPlayerOneDataArray"
                   placeholder="e.g. Michael!!!!!"
@@ -63,7 +62,6 @@
               </header>
               <div class="card-content">
                 <b-autocomplete
-                  rounded
                   v-model="nametwo"
                   :data="filteredPlayerTwoDataArray"
                   placeholder="e.g. Michael!!!!!"
