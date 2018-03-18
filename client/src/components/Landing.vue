@@ -2,17 +2,6 @@
 
   <section class="hero is-dark is-fullheight">
     <nav class="navbar is-transparent">
-      <div class="navbar-brand">
-        <a class="navbar-item" href="https://bulma.io">
-          <img src="https://bulma.io/images/bulma-logo.png" alt="Bulma: a modern CSS framework based on Flexbox" width="112" height="28">
-        </a>
-        <div class="navbar-burger burger" data-target="navbarExampleTransparentExample">
-          <span></span>
-          <span></span>
-          <span></span>
-        </div>
-      </div>
-
         <div class="navbar-end">
           <div class="navbar-item">
             <router-link v-bind:to="{ name: 'NewPlayer' }" class="button">
@@ -75,9 +64,9 @@
 
 
         </div>
-        <div class="columns is-centered" v-if="(playerone && playertwo)">
-          <div class="column is-6">
-            <a class="button is-large is-fullwidth is-primary">ROSHAMBO!</a>
+        <div class="columns is-centered">
+          <div class="column is-6" v-show="debounceBtn">
+            <a class="button is-large is-fullwidth is-primary" v-bind:class="showButton">ROSHAMBO!</a>
           </div>
         </div>
       </div>
@@ -103,15 +92,16 @@
         nameone: '',
         nametwo: '',
         playerone: null,
-        playertwo: null
+        playertwo: null,
+        displayBtn: false
       }
     },
     computed: {
       playerOneAdded() {
-        return this.playerone ?  'player-added' : '';
+        return this.playerone ?  'player-added animated jackInTheBox' : '';
       },
       playerTwoAdded() {
-        return this.playertwo ? 'player-added' : '';
+        return this.playertwo ? 'player-added animated jackInTheBox' : '';
       },
       filteredPlayerOneDataArray() {
         return this.data.filter((option) => {
@@ -128,11 +118,26 @@
             .toLowerCase()
             .indexOf(this.nametwo.toLowerCase()) >= 0
         })
+      },
+      showButton () {
+        if (this.playerone && this.playertwo)  {
+          this.displayBtn = true
+          return 'animated-delay fadeInUp'
+        }
+      },
+      debounceBtn: function () {
+        if (this.playerone && this.playertwo)  {
+          this.displayBtn = true
+          return 'animated-delay fadeInUp'
+
+        }
       }
-    }
+    },
+    methods: {}
   }
 </script>
 
 <style>
   @import '../assets/style/main.css';
+  @import '../assets/style/animate.min.css';
 </style>
