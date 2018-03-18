@@ -2,7 +2,11 @@
 
 ### Currently a WIP
 
-A Web App for Tier 3 members to battle over fixing bugs && production incidents
+A Web App for Tier 3 members to roshambo over fixing bugs && production incidents
+
+
+![Alt Text](https://media0.giphy.com/media/3o6Zt1ogQsYg0rVgbK/giphy.gif)
+
 ______________________________________________
 
 To run client
