@@ -8,11 +8,21 @@ app.use(logger('combined'))
 app.use(bodyParser.json())
 app.use(cors())
 
-app.get('/test', (req, res) => {
-    res.send([{
-        title: 'Hello, World!',
-        description: 'This is a server test! Bleep Bloop!'
-    }])
+app.get('/players', (req, res) => {
+    res.send(
+        [
+            {
+                name: 'Ian A',
+                nickname: 'Gorgons Maze',
+                chant: 'I WON?!'
+            },
+            {
+                name: 'Jameson A',
+                nickname: 'Overlord Gorgonzola',
+                chant: 'DERP!'
+            }
+        ]
+    )
 })
 
 // app.listen(process.env.PORT || 8081)

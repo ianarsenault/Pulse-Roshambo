@@ -133,34 +133,6 @@
   }
 </script>
 
-<style lang="css">
-  @import url('https://fonts.googleapis.com/css?family=Quicksand');
-
-  body {
-    font-family: 'Quicksand', sans-serif;
-  }
-
-  .hero.is-dark.is-fullheight {
-    background: linear-gradient(
-      rgba(255, 255, 255, 0.5),
-      rgba(255, 255, 255, 0.88)
-    ), url('../assets/images/white.jpg') no-repeat center center fixed;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
-  }
-
-  .card {
-    background-color: #ffffff08;
-  }
-
-  .versus {
-    font-family: 'Quicksand', sans-serif;
-    color: rgba(147, 147, 147, 0.62) !important;
-  }
-
-  .player-added {
-    box-shadow: 0 2px 3px rgba(15, 243, 43, 0.5), 0 0 0 1px rgb(25, 193, 86);
-  }
+<style>
+  @import '../assets/style/main.css';
 </style>
