@@ -73,7 +73,7 @@
 
         <div class="columns is-centered">
           <div class="column is-3">
-            <a class="button is-large is-fullwidth is-primary">Add New Player</a>
+            <a class="button is-large is-fullwidth is-primary" @click="playerSaved">Add New Player</a>
           </div>
         </div>
 
@@ -84,7 +84,18 @@
 </template>
 
 <script>
-
+  export default {
+    methods: {
+      playerSaved() {
+        this.$toast.open({
+          duration: 5000,
+          message: `Player Information Saved!`,
+          position: 'is-bottom',
+          type: 'is-success'
+        })
+      }
+    }
+  }
 </script>
 
 <style lang="css">
