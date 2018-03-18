@@ -17,4 +17,6 @@ app.get('/test', (req, res) => {
 
 // app.listen(process.env.PORT || 8081)
 
+require('express-debug')(app);
+
 module.exports = app;
