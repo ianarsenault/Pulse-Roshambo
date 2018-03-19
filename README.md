@@ -25,6 +25,15 @@ $ npm install
 $ npm run dev
 ```
 
+[Install MongoDB](https://treehouse.github.io/installation-guides/mac/mongo-mac.html)
+
+To run MongoDB
+
+```sh
+$ mongod
+```
+
+
 To run server
 
 ```sh
