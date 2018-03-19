@@ -35,19 +35,19 @@
                     <div class="field">
                       <label class="label">Name</label>
                       <div class="control">
-                        <input class="input" type="text" placeholder="Ian A">
+                        <input class="input" type="text" placeholder="Ian A" name="name" v-model="name">
                       </div>
                     </div>
                     <div class="field">
                       <label class="label">Nickname</label>
                       <div class="control">
-                        <input class="input" type="text" placeholder="GorgonsMaze">
+                        <input class="input" type="text" placeholder="GorgonsMaze" name="nickname" v-model="nickname">
                       </div>
                     </div>
                     <div class="field">
                       <label class="label">Winner Saying</label>
                       <div class="control">
-                        <input class="input" type="text" placeholder="Booyakasha!">
+                        <input class="input" type="text" placeholder="Booyakasha!" name="chant" v-model="chant">
                       </div>
                     </div>
                   </form>
@@ -62,7 +62,7 @@
 
         <div class="columns is-centered">
           <div class="column is-3">
-            <a class="button is-large is-fullwidth is-primary" @click="playerSaved">Add New Player</a>
+            <a class="button is-large is-fullwidth is-primary" @click="addPlayer">Add New Player</a>
           </div>
         </div>
 
@@ -73,7 +73,17 @@
 </template>
 
 <script>
+  import PlayerService from '@/services/PlayerService'
+
   export default {
+    name: 'NewPlayer',
+    data () {
+      return {
+        name: '',
+        nickname: '',
+        chant: ''
+      }
+    },
     methods: {
       playerSaved() {
         this.$toast.open({
@@ -82,6 +92,14 @@
           position: 'is-bottom',
           type: 'is-success'
         })
+      },
+      async addPlayer () {
+        await PlayerService.addPlayer({
+          name: this.name,
+          nickname: this.nickname,
+          chant: this.chant
+        }).then(this.playerSaved())
+//        this.$router.push({ name: 'Players' })  // Go to player list page
       }
     }
   }
