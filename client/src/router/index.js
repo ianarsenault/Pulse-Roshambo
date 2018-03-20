@@ -3,7 +3,7 @@ import Router from 'vue-router'
 import Landing from '@/components/Landing'
 import NewPlayer from '@/components/NewPlayer'
 import Players from '@/components/Players'
-
+import LeaderBoard from '@/components/Leaderboard'
 
 Vue.use(Router)
 
@@ -24,6 +24,11 @@ export default new Router({
       path: '/Players',
       name: 'Players',
       component: Players
+    },
+    {
+      path: '/LeaderBoard',
+      name: 'LeaderBoard',
+      component: LeaderBoard
     }
   ]
 })

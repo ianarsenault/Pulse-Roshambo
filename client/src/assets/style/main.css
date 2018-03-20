@@ -1,7 +1,9 @@
 @import url('https://fonts.googleapis.com/css?family=Quicksand');
+@import url('https://fonts.googleapis.com/css?family=Open+Sans');
+
 
 body {
-  font-family: 'Quicksand', sans-serif;
+  font-family: 'Open Sans', sans-serif;
 }
 
 .hero.is-dark.is-fullheight {
@@ -37,4 +39,8 @@ body {
   animation-duration: 1s;
   -webkit-animation-fill-mode: both;
   animation-fill-mode: both;
+}
+
+.navbar-item {
+  color: #7957d5 !important;
 }
