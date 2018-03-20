@@ -4,23 +4,23 @@
       <div class="navbar-end">
         <div class="navbar-item">
           <router-link v-bind:to="{ name: 'LeaderBoard' }" class="navbar-item">
-               <span class="icon">
-                  <i class="fas fa-chart-line"></i>
-               </span>
+             <span class="icon">
+                <i class="fas fa-chart-line"></i>
+             </span>
             <span>Leaderboard</span>
           </router-link>
 
           <router-link v-bind:to="{ name: 'Players' }" class="navbar-item">
-               <span class="icon">
-                  <i class="fas fa-users"></i>
-               </span>
+             <span class="icon">
+                <i class="fas fa-users"></i>
+             </span>
             <span>Players</span>
           </router-link>
 
           <router-link v-bind:to="{ name: 'Landing' }" class="button">
-               <span class="icon">
-                 <i class="fas fa-arrow-left"></i>
-               </span>
+             <span class="icon">
+               <i class="fas fa-arrow-left"></i>
+             </span>
             <span>Back</span>
           </router-link>
         </div>
@@ -41,7 +41,7 @@
     </section>
 
     <div v-if="players.length > 0">
-      <router-link v-bind:to="{ name: 'NewPlayer' }" class="button is-primary is-fullwidth">Add Player</router-link>
+      <router-link v-bind:to="{ name: 'NewPlayer' }" class="button is-primary is-fullwidth u-margin--bottom">Add Player</router-link>
       <div class="columns is-centered">
         <div class="column is-half">
           <table class="table is-bordered is-narrow is-hoverable is-fullwidth">
@@ -73,7 +73,7 @@
     </div>
     <div v-else>
       There are no players.. Lets add one now <br /><br />
-      <router-link v-bind:to="{ name: 'NewPlayer' }" class="add_post_link">Add Player</router-link>
+      <router-link v-bind:to="{ name: 'NewPlayer' }" class="add_post_link button">Add Player</router-link>
     </div>
   </div>
 </template>
@@ -93,6 +93,7 @@
       }
     },
     mounted () {
+
       this.getPlayers()
     },
     methods: {
@@ -104,6 +105,6 @@
   }
 </script>
 
-<style>
-  @import '../assets/style/main.css';
+<style lang="scss">
+  @import '../assets/style/app.scss';
 </style>
