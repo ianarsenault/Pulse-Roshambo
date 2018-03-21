@@ -64,7 +64,6 @@
                       </div>
                     </div>
                   </form>
-                  <!-- END LOGIN FORM -->
 
                 </div>
               </div>
