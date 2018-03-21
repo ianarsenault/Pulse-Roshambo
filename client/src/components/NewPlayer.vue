@@ -101,7 +101,7 @@
         this.$toast.open({
           duration: 3500,
           message: `Player Information Saved!`,
-          position: 'is-bottom',
+          position: 'is-top',
           type: 'is-success'
         })
       },
