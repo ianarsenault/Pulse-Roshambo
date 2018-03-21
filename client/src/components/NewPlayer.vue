@@ -118,7 +118,3 @@
   }
 </script>
 
-<style>
-  @import '../assets/style/main.css';
-</style>
-

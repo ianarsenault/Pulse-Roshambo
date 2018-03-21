@@ -150,8 +150,3 @@
     methods: {}
   }
 </script>
-
-<style>
-  @import '../assets/style/main.css';
-  @import '../assets/style/animate.min.css';
-</style>

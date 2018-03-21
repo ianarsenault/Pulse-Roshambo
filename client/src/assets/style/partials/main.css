@@ -10,7 +10,7 @@ body {
   background: linear-gradient(
     rgba(255, 255, 255, 0.5),
     rgba(255, 255, 255, 0.88)
-  ), url('../images/white.jpg') no-repeat center center fixed;
+  ), url('../../images/white.jpg') no-repeat center center fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;

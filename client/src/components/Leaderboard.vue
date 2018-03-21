@@ -65,8 +65,7 @@
 </script>
 
 <style>
-  @import '../assets/style/main.css';
   .rc {
-    border-radius: 25px!important;
+    border-radius: 25px !important;
   }
 </style>
