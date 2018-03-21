@@ -4,6 +4,7 @@ import Landing from '@/components/Landing'
 import NewPlayer from '@/components/NewPlayer'
 import Players from '@/components/Players'
 import LeaderBoard from '@/components/Leaderboard'
+import EditPlayer from '@/components/EditPlayer'
 
 Vue.use(Router)
 
@@ -29,6 +30,11 @@ export default new Router({
       path: '/LeaderBoard',
       name: 'LeaderBoard',
       component: LeaderBoard
+    },
+    {
+      path: '/player/:id',
+      name: 'EditPlayer',
+      component: EditPlayer
     }
   ]
 })
