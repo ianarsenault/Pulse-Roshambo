@@ -1,21 +1,11 @@
 
-/* Utilities */
+@import "partials/main";
 
-$margin-amount: 15px;
 
-.u {
-  &-margin {
-    &--top {
-      margin-top: $margin-amount;
-    }
-    &--bottom {
-      margin-bottom: $margin-amount;
-    }
-    &--left {
-      margin-left: $margin-amount;
-    }
-    &--right {
-      margin-right: $margin-amount;
-    }
-  }
-}
+/* Partials */
+@import "partials/navigation";
+@import "partials/utilities";
+
+
+/* Other libraries */
+@import "partials/animate.min.css";

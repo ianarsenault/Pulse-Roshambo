@@ -1,36 +1,8 @@
 <template>
-
   <section class="hero is-dark is-fullheight">
-    <nav class="navbar is-transparent">
-      <div class="navbar-end">
-        <div class="navbar-item">
-          <router-link v-bind:to="{ name: 'LeaderBoard' }" class="navbar-item">
-               <span class="icon">
-                  <i class="fas fa-chart-line"></i>
-               </span>
-            <span>Leaderboard</span>
-          </router-link>
-
-          <router-link v-bind:to="{ name: 'Players' }" class="navbar-item">
-               <span class="icon">
-                  <i class="fas fa-users"></i>
-               </span>
-            <span>Players</span>
-          </router-link>
-
-          <router-link v-bind:to="{ name: 'Landing' }" class="button">
-               <span class="icon">
-                 <i class="fas fa-arrow-left"></i>
-               </span>
-            <span>Back</span>
-          </router-link>
-        </div>
-      </div>
-    </nav>
 
     <div class="hero-body">
       <div class="container">
-
 
         <div class="columns is-centered">
           <div class="column is-4">
@@ -78,7 +50,6 @@
           </div>
         </div>
 
-
       </div>
     </div>
   </section>
@@ -116,8 +87,4 @@
     }
   }
 </script>
-
-<style>
-  @import '../assets/style/main.css';
-</style>
 
