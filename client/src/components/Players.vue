@@ -45,8 +45,20 @@
       </div>
     </div>
     <div v-else>
-      There are no players.. Lets add one now <br /><br />
-      <router-link v-bind:to="{ name: 'NewPlayer' }" class="add_post_link button">Add Player</router-link>
+      <div class="columns is-centered">
+        <div class="column is-4">
+          <div class="card">
+            <div class="card-image">
+              <figure class="image">
+                <img src="../assets/images/nothing2see.gif" alt="Nothing Here">
+              </figure>
+            </div>
+            <div class="card-content">
+              <router-link v-bind:to="{ name: 'NewPlayer' }" class="add_post_link button is-fullwidth is-primary">Add Player</router-link>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
