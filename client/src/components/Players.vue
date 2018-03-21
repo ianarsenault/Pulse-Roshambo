@@ -63,7 +63,7 @@
                 <router-link v-bind:to="{ name: 'EditPlayer', params: { id: player._id } }" class="button">Edit</router-link>
               </td>
               <td>
-                <a href="#" class="button">Delete</a>
+                <a href="#" class="button" @click="deleteAlert(player._id, player.name)">Delete</a>
               </td>
             </tr>
             </tbody>
@@ -100,6 +100,28 @@
       async getPlayers() {
         const response = await PlayerService.fetchPlayers()
         this.players = response.data.players
+      },
+      async deletePlayer(id) {
+        await PlayerService.deletePlayer(id)
+        this.getPlayers()
+        this.$router.push({ name: 'Players' })
+      },
+      deleteAlert(id, name) {
+        this.$snackbar.open({
+          duration: 5000,
+          message: 'Do you want to delete  ' + name + '? ' ,
+          type: 'is-danger',
+          position: 'is-bottom',
+          actionText: 'Yes',
+          onAction: () => {
+            this.deletePlayer(id)
+            this.$toast.open({
+              message: 'Player Deleted',
+              type: 'is-danger',
+              queue: false
+            })
+          }
+        })
       }
     }
   }

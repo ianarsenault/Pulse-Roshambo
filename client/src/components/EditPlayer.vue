@@ -18,12 +18,23 @@
             <span>Players</span>
           </router-link>
 
-          <router-link v-bind:to="{ name: 'Landing' }" class="button">
+          <div class="navbar-item">
+            <router-link v-bind:to="{ name: 'Landing' }" class="button">
                <span class="icon">
                  <i class="fas fa-arrow-left"></i>
                </span>
-            <span>Back</span>
-          </router-link>
+              <span>Home</span>
+            </router-link>
+          </div>
+
+          <div class="navbar-item">
+            <router-link v-bind:to="{ name: 'Players' }" class="button is-primary">
+                <span class="icon">
+                  <i class="fas fa-arrow-left"></i>
+                </span>
+              <span>Back</span>
+            </router-link>
+          </div>
         </div>
       </div>
     </nav>
@@ -31,14 +42,13 @@
     <div class="hero-body">
       <div class="container">
 
-
         <div class="columns is-centered">
           <div class="column is-4">
 
             <div class="card">
               <header class="card-header">
                 <p class="card-header-title is-centered">
-                  Add New Tier 3 Member
+                  Update Tier 3 Member
                 </p>
               </header>
               <div class="card-content">
@@ -64,6 +74,7 @@
                       </div>
                     </div>
                   </form>
+                  <!-- END LOGIN FORM -->
 
                 </div>
               </div>
@@ -74,7 +85,7 @@
 
         <div class="columns is-centered">
           <div class="column is-3">
-            <a class="button is-large is-fullwidth is-primary" @click="addPlayer">Add New Player</a>
+            <a class="button is-large is-fullwidth is-primary" @click="UpdatePlayer">Update Player</a>
           </div>
         </div>
 
@@ -88,7 +99,7 @@
   import PlayerService from '@/services/PlayerService'
 
   export default {
-    name: 'NewPlayer',
+    name: 'EditPlayer',
     data () {
       return {
         name: '',
@@ -96,21 +107,33 @@
         chant: ''
       }
     },
+    mounted () {
+      this.getPlayer()
+    },
     methods: {
-      playerSaved() {
+      playerUpdated() {
         this.$toast.open({
-          duration: 3500,
-          message: `Player Information Saved!`,
+          duration: 5000,
+          message: `Player Information Updated!`,
           position: 'is-top',
           type: 'is-success'
         })
       },
-      async addPlayer () {
-        await PlayerService.addPlayer({
+      async getPlayer () {
+        const response = await PlayerService.getPlayer({
+          id: this.$route.params.id
+        })
+        this.name = response.data.name
+        this.nickname = response.data.nickname
+        this.chant = response.data.chant
+      },
+      async UpdatePlayer () {
+        await PlayerService.updatePlayer({
+          id: this.$route.params.id,
           name: this.name,
           nickname: this.nickname,
           chant: this.chant
-        }).then(this.playerSaved())
+        }).then(this.playerUpdated())
         this.$router.push({ name: 'Players' })
       }
     }

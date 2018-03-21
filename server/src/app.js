@@ -54,6 +54,54 @@ app.get('/players', (req, res) => {
 })
 
 
+// Fetch single player
+app.get('/player/:id', (req, res) => {
+    let db = req.db
+    Players.findById(req.params.id, 'name nickname chant', function (error, player) {
+        if (error) { console.log(error) }
+        res.send(player)
+    })
+})
+
+
+// Update a player
+app.put('/players/:id', (req, res) => {
+    let db = req.db
+    Players.findById(req.params.id, 'name nickname chant', function (error, player) {
+        if (error) { console.log(error) }
+
+        player.name = req.body.name
+        player.nickname = req.body.nickname
+        player.chant = req.body.chant
+
+        player.save(function (error) {
+            if (error) { console.log(error) }
+
+            res.send({
+                success: true
+            })
+        })
+
+    })
+})
+
+
+// Delete a player
+app.delete('/players/:id', (req, res) => {
+    let db = req.db
+    Players.remove({
+        _id: req.params.id
+    }, function (error, player) {
+        if (error) {
+            res.send(error)
+        }
+        res.send({
+            success: true
+        })
+    })
+})
+
+
 // app.listen(process.env.PORT || 8081)
 
 require('express-debug')(app);
