@@ -17,6 +17,7 @@ db.once("open", function(callback){
 });
 
 let Players = require("../models/players");
+let GameLogs = require("../models/GameLogs");
 
 // Add new player
 app.post('/players', (req, res) => {
