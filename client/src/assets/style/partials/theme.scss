@@ -1,0 +1,26 @@
+
+$primary-color: #BE434E;
+
+
+.navbar-item {
+  color: $primary-color !important;
+}
+
+.is-primary {
+  color: $primary-color;
+}
+
+.button.is-primary {
+  background-color: $primary-color;
+
+  &:hover {
+    background-color: darken($primary-color, 10);
+  }
+}
+
+input:active, input:focus {
+  border-color: $primary-color !important;
+  //box-shadow: none !important;
+  box-shadow: 0 0 0 0.125em rgba($primary-color, 0.2) !important;
+
+}

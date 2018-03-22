@@ -4,7 +4,9 @@ let Schema = mongoose.Schema;
 let PlayersSchema = new Schema({
     name: String,
     nickname: String,
-    chant: String
+    chant: String,
+    wins: Number,
+    losses: Number
 });
 
 let Players = mongoose.model("Players", PlayersSchema);

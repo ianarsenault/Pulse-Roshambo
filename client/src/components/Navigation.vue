@@ -29,7 +29,7 @@
 
       <div class="navbar-end">
         <div class="navbar-item">
-          <router-link v-bind:to="{ name: 'NewPlayer' }" class="button">
+          <router-link v-bind:to="{ name: 'NewPlayer' }" class="button is-primary">
                <span class="icon">
                     <i class="fas fa-plus"></i>
                </span>
