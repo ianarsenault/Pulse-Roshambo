@@ -47,7 +47,6 @@
             </div>
           </div>
 
-
         </div>
         <div class="columns is-centered">
           <div class="column is-6" v-show="debounceBtn">
@@ -108,7 +107,6 @@
         if (this.playerOne && this.playerTwo)  {
           this.displayBtn = true
           return 'animated-delay fadeInUp'
-
         }
       }
     },

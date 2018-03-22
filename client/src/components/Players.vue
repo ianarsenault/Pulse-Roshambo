@@ -78,7 +78,6 @@
       }
     },
     mounted () {
-
       this.getPlayers()
     },
     methods: {

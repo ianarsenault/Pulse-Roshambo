@@ -42,7 +42,6 @@
 </template>
 
 <script>
-
   import logo from '../assets/images/death2.svg';
 
   export default {
@@ -53,11 +52,4 @@
       }
     }
   }
-
 </script>
-
-<style lang="css">
-  .far {
-    color: #731380;
-  }
-</style>
