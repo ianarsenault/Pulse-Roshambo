@@ -60,26 +60,20 @@
 </template>
 
 <script>
+  import PlayerService from '@/services/PlayerService'
   export default {
     data() {
       return {
-        data: [
-          'Ian',
-          'Jameson',
-          'Jay',
-          'Keys',
-          'Christian',
-          'Brad',
-          'Anne',
-          'Katy',
-          'Isabel'
-        ],
+        data: [],
         nameone: '',
         nametwo: '',
         playerone: null,
         playertwo: null,
         displayBtn: false
       }
+    },
+    mounted () {
+      this.getPlayers()
     },
     computed: {
       playerOneAdded() {
@@ -118,6 +112,14 @@
         }
       }
     },
-    methods: {}
+    methods: {
+      async getPlayers() {
+        const response = await PlayerService.fetchPlayers()
+        let obj = response.data.players
+        Object.keys(obj).forEach(key => {
+          this.data.push(obj[key].name)
+        })
+      }
+    }
   }
 </script>
