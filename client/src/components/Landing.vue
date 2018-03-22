@@ -7,16 +7,16 @@
             <div class="card" v-bind:class="playerOneAdded">
               <header class="card-header">
                 <p class="card-header-title is-centered">
-                  PI Fighter One: {{ playerone }}
+                  PI Fighter One: {{ playerOne }}
                 </p>
               </header>
               <div class="card-content">
                 <b-autocomplete
-                  v-model="nameone"
+                  v-model="nameOne"
                   :data="filteredPlayerOneDataArray"
                   placeholder="e.g. Michael!!!!!"
                   icon="magnify"
-                  @select="option => playerone = option">
+                  @select="option => playerOne = option">
                   <template slot="empty">No results - Please Add New Player</template>
                 </b-autocomplete>
               </div>
@@ -31,16 +31,16 @@
             <div class="card" v-bind:class="playerTwoAdded">
               <header class="card-header">
                 <p class="card-header-title is-centered">
-                  PI Fighter Two: {{ playertwo }}
+                  PI Fighter Two: {{ playerTwo }}
                 </p>
               </header>
               <div class="card-content">
                 <b-autocomplete
-                  v-model="nametwo"
+                  v-model="nameTwo"
                   :data="filteredPlayerTwoDataArray"
                   placeholder="e.g. Michael!!!!!"
                   icon="magnify"
-                  @select="option => playertwo = option">
+                  @select="option => playerTwo = option">
                   <template slot="empty">No results - Please Add New Player</template>
                 </b-autocomplete>
               </div>
@@ -60,40 +60,34 @@
 </template>
 
 <script>
+  import PlayerService from '@/services/PlayerService'
   export default {
     data() {
       return {
-        data: [
-          'Ian',
-          'Jameson',
-          'Jay',
-          'Keys',
-          'Christian',
-          'Brad',
-          'Anne',
-          'Katy',
-          'Isabel'
-        ],
-        nameone: '',
-        nametwo: '',
-        playerone: null,
-        playertwo: null,
+        data: [],
+        nameOne: '',
+        nameTwo: '',
+        playerOne: null,
+        playerTwo: null,
         displayBtn: false
       }
     },
+    mounted () {
+      this.getPlayers()
+    },
     computed: {
       playerOneAdded() {
-        return this.playerone ?  'player-added animated jackInTheBox' : '';
+        return this.playerOne ?  'player-added animated jackInTheBox' : '';
       },
       playerTwoAdded() {
-        return this.playertwo ? 'player-added animated jackInTheBox' : '';
+        return this.playerTwo ? 'player-added animated jackInTheBox' : '';
       },
       filteredPlayerOneDataArray() {
         return this.data.filter((option) => {
           return option
             .toString()
             .toLowerCase()
-            .indexOf(this.nameone.toLowerCase()) >= 0
+            .indexOf(this.nameOne.toLowerCase()) >= 0
         })
       },
       filteredPlayerTwoDataArray() {
@@ -101,23 +95,31 @@
           return option
             .toString()
             .toLowerCase()
-            .indexOf(this.nametwo.toLowerCase()) >= 0
+            .indexOf(this.nameTwo.toLowerCase()) >= 0
         })
       },
       showButton () {
-        if (this.playerone && this.playertwo)  {
+        if (this.playerOne && this.playerTwo)  {
           this.displayBtn = true
           return 'animated-delay fadeInUp'
         }
       },
       debounceBtn: function () {
-        if (this.playerone && this.playertwo)  {
+        if (this.playerOne && this.playerTwo)  {
           this.displayBtn = true
           return 'animated-delay fadeInUp'
 
         }
       }
     },
-    methods: {}
+    methods: {
+      async getPlayers() {
+        const response = await PlayerService.fetchPlayers()
+        let obj = response.data.players
+        Object.keys(obj).forEach(key => {
+          this.data.push(obj[key].name)
+        })
+      }
+    }
   }
 </script>
