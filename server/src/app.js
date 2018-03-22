@@ -8,99 +8,48 @@ app.use(logger('combined'))
 app.use(bodyParser.json())
 app.use(cors())
 
-const mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost:27017/players');
-let db = mongoose.connection;
-db.on("error", console.error.bind(console, "connection error"));
-db.once("open", function(callback){
-    console.log("Connection Succeeded");
-});
-
 let Players = require("../models/players");
 let GameLogs = require("../models/GameLogs");
 
 // Add new player
 app.post('/players', (req, res) => {
-    let db = req.db;
-    let name = req.body.name;
-    let nickname = req.body.nickname;
-    let chant = req.body.chant;
-
-    let new_player = new Players({
-        name: name,
-        nickname: nickname,
-        chant: chant
-    })
-
-    new_player.save(function (error) {
-        if (error) {
-            console.log(error)
-        }
-        res.send({
-            success: true,
-            message: 'Player was saved successfully'
-        })
-    })
+    Players.addPlayer(req.body.name, req.body.nickname, req.body.chant).then(
+        (message) => { res.send(message); },
+        (err) => { console.error(err); }
+    );
 });
-
 
 // Fetch all players
 app.get('/players', (req, res) => {
-    Players.find({}, 'name nickname chant', function (error, players) {
-        if (error) { console.error(error); }
-        res.send({
-            players: players
-        })
-    }).sort({_id:-1})
-})
-
+    Players.fetchAll().then(
+        (players) => { res.send({players: players}); },
+        (err) => { console.err(err); }  
+    );
+});
 
 // Fetch single player
 app.get('/player/:id', (req, res) => {
-    let db = req.db
-    Players.findById(req.params.id, 'name nickname chant', function (error, player) {
-        if (error) { console.log(error) }
-        res.send(player)
-    })
-})
-
+    Players.fetchOne(req.params.id).then(
+        (player) => { res.send(player); },
+        (err) => { console.error(err); } 
+    );
+});
 
 // Update a player
 app.put('/players/:id', (req, res) => {
-    let db = req.db
-    Players.findById(req.params.id, 'name nickname chant', function (error, player) {
-        if (error) { console.log(error) }
-
-        player.name = req.body.name
-        player.nickname = req.body.nickname
-        player.chant = req.body.chant
-
-        player.save(function (error) {
-            if (error) { console.log(error) }
-
-            res.send({
-                success: true
-            })
-        })
-
-    })
-})
-
+    Players.updateOne(req.params.id, req.body.name, req.body.nickname, req.body.chant).then(
+        (success) => { res.send({ success: true }); },
+        (err) => { console.error(err); }
+    );
+});
 
 // Delete a player
 app.delete('/players/:id', (req, res) => {
-    let db = req.db
-    Players.remove({
-        _id: req.params.id
-    }, function (error, player) {
-        if (error) {
-            res.send(error)
-        }
-        res.send({
-            success: true
-        })
-    })
-})
+    Players.removeOne(req.params.id).then(
+        (success) => { res.send({ success: true }); },
+        (err) => { console.error(err); }
+    );
+});
 
 
 // app.listen(process.env.PORT || 8081)
