@@ -8,6 +8,16 @@ app.use(logger('combined'))
 app.use(bodyParser.json())
 app.use(cors())
 
+// SET UP DATABASE DO NOT REMOVE
+const mongoose = require('mongoose');
+mongoose.connect('mongodb://localhost:27017/players');
+let db = mongoose.connection;
+db.on("error", console.error.bind(console, "connection error"));
+db.once("open", function(callback){
+    console.log("Connection Succeeded");
+});
+// END DATABASE SETUP
+
 let Players = require("../models/players");
 let GameLogs = require("../models/GameLogs");
 
