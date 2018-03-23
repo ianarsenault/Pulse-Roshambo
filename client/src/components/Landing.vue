@@ -90,9 +90,9 @@
 <script>
   import PlayerService from '@/services/PlayerService'
   import battle from '@/services/BattleEngine'
-  import rock from '../assets/images/rock.svg';
-  import paper from '../assets/images/paper.svg';
-  import scissors from '../assets/images/scissors.svg';
+  import Rock from '../assets/images/rock.svg';
+  import Paper from '../assets/images/paper.svg';
+  import Scissors from '../assets/images/scissors.svg';
   export default {
     data() {
       return {
@@ -104,9 +104,9 @@
         displayBtn: false,
         gameResults: {},
         images: {
-          Rock: rock,
-          Paper: paper,
-          Scissors: scissors
+          Rock,
+          Paper,
+          Scissors
         }
       }
     },
