@@ -27,7 +27,13 @@ module.exports = (app) => {
 
     // Update a player
     app.put('/players/:id', (req, res) => {
-        Players.updateOne(req.params.id, req.body.name, req.body.nickname, req.body.chant).then(
+        const playerObj = {
+            name: req.body.name,
+            nickname: req.body.nickname,
+            chant: req.body.chant
+        };
+
+        Players.updateOne(req.params.id, playerObj).then(
             (success) => { res.send({ success: true }); },
             (err) => { console.error(err); }
         );
