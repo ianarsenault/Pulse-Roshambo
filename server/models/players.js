@@ -3,7 +3,9 @@ const factory = require('./database.js');
 const schema = {
     name: String,
     nickname: String,
-    chant: String
+    chant: String,
+    wins: Number,
+    losses: Number
 };
 
 const Players = factory("Players", schema);
