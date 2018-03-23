@@ -46,7 +46,7 @@
 
         <div class="columns is-centered">
           <div class="column is-3">
-            <a class="button is-large is-fullwidth is-primary" @click="addPlayer">Add New Player</a>
+            <a class="button is-large is-fullwidth is-primary" @click="addPlayer" href="">Add New Player</a>
           </div>
         </div>
 
