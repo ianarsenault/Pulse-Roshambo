@@ -1,15 +1,14 @@
-let mongoose = require('mongoose');
-let Schema = mongoose.Schema;
+const factory = require('./database.js');
 
-let PlayersSchema = new Schema({
+const schema = {
     name: String,
     nickname: String,
     chant: String,
     wins: Number,
     losses: Number
-});
+};
 
-let Players = mongoose.model("Players", PlayersSchema);
+const Players = factory("Players", schema);
 
 function addPlayer(name, nickname, chant) {
     let new_player = new Players({
@@ -17,7 +16,6 @@ function addPlayer(name, nickname, chant) {
         nickname: nickname,
         chant: chant
     });
-
     return new Promise((resolve, reject) => {
         new_player.save(function (error) {
             if (error) {
@@ -33,7 +31,7 @@ function addPlayer(name, nickname, chant) {
 
 function fetchAll() {
     return new Promise((resolve, reject) => {
-        Players.find({}, 'name nickname chant', function (error, players) {
+        Players.find({}, Object.keys(schema).join(" "), function (error, players) {
            if (error) { reject(error); }
             resolve(players);
         }).sort({_id:-1})
@@ -42,7 +40,7 @@ function fetchAll() {
 
 function fetchOne(id) {
     return new Promise((resolve, reject) => {
-        Players.findById(id, 'name nickname chant', function (error, player) {
+        Players.findById(id, Object.keys(schema).join(" "), function (error, player) {
             if (error) { reject(error); }
             resolve(player);
         })
@@ -51,7 +49,7 @@ function fetchOne(id) {
 
 function updateOne(id, playerObj) {
     return new Promise((resolve, reject) => {
-        Players.findById(id, 'name nickname chant', function (error, player) {
+        Players.findById(id, Object.keys(schema).join(" "), function (error, player) {
             if (error) {reject(error) }
 
             player.name = playerObj.name;
