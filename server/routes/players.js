@@ -6,7 +6,16 @@ module.exports = (app) => {
         Players.addPlayer(req.body.name, req.body.nickname, req.body.chant).then(
             (message) => { res.send(message); },
             (err) => { console.error(err); }
-        );
+        ).catch(function (error) {
+            return error
+        }).then(function (err) {
+            let errMsg = {
+                nameErrorMessage: err.errors.name,
+                nicknameErrorMessage: err.errors.nickname,
+                chantErrorMessage: err.errors.chant
+            }
+            res.send(errMsg)
+        });
     });
 
     // Fetch all players

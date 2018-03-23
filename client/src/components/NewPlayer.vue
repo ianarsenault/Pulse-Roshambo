@@ -21,21 +21,21 @@
                       <label class="label">Name</label>
                       <div class="control">
                         <input class="input" type="text" placeholder="Ian A" name="name" v-model="name" required>
-                        <p class="help is-danger" v-if="nameErrorMessage">{{ nameErrorMessage }}</p>
+                        <p class="help is-danger" v-if="errors.nameErrorMessage">{{ errors.nameErrorMessage }}</p>
                       </div>
                     </div>
                     <div class="field">
                       <label class="label">Nickname</label>
                       <div class="control">
                         <input class="input" type="text" placeholder="GorgonsMaze" name="nickname" v-model="nickname" required>
-                        <p class="help is-danger" v-if="nicknameErrorMessage">{{ nicknameErrorMessage }}</p>
+                        <p class="help is-danger" v-if="errors.nicknameErrorMessage">{{ errors.nicknameErrorMessage }}</p>
                       </div>
                     </div>
                     <div class="field">
                       <label class="label">Winner Saying</label>
                       <div class="control">
                         <input class="input" type="text" placeholder="Booyakasha!" name="chant" v-model="chant" required>
-                        <p class="help is-danger" v-if="chantErrorMessage">{{ chantErrorMessage }}</p>
+                        <p class="help is-danger" v-if="errors.chantErrorMessage">{{ errors.chantErrorMessage }}</p>
                       </div>
                     </div>
                   </form>
@@ -65,7 +65,8 @@
       return {
         name: '',
         nickname: '',
-        chant: ''
+        chant: '',
+        errors: []
       }
     },
     methods: {
@@ -86,7 +87,10 @@
             name: this.name,
             nickname: this.nickname,
             chant: this.chant
-          }).then(this.playerSaved())
+          }).then(this.playerSaved()).catch(e => {
+            console.log(e);
+            this.errors.push(e)
+          })
           this.$router.push({ name: 'Players' })
         } else {
           this.$toast.open({
