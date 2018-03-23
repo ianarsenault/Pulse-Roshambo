@@ -21,7 +21,7 @@
                 </b-autocomplete>
 
                 <div v-if="gameResults.p1Throws" class="columns is-centered u-margin--top">
-                  <img :src="images[gameResults.p1Throws]" style="width: 150px;">
+                  <img :src="images[gameResults.p1Throws]" class="thrown-image">
                 </div>
 
               </div>
@@ -50,7 +50,7 @@
                 </b-autocomplete>
 
                 <div v-if="gameResults.p2Throws" class="columns is-centered u-margin--top">
-                  <img :src="images[gameResults.p2Throws]" style="width: 150px;">
+                  <img :src="images[gameResults.p2Throws]" class="thrown-image">
                 </div>
 
               </div>
