@@ -52,9 +52,11 @@ module.exports = (app) => {
         res.send({success: true});
       },
       (err) => {
-        console.error(err);
+        res.send(err);
       }
-    );
+    ).catch(function (error) {
+      return error
+    });
   });
 
   // Delete a player
