@@ -19,6 +19,11 @@
                   @select="option => playerOne = option">
                   <template slot="empty">No results - Please Add New Player</template>
                 </b-autocomplete>
+
+                <div v-if="gameResults.p1Throws" class="columns is-centered u-margin--top">
+                  <img :src="images[gameResults.p1Throws]" class="thrown-image">
+                </div>
+
               </div>
             </div>
           </div>
@@ -43,16 +48,40 @@
                   @select="option => playerTwo = option">
                   <template slot="empty">No results - Please Add New Player</template>
                 </b-autocomplete>
+
+                <div v-if="gameResults.p2Throws" class="columns is-centered u-margin--top">
+                  <img :src="images[gameResults.p2Throws]" class="thrown-image">
+                </div>
+
               </div>
             </div>
           </div>
-
         </div>
+
         <div class="columns is-centered">
           <div class="column is-6" v-show="debounceBtn">
-            <a class="button is-large is-fullwidth is-primary" v-bind:class="showButton">ROSHAMBO!</a>
+            <a class="button is-large is-fullwidth is-primary" v-bind:class="showButton" @click="playGame">ROSHAMBO!</a>
           </div>
         </div>
+
+
+        <div class="columns is-centered" v-if="gameResults.winner">
+          <div class="column is-4">
+            <div class="card">
+              <header class="card-header">
+                <p class="card-header-title is-centered">
+                  Winner!
+                </p>
+              </header>
+              <div class="card-content u-text-center">
+                <p class="winner-title">
+                  {{ gameResults.winner }}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
   </section>
@@ -60,6 +89,10 @@
 
 <script>
   import PlayerService from '@/services/PlayerService'
+  import battle from '@/services/BattleEngine'
+  import Rock from '../assets/images/rock.svg';
+  import Paper from '../assets/images/paper.svg';
+  import Scissors from '../assets/images/scissors.svg';
   export default {
     data() {
       return {
@@ -68,7 +101,13 @@
         nameTwo: '',
         playerOne: null,
         playerTwo: null,
-        displayBtn: false
+        displayBtn: false,
+        gameResults: {},
+        images: {
+          Rock,
+          Paper,
+          Scissors
+        }
       }
     },
     mounted () {
@@ -111,6 +150,9 @@
       }
     },
     methods: {
+      playGame() {
+        this.gameResults = battle(this.playerOne, this.playerTwo)
+      },
       async getPlayers() {
         const response = await PlayerService.fetchPlayers()
         let obj = response.data.players

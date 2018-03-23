@@ -25,6 +25,12 @@
           </span>
           <span>Players</span>
         </router-link>
+        <router-link v-bind:to="{ name: 'Landing' }" class="navbar-item" active-class="link-is-active" exact>
+          <span class="icon">
+            <i class="fas fa-hand-scissors"></i>
+          </span>
+          <span>Fight!</span>
+        </router-link>
       </div>
 
       <div class="navbar-end">
