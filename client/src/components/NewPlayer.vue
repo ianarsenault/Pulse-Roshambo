@@ -21,18 +21,21 @@
                       <label class="label">Name</label>
                       <div class="control">
                         <input class="input" type="text" placeholder="Ian A" name="name" v-model="name">
+                        <p class="help is-danger" v-if="nameErrorMessage">{{ nameErrorMessage }}</p>
                       </div>
                     </div>
                     <div class="field">
                       <label class="label">Nickname</label>
                       <div class="control">
                         <input class="input" type="text" placeholder="GorgonsMaze" name="nickname" v-model="nickname">
+                        <p class="help is-danger" v-if="nicknameErrorMessage">{{ nicknameErrorMessage }}</p>
                       </div>
                     </div>
                     <div class="field">
                       <label class="label">Winner Saying</label>
                       <div class="control">
                         <input class="input" type="text" placeholder="Booyakasha!" name="chant" v-model="chant">
+                        <p class="help is-danger" v-if="chantErrorMessage">{{ chantErrorMessage }}</p>
                       </div>
                     </div>
                   </form>
