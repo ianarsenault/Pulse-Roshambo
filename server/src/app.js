@@ -23,7 +23,6 @@ let GameLogs = require("../models/GameLogs");
 // configure routes
 require("../routes/players")(app);
 
-
 // app.listen(process.env.PORT || 8081)
 
 require('express-debug')(app);
