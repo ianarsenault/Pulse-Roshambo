@@ -17,28 +17,30 @@
               <div class="card-content">
                 <div class="content">
                   <form>
-
                     <div class="field">
                       <label class="label">Name</label>
                       <div class="control">
-                        <input class="input" type="text" placeholder="Ian A" name="name" v-model="name">
+                        <input class="input" type="text" placeholder="Ian A" name="name" v-model="name" required>
+                        <p class="help is-danger" v-if="errors.name">{{ errors.name.message }}</p>
                       </div>
                     </div>
                     <div class="field">
                       <label class="label">Nickname</label>
                       <div class="control">
-                        <input class="input" type="text" placeholder="GorgonsMaze" name="nickname" v-model="nickname">
+                        <input class="input" type="text" placeholder="GorgonsMaze" name="nickname" v-model="nickname"
+                               required>
+                        <p class="help is-danger" v-if="errors.nickname">{{ errors.nickname.message }}</p>
                       </div>
                     </div>
                     <div class="field">
                       <label class="label">Winner Saying</label>
                       <div class="control">
-                        <input class="input" type="text" placeholder="Booyakasha!" name="chant" v-model="chant">
+                        <input class="input" type="text" placeholder="Booyakasha!" name="chant" v-model="chant"
+                               required>
+                        <p class="help is-danger" v-if="errors.chant">{{ errors.chant.message }}</p>
                       </div>
                     </div>
                   </form>
-                  <!-- END LOGIN FORM -->
-
                 </div>
               </div>
             </div>
@@ -67,7 +69,8 @@
       return {
         name: '',
         nickname: '',
-        chant: ''
+        chant: '',
+        errors: []
       }
     },
     mounted () {
@@ -80,6 +83,14 @@
           message: `Player Information Updated!`,
           position: 'is-top',
           type: 'is-success'
+        })
+      },
+      errorMsg(message) {
+        this.$toast.open({
+          duration: 3500,
+          message: message,
+          position: 'is-top',
+          type: 'is-danger'
         })
       },
       async getPlayer () {
@@ -96,8 +107,16 @@
           name: this.name,
           nickname: this.nickname,
           chant: this.chant
-        }).then(this.playerUpdated())
-        this.$router.push({ name: 'Players' })
+        }).then(res => {
+          if (res.data.errors) {
+            this.errors = res.data.errors
+            this.errorMsg('Please fill out all form fields')
+          } else {
+            this.playerUpdated()
+            this.$router.push({ name: 'Players' })
+          }
+        })
+
       }
     }
   }

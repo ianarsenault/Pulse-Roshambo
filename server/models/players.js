@@ -1,11 +1,27 @@
 const factory = require('./database.js');
 
 const schema = {
-    name: String,
-    nickname: String,
-    chant: String,
-    wins: Number,
-    losses: Number
+    name: {
+        type: String,
+        required: [true, 'Name is required'],
+        minlength: 3
+    },
+    nickname: {
+        type: String,
+        required: [true, 'Nickname is required'],
+        minlength: 3
+    },
+    chant: {
+        type: String,
+        required: [true, 'Your chant is required'],
+        minlength: 3
+    },
+    wins: {
+        type: Number
+    },
+    losses: {
+        type: Number
+    }
 };
 
 const Players = factory("Players", schema);
