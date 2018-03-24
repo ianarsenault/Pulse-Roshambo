@@ -19,6 +19,10 @@ export default {
 
   deletePlayer(id) {
     return Api().delete('players/' + id)
+  },
+
+  uploadAvatar(params) {
+    return Api().post('uploads', params, { headers: { 'Content-Type': 'multipart/form-data' } })
   }
 
 }

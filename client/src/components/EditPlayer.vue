@@ -40,6 +40,10 @@
                         <p class="help is-danger" v-if="errors.chant">{{ errors.chant.message }}</p>
                       </div>
                     </div>
+                    <div class="field">
+                      <img :src="imageSrc" class="image">
+                      <input @change="uploadImage" type="file" name="photo" accept="image/*">
+                    </div>
                   </form>
                 </div>
               </div>
@@ -62,6 +66,7 @@
 
 <script>
   import PlayerService from '@/services/PlayerService'
+  import Api from '@/services/Api'
 
   export default {
     name: 'EditPlayer',
@@ -70,7 +75,8 @@
         name: '',
         nickname: '',
         chant: '',
-        errors: []
+        errors: [],
+        imageSrc: 'http://nahmdong.com/vitalhill/img/default.png'
       }
     },
     mounted () {
@@ -116,7 +122,22 @@
             this.$router.push({ name: 'Players' })
           }
         })
-
+      },
+      uploadImage: function(e) {
+        let file = e.target.files[0]
+        if(!file) {
+          return
+        }
+        let data = new FormData()
+        data.append('player', this.name)
+        data.append('image', file)
+        console.log(file)
+        PlayerService.uploadAvatar(data).then(res => {
+          let ext = file.name.substr(file.name.lastIndexOf('.') + 1);
+          this.imageSrc = Api().get(`images/uploads/${this.name}.${ext}`)
+        }).catch(error => {
+          console.log(error)
+        });
       }
     }
   }

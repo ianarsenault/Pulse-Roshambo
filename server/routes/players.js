@@ -1,4 +1,6 @@
 let Players = require("../models/players");
+let multer  = require('multer');
+let path = require('path');
 
 module.exports = (app) => {
   // Add new player
@@ -70,4 +72,21 @@ module.exports = (app) => {
       }
     );
   });
+
+  // Avatar upload
+  let storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null, '../client/src/assets/images/uploads')
+    },
+    filename: function (req, file, cb) {
+      let ext = file.originalname.substr(file.originalname.lastIndexOf('.') + 1);
+      cb(null, req.body.player+'.'+ext)
+    }
+  })
+
+  let upload = multer({ storage: storage })
+  app.post('/uploads', upload.single('image'), (req, res) => {
+    return res.json('success');
+  });
 };
+``
