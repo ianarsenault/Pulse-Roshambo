@@ -42,7 +42,7 @@
                     </div>
                     <div class="field">
                       <img :src="imageSrc" class="image">
-                      <input @change="onFileChange" type="file" name="photo" accept="image/*">
+                      <input @change="onFileChange" type="file" name="photo" accept="image/*" ref="fileInput">
                     </div>
                   </form>
                 </div>
@@ -108,6 +108,11 @@
           }
         })
       },
+      reset: function () {
+        const input = this.$refs.fileInput;
+        input.type = 'text';
+        input.type = 'file';
+      },
       onFileChange: function(e) {
         let files = e.target.files || e.dataTransfer.files;
         if (!files) {
@@ -115,7 +120,14 @@
         }
         this.createImage(files);
       },
-      createImage(files) {
+      createImage: function(files) {
+        let imageSize = files[0].size
+        if (imageSize > 500000) {
+          // if image size > 500kb -- can be changed
+          this.errorMsg('Image Size is too large! Try a different image')
+          this.reset()
+          return
+        }
         let reader = new FileReader();
         reader.onload = (e) => {
           this.imageSrc = e.target.result;
