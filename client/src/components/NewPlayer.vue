@@ -40,6 +40,10 @@
                         <p class="help is-danger" v-if="errors.chant">{{ errors.chant.message }}</p>
                       </div>
                     </div>
+                    <div class="field">
+                      <img :src="imageSrc" class="image">
+                      <input @change="onFileChange" type="file" name="photo" accept="image/*">
+                    </div>
                   </form>
                 </div>
               </div>
@@ -68,7 +72,8 @@
         name: '',
         nickname: '',
         chant: '',
-        errors: {}
+        errors: {},
+        imageSrc: 'http://nahmdong.com/vitalhill/img/default.png'
       }
     },
     methods: {
@@ -102,6 +107,20 @@
             this.$router.push({name: 'Players'})
           }
         })
+      },
+      onFileChange: function(e) {
+        let files = e.target.files || e.dataTransfer.files;
+        if (!files) {
+          return
+        }
+        this.createImage(files);
+      },
+      createImage(files) {
+        let reader = new FileReader();
+        reader.onload = (e) => {
+          this.imageSrc = e.target.result;
+        };
+        reader.readAsDataURL(files[0]);
       }
     }
   }
