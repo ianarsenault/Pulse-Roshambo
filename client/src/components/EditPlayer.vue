@@ -117,16 +117,16 @@
           }
         })
       },
-      uploadImage: function(e) {
+      uploadImage(e) {
         let file = e.target.files[0]
         if(!file) {
           return
         }
         let reader = new FileReader();
         reader.onload = (e) => {
-          this.player.avatar = e.target.result;
+          this.player.avatar = e.target.result
         };
-        reader.readAsDataURL(file);
+        reader.readAsDataURL(file)
       }
     }
   }

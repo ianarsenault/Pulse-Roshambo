@@ -112,19 +112,19 @@
           }
         })
       },
-      reset: function () {
-        const input = this.$refs.fileInput;
-        input.type = 'text';
-        input.type = 'file';
+      reset() {
+        const input = this.$refs.fileInput
+        input.type = 'text'
+        input.type = 'file'
       },
-      onFileChange: function(e) {
-        let files = e.target.files || e.dataTransfer.files;
+      onFileChange(e) {
+        let files = e.target.files || e.dataTransfer.files
         if (!files) {
           return
         }
         this.createImage(files);
       },
-      createImage: function(files) {
+      createImage(files) {
         let imageSize = files[0].size
         if (imageSize > 500000) {
           // if image size > 500kb -- can be changed
@@ -134,9 +134,9 @@
         }
         let reader = new FileReader();
         reader.onload = (e) => {
-          this.player.avatar = e.target.result;
+          this.player.avatar = e.target.result
         };
-        reader.readAsDataURL(files[0]);
+        reader.readAsDataURL(files[0])
       }
     }
   }
