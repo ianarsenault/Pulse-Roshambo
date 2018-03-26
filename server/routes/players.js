@@ -43,13 +43,7 @@ module.exports = (app) => {
 
   // Update a player
   app.put('/players/:id', (req, res) => {
-    const playerObj = {
-      name: req.body.name,
-      nickname: req.body.nickname,
-      chant: req.body.chant
-    };
-
-    Players.updateOne(req.params.id, playerObj).then(
+    Players.updateOne(req.params._id, req.body).then(
       (success) => {
         res.send({success: true});
       },
@@ -76,7 +70,7 @@ module.exports = (app) => {
   // Avatar upload
   let storage = multer.diskStorage({
     destination: function (req, file, cb) {
-      cb(null, '../client/src/assets/images/uploads')
+      cb(null, '../client/images/uploads')
     },
     filename: function (req, file, cb) {
       let ext = file.originalname.substr(file.originalname.lastIndexOf('.') + 1);
