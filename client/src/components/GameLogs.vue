@@ -72,8 +72,8 @@
       this.getAllGames()
     },
     methods: {
-      moment: function () {
-        return moment();
+      moment: function (date) {
+        return moment(date);
       },
       async getAllGames () {
         const response = await GameLogsService.fetchGames()

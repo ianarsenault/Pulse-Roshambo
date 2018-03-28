@@ -1,4 +1,5 @@
 import GameLogsService from '@/services/GameLogsService'
+import moment from 'moment'
 
 function playerChoice(){
   return Math.floor(Math.random() * 3);
@@ -18,7 +19,7 @@ const battle = (player1, player2) => {
   let outcome = (3 + p1Throws - p2Throws) % 3;
   let winner = ["Tie!", player1, player2][outcome];
   let game = {
-    date: new Date(),
+    date: moment(),
     playerOne: player1,
     playerTwo: player2,
     throwOne: choiceName(p1Throws),
