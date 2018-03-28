@@ -18,11 +18,11 @@ db.once("open", function(callback){
 });
 // END DATABASE SETUP
 
-let LeaderBoard = require("../models/leaderboard");
+let GameLogs = require("../models/gamelogs");
 
 // configure routes
 require("../routes/players")(app);
-require("../routes/leaderboard")(app);
+require("../routes/gamelogs")(app);
 
 // app.listen(process.env.PORT || 8081)
 

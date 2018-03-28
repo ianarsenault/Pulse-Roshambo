@@ -9,28 +9,28 @@ const schema = {
   winner: String
 };
 
-const LeaderBoard = factory("LeaderBoard", schema);
+const GameLogs = factory("GameLogs", schema);
 
 function fetchAll() {
     return new Promise((resolve, reject) => {
-        LeaderBoard.find({}, Object.keys(schema).join(" "), function (error, leaderboard) {
+        GameLogs.find({}, Object.keys(schema).join(" "), function (error, gameLogs) {
            if (error) { reject(error); }
-            resolve(leaderboard);
+            resolve(gameLogs);
         }).sort({_id:-1})
     });
 }
 
 function fetchPlayerGames(id) {
     return new Promise((resolve, reject) => {
-        LeaderBoard.find({playerOne:id}, Object.keys(schema).join(" "), function (error, leaderboard) {
+        GameLogs.find({playerOne:id}, Object.keys(schema).join(" "), function (error, gameLogs) {
             if (error) { reject(error); }
-            resolve(leaderboard);
+            resolve(gameLogs);
         })
     });
 }
 
 function addGame(date, playerOne, playerTwo, throwOne, throwTwo, winner) {
-    let new_game = new LeaderBoard({
+    let new_game = new GameLogs({
       date: date,
       playerOne: playerOne,
       playerOneThrew: throwOne,
