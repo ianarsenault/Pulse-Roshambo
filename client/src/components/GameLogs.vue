@@ -4,7 +4,7 @@
       <div class="hero-body">
         <div class="container has-text-centered">
           <h1 class="title">
-            Game Log
+            Game Logs
           </h1>
           <h2 class="subtitle">
             A list of all ROSHAMBO games
@@ -58,10 +58,10 @@
 </template>
 
 <script>
-  import LeaderBoardService from '@/services/LeaderBoardService'
+  import GameLogsService from '@/services/GameLogsService'
   import moment from 'moment'
   export default {
-    name: 'Leaderboard',
+    name: 'GameLogs',
     data () {
       return {
         games: [],
@@ -76,8 +76,8 @@
         return moment();
       },
       async getAllGames () {
-        const response = await LeaderBoardService.fetchGames()
-        this.games = response.data.leaderboards
+        const response = await GameLogsService.fetchGames()
+        this.games = response.data.gamelogs
       }
     }
   }

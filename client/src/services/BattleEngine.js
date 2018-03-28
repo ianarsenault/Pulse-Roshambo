@@ -1,4 +1,4 @@
-import LeaderBoardService from '@/services/LeaderBoardService'
+import GameLogsService from '@/services/GameLogsService'
 
 function playerChoice(){
   return Math.floor(Math.random() * 3);
@@ -26,7 +26,7 @@ const battle = (player1, player2) => {
     winner: winner
   }
 
-  LeaderBoardService.addGame(game);
+  GameLogsService.addGame(game);
 
   return {
     winner,

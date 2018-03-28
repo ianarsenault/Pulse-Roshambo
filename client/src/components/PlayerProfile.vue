@@ -40,7 +40,7 @@
 
 <script>
   import PlayerService from '@/services/PlayerService'
-  import LeaderBoardService from '@/services/LeaderBoardService'
+  import GameLogsService from '@/services/GameLogsService'
 
   export default {
     name: 'PlayerProfile',
@@ -55,7 +55,7 @@
     },
     mounted () {
       this.getPlayer()
-      this.getLeaderBoard()
+      this.getPlayerGames()
     },
     methods: {
       async getPlayer () {
@@ -66,11 +66,11 @@
         this.nickname = response.data.nickname
         this.chant = response.data.chant
       },
-      async getLeaderBoard () {
-        const response = await LeaderBoardService.getPlayerGames({
+      async getPlayerGames () {
+        const response = await GameLogsService.getPlayerGames({
           id: this.$route.params.id
         })
-        this.games = response.data.leaderboards
+        this.games = response.data.gamelogs
       }
     }
   }

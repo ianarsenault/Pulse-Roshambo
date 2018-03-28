@@ -3,7 +3,7 @@ import Router from 'vue-router'
 import Landing from '@/components/Landing'
 import NewPlayer from '@/components/NewPlayer'
 import Players from '@/components/Players'
-import LeaderBoard from '@/components/Leaderboard'
+import GameLogs from '@/components/GameLogs'
 import EditPlayer from '@/components/EditPlayer'
 import PlayerProfile from '@/components/PlayerProfile'
 
@@ -28,9 +28,9 @@ export default new Router({
       component: Players
     },
     {
-      path: '/LeaderBoard',
-      name: 'LeaderBoard',
-      component: LeaderBoard
+      path: '/GameLogs',
+      name: 'GameLogs',
+      component: GameLogs
     },
     {
       path: '/player/:id',
