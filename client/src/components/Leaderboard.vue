@@ -29,11 +29,11 @@
             </thead>
             <tbody>
             <tr v-for="game in games">
-              <td>{{ game.date }}</td>
+              <td>{{ moment(game.date).format('dddd, MMMM Do YYYY, h:mm a') }}</td>
               <td>{{ game.playerOne }}</td>
               <td>{{ game.playerTwo }}</td>
-              <td>{{ game.throwOne }}</td>
-              <td>{{ game.throwTwo }}</td>
+              <td>{{ game.playerOneThrew }}</td>
+              <td>{{ game.playerTwoThrew }}</td>
               <td>{{ game.winner }}</td>
             </tr>
             </tbody>
@@ -59,6 +59,7 @@
 
 <script>
   import LeaderBoardService from '@/services/LeaderBoardService'
+  import moment from 'moment'
   export default {
     name: 'Leaderboard',
     data () {
@@ -71,9 +72,12 @@
       this.getAllGames()
     },
     methods: {
+      moment: function () {
+        return moment();
+      },
       async getAllGames () {
         const response = await LeaderBoardService.fetchGames()
-        this.games = response.data.games
+        this.games = response.data.leaderboards
       }
     }
   }

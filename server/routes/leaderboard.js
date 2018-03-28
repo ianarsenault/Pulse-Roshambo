@@ -1,4 +1,4 @@
-let LeaderBoard = require("../models/gameLogs");
+let LeaderBoard = require("../models/leaderboard");
 
 module.exports = (app) => {
   // Fetch all games
@@ -27,7 +27,7 @@ module.exports = (app) => {
 
   // Add new player
   app.post('/leaderboard', (req, res) => {
-    LeaderBoard.addGame(req.body.date, req.body.playerOne, req.body.playerTwo, req.body.throwOne, req.body.throwTwo).then(
+    LeaderBoard.addGame(req.body.date, req.body.playerOne, req.body.playerTwo, req.body.throwOne, req.body.throwTwo, req.body.winner).then(
       (message) => {
         res.send(message);
       },

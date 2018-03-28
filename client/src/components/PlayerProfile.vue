@@ -56,17 +56,8 @@
     mounted () {
       this.getPlayer()
       this.getLeaderBoard()
-      this.getAllLeaderBoards()
     },
     methods: {
-      playerUpdated() {
-        this.$toast.open({
-          duration: 5000,
-          message: `Player Information Updated!`,
-          position: 'is-top',
-          type: 'is-success'
-        })
-      },
       async getPlayer () {
         const response = await PlayerService.getPlayer({
           id: this.$route.params.id
@@ -79,8 +70,7 @@
         const response = await LeaderBoardService.getPlayerGames({
           id: this.$route.params.id
         })
-        this.games = response.data.games
-        console.log(this.games)
+        this.games = response.data.leaderboards
       }
     }
   }

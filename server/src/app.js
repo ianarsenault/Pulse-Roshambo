@@ -18,7 +18,7 @@ db.once("open", function(callback){
 });
 // END DATABASE SETUP
 
-let GameLogs = require("../models/gameLogs");
+let LeaderBoard = require("../models/leaderboard");
 
 // configure routes
 require("../routes/players")(app);

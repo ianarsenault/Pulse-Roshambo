@@ -17,16 +17,16 @@ const battle = (player1, player2) => {
 
   let outcome = (3 + p1Throws - p2Throws) % 3;
   let winner = ["Tie!", player1, player2][outcome];
-  let gameLog = {
+  let game = {
     date: new Date(),
     playerOne: player1,
     playerTwo: player2,
-    throwOne: p1Throws,
-    throwTwo: p1Throws,
-    winnner: winner
+    throwOne: choiceName(p1Throws),
+    throwTwo: choiceName(p2Throws),
+    winner: winner
   }
 
-  LeaderBoardService.addGame(gameLog);
+  LeaderBoardService.addGame(game);
 
   return {
     winner,
