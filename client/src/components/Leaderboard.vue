@@ -4,35 +4,77 @@
       <div class="hero-body">
         <div class="container has-text-centered">
           <h1 class="title">
-            OOOOPS!
+            Game Log
           </h1>
           <h2 class="subtitle">
-            Looks like I haven't done a damn thing on this page
+            A list of all ROSHAMBO games
           </h2>
         </div>
       </div>
     </section>
 
-    <div class="columns is-centered">
-      <div class="column is-half">
-        <figure class="image">
-          <img class="rc" src="../assets/images/talosian-trapcard.jpg">
-        </figure>
+    <div v-if="games && games.length > 0">
+      <div class="columns is-centered">
+        <div class="column is-half">
+          <table class="table is-bordered is-narrow is-hoverable is-fullwidth">
+            <thead>
+            <tr>
+              <th>Date</th>
+              <th>Player One</th>
+              <th>Player Two</th>
+              <th>Player One Throw</th>
+              <th>Player Two Throw</th>
+              <th>Winner</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr v-for="game in games">
+              <td>{{ game.date }}</td>
+              <td>{{ game.playerOne }}</td>
+              <td>{{ game.playerTwo }}</td>
+              <td>{{ game.throwOne }}</td>
+              <td>{{ game.throwTwo }}</td>
+              <td>{{ game.winner }}</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div v-else>
+      <div class="columns is-centered">
+        <div class="column is-4">
+          <div class="card">
+            <div class="card-image">
+              <figure class="image">
+                <img src="../assets/images/nothing2see.gif" alt="Nothing Here">
+              </figure>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+  import LeaderBoardService from '@/services/LeaderBoardService'
   export default {
-    name: 'players',
+    name: 'Leaderboard',
     data () {
       return {
-        data: []
+        games: [],
+        errors: []
       }
     },
+    mounted () {
+      this.getAllGames()
+    },
     methods: {
-
+      async getAllGames () {
+        const response = await LeaderBoardService.fetchGames()
+        this.games = response.data.games
+      }
     }
   }
 </script>

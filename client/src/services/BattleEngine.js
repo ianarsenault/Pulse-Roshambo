@@ -1,3 +1,5 @@
+import LeaderBoardService from '@/services/LeaderBoardService'
+
 function playerChoice(){
   return Math.floor(Math.random() * 3);
 }
@@ -15,6 +17,16 @@ const battle = (player1, player2) => {
 
   let outcome = (3 + p1Throws - p2Throws) % 3;
   let winner = ["Tie!", player1, player2][outcome];
+  let gameLog = {
+    date: new Date(),
+    playerOne: player1,
+    playerTwo: player2,
+    throwOne: p1Throws,
+    throwTwo: p1Throws,
+    winnner: winner
+  }
+
+  LeaderBoardService.addGame(gameLog);
 
   return {
     winner,
@@ -23,4 +35,4 @@ const battle = (player1, player2) => {
   }
 }
 
-module.exports = battle;
+export default battle;
