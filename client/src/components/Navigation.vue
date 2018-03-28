@@ -13,11 +13,11 @@
 
     <div id="navbarExampleTransparentExample" class="navbar-menu">
       <div class="navbar-start">
-        <router-link v-bind:to="{ name: 'LeaderBoard' }" class="navbar-item" active-class="link-is-active">
+        <router-link v-bind:to="{ name: 'GameLogs' }" class="navbar-item" active-class="link-is-active">
            <span class="icon">
               <i class="fas fa-chart-line"></i>
            </span>
-          <span>Leaderboard</span>
+          <span>Game Logs</span>
         </router-link>
         <router-link v-bind:to="{ name: 'Players' }" class="navbar-item" active-class="link-is-active">
           <span class="icon">
