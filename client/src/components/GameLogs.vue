@@ -77,6 +77,9 @@
       },
       async getAllGames () {
         const response = await GameLogsService.fetchGames()
+        response.data.gamelogs.sort(function (a, b) {
+          return (new Date(b.date)) - (new Date(a.date))
+        });
         this.games = response.data.gamelogs
       }
     }
