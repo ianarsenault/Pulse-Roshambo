@@ -16,7 +16,7 @@ const schema = {
     required: [true, 'Your chant is required'],
     minlength: 3
   },
-  avatar: Buffer,
+  avatar: String,
   wins: {
     type: Number
   },

@@ -5,7 +5,7 @@ let path = require('path');
 module.exports = (app) => {
   // Add new player
   app.post('/players', (req, res) => {
-    Players.addPlayer(req.body.name, req.body.nickname, req.body.chant).then(
+    Players.addPlayer(req.body.name, req.body.nickname, req.body.chant, req.body.avatar).then(
       (message) => {
         res.send(message);
       },

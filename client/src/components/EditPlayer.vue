@@ -42,7 +42,7 @@
                     </div>
                     <div class="field">
                       <img :src="avatar" class="image">
-                      <input @change="uploadImage" type="file" name="avatar" accept="image/*">
+                      <input @change="onFileChange" type="file" name="avatar" accept="image/*">
                     </div>
                   </form>
                 </div>
@@ -117,17 +117,43 @@
           }
         })
       },
-      uploadImage(e) {
-        let file = e.target.files[0]
-        if(!file) {
+      reset() {
+        const input = this.$refs.fileInput
+        input.type = 'text'
+        input.type = 'file'
+      },
+      onFileChange(e) {
+        let files = e.target.files || e.dataTransfer.files
+        if (!files) {
+          return
+        }
+        this.createImage(files);
+      },
+      createImage(files) {
+        let imageSize = files[0].size
+        if (imageSize > 500000) {
+          // if image size > 500kb -- can be changed
+          this.errorMsg('Image Size is too large! Try a different image')
+          this.reset()
           return
         }
         let reader = new FileReader();
         reader.onload = (e) => {
           this.player.avatar = e.target.result
         };
-        reader.readAsDataURL(file)
+        reader.readAsDataURL(files[0])
       }
+//      uploadImage(e) {
+//        let file = e.target.files[0]
+//        if(!file) {
+//          return
+//        }
+//        let reader = new FileReader();
+//        reader.onload = (e) => {
+//          this.player.avatar = e.target.result
+//        };
+//        reader.readAsDataURL(file)
+//      }
     }
   }
 </script>
