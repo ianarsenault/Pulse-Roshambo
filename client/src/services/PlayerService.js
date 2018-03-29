@@ -1,4 +1,5 @@
 import Api from '@/services/Api'
+import LeaderboardService from '@/services/LeaderboardService'
 
 export default {
   fetchPlayers() {
@@ -6,6 +7,7 @@ export default {
   },
 
   addPlayer(params) {
+    LeaderboardService.createPlayerLeaderBoard(params);
     return Api().post('players', params);
   },
 

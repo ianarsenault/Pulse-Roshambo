@@ -1,4 +1,5 @@
 import GameLogsService from '@/services/GameLogsService'
+import LeaderboardService from '@/services/LeaderboardService'
 import moment from 'moment'
 
 function playerChoice(){
@@ -27,13 +28,16 @@ const battle = (player1, player2) => {
     winner: winner
   }
 
-  GameLogsService.addGame(game);
-
-  return {
+  let battle = {
     winner,
     p1Throws: choiceName(p1Throws),
     p2Throws: choiceName(p2Throws)
   }
+
+  GameLogsService.addGame(game);
+  LeaderboardService.updateLeaderboards(battle);
+
+  return battle;
 }
 
 export default battle;

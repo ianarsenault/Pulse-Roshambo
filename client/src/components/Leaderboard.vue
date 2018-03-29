@@ -30,7 +30,7 @@
             <tr v-for="record in leaderboard">
               <td>{{ record.player }}</td>
               <td>{{ record.wins }}</td>
-              <td>{{ record.loses }}</td>
+              <td>{{ record.losses }}</td>
               <td>{{ record.conquerer }}</td>
               <td>{{ record.nemesis }}</td>
             </tr>
