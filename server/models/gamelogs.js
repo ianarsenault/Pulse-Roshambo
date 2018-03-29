@@ -22,7 +22,12 @@ function fetchAll() {
 
 function fetchPlayerGames(id) {
     return new Promise((resolve, reject) => {
-        GameLogs.find({playerOne:id}, Object.keys(schema).join(" "), function (error, gameLogs) {
+        GameLogs.find({
+          $or:[
+              {playerOne:id},
+              {playerTwo:id}
+          ]}, Object.keys(schema).join(" "), function (error, gameLogs) {
+
             if (error) { reject(error); }
             resolve(gameLogs);
         })
