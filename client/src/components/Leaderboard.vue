@@ -31,8 +31,8 @@
               <td>{{ record.player }}</td>
               <td>{{ record.wins }}</td>
               <td>{{ record.losses }}</td>
-              <td>{{ record.conquerer }}</td>
-              <td>{{ record.nemesis }}</td>
+              <td>{{ record.conquerer ? record.conquerer : "Unkown" }}</td>
+              <td>{{ record.nemesis ? record.nemesis : "Unkown" }}</td>
             </tr>
             </tbody>
           </table>
