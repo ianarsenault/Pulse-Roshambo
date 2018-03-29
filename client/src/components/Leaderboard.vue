@@ -61,17 +61,20 @@
     name: 'Leaderboard',
     data () {
       return {
-        games: [],
+        leaderboard: [],
         errors: []
       }
     },
     mounted () {
-      this.getLeaderboard()
+      this.fetchLeaderboard()
     },
     methods: {
-      async getLeaderboard () {
-        const response = await LeaderboardService.getLeaderboard()
-        this.games = response.data.leaderboard
+      async fetchLeaderboard () {
+        const response = await LeaderboardService.fetchLeaderboard()
+        response.data.leaderboard.sort(function (playerOne, playerTwo) {
+          return playerTwo.wins - playerOne.wins
+        });
+        this.leaderboard = response.data.leaderboard
       }
     }
   }
