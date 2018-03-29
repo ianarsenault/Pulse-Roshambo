@@ -28,16 +28,14 @@ const battle = (player1, player2) => {
     winner: winner
   }
 
-  let battle = {
+  GameLogsService.addGame(game);
+  LeaderboardService.updateLeaderboards(game);
+
+  return {
     winner,
     p1Throws: choiceName(p1Throws),
     p2Throws: choiceName(p2Throws)
-  }
-
-  GameLogsService.addGame(game);
-  LeaderboardService.updateLeaderboards(battle);
-
-  return battle;
+  };
 }
 
 export default battle;

@@ -43,7 +43,7 @@ function fetchLeaderboard() {
 
 function fetchPlayerLeaderboard(id) {
     return new Promise((resolve, reject) => {
-        Leaderboard.find({player:id}, Object.keys(schema).join(" "), function (error, leaderboard) {
+        Leaderboard.find({player: id}, Object.keys(schema).join(" "), function (error, leaderboard) {
             if (error) { reject(error); }
             resolve(leaderboard);
         })

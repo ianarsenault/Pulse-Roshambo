@@ -16,42 +16,51 @@ function updateUserLeaderboardData(record, id) {
   return record
 }
 
+function getPlayerLeaderboard(params) {
+  return Api().get('leaderboard/player/' + params.id)
+}
+
+function fetchLeaderboard() {
+  return Api().get('leaderboard')
+}
+
+function createPlayerLeaderboard(params) {
+  return Api().post('leaderboard/player/' + params.id)
+}
+
+function updateLeaderboards(battle) {
+  getPlayerLeaderboard({id: battle.playerOne}).then(function(data) {
+    playerOneRecord = data.data
+  })
+
+  getPlayerLeaderboard({id: battle.playerTwo}).then(function(data) {
+    playerTwoRecord = data.data
+  })
+
+  winner = battle.winner
+
+  if (winner == battle.playerOne) {
+    playerOneRecord.wins++
+  } else {
+    playerTwoRecord.wins++
+  }
+
+  if (winner != battle.playerOne) {
+    playerOneRecord.losses++
+  } else {
+    playerTwoRecord.losses++
+  }
+
+  playerOneRecord = updateUserLeaderboardData(playerOneRecord, battle.playerOne)
+  playerTwoRecord = updateUserLeaderboardData(playerTwoRecord, battle.playerTwo)
+
+  Api().put('leaderboard/player/' + battle.playerOne, { leaderboard: playerOneRecord})
+  Api().put('leaderboard/player/' + battle.playerTwo, { leaderboard: playerTwoRecord})
+}
 
 export default {
-  fetchLeaderboard() {
-    return Api().get('leaderboard')
-  },
-
-  getPlayerLeaderboard(params) {
-    return Api().get('leaderboard/player/' + params.id)
-  },
-
-  createPlayerLeaderboard(params) {
-    return Api().post('leaderboard/player/' + params.id)
-  },
-
-  updateLeaderboards(battle) {
-    playerOneRecord = getPlayerLeaderboard(battle.playerOne)
-    playerTwoRecord = getPlayerLeaderboard(battle.playerTwo)
-
-    winner = battle.winner
-
-    if (winner == battle.playerOne) {
-      playerOneRecord.wins++
-    } else {
-      playerTwoRecord.wins++
-    }
-
-    if (winner != battle.playerOne) {
-      playerOneRecord.losses++
-    } else {
-      playerTwoRecord.losses++
-    }
-
-    playerOneRecord = updateUserLeaderboardData(playerOneRecord, battle.playerOne)
-    playerTwoRecord = updateUserLeaderboardData(playerTwoRecord, battle.playerTwo)
-
-    Api().put('leaderboard/player/' + battle.playerOne, { leaderboard: playerOneRecord})
-    Api().put('leaderboard/player/' + battle.playerTwo, { leaderboard: playerTwoRecord})
-  }
+  fetchLeaderboard,
+  getPlayerLeaderboard,
+  createPlayerLeaderboard,
+  updateLeaderboards
 }

@@ -97,6 +97,7 @@
     data() {
       return {
         data: [],
+        playerMap: [],
         nameOne: '',
         nameTwo: '',
         playerOne: null,
@@ -151,13 +152,14 @@
     },
     methods: {
       playGame() {
-        this.gameResults = battle(this.playerOne, this.playerTwo)
+        this.gameResults = battle(this.playerMap[0][1], this.playerMap[1][1])
       },
       async getPlayers() {
         const response = await PlayerService.fetchPlayers()
         let obj = response.data.players
         Object.keys(obj).forEach(key => {
           this.data.push(obj[key].name)
+          this.playerMap.push([obj[key].name, obj[key]._id])
         })
       }
     }
