@@ -73,8 +73,10 @@
 
 <script>
   import PlayerService from '@/services/PlayerService'
+  import LoadingIndicator from "./LoadingIndicator.vue";
 
   export default {
+    components: {LoadingIndicator},
     name: 'players',
     data() {
       return {
