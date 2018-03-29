@@ -39,11 +39,12 @@ function addGame(date, playerOne, playerTwo, throwOne, throwTwo, winner) {
       winner: winner
     });
     return new Promise((resolve, reject) => {
-        new_game.save(function (error) {
+        new_game.save(function (error, gamelog) {
             if (error) {
                 reject(error);
             }
             resolve({
+                gamelog: gamelog,
                 success: true,
                 message: 'Game was recorded successfully!'
             });

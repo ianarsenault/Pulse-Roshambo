@@ -1,10 +1,12 @@
 let Players = require("../models/players");
+let Leaderboard = require("../models/leaderboard");
 
 module.exports = (app) => {
   // Add new player
   app.post('/players', (req, res) => {
     Players.addPlayer(req.body.name, req.body.nickname, req.body.chant).then(
       (message) => {
+        Leaderboard.createPlayerLeaderBoard(message.user.id);
         res.send(message);
       },
       (err) => {

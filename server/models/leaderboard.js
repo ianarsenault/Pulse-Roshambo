@@ -19,11 +19,12 @@ function createPlayerLeaderBoard(id) {
         nemesis: null
     });
     return new Promise((resolve, reject) => {
-        new_leaderboard.save(function (error) {
+        new_leaderboard.save(function (error, leaderboard) {
             if (error) {
                 reject(error);
             }
             resolve({
+                leaderboard: leaderboard,
                 success: true,
                 message: 'Leaderboard record for user has been created'
             });
@@ -53,7 +54,7 @@ function fetchPlayerLeaderboard(id) {
     return new Promise((resolve, reject) => {
         Leaderboard.fetchPlayerLeaderboard(id, Object.keys(schema).join(" "), function (error, leaderboard) {
             if (error) {reject(error) }
-            
+
             leaderboard.wins = new_leaderboard.wins;
             leaderboard.losses = new_leaderboard.losses;
             leaderboard.nemesis = new_leaderboard.nemesis;
