@@ -35,7 +35,7 @@ const battle = (player1, player2) => {
     winner,
     p1Throws: choiceName(p1Throws),
     p2Throws: choiceName(p2Throws)
-  };
+  }
 }
 
 export default battle;
