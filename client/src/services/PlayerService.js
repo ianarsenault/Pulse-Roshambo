@@ -7,8 +7,9 @@ export default {
   },
 
   addPlayer(params) {
-    LeaderboardService.createPlayerLeaderBoard(params);
-    return Api().post('players', params);
+    response = Api().post('players', params);
+    LeaderboardService.createPlayerLeaderBoard(response.id);
+    return response
   },
 
   getPlayer(params) {
