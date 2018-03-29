@@ -68,6 +68,6 @@ Open an issue or a pull request to suggest changes or additions.
 
 ## Contributors
 
-|  [![ianarsenault](https://avatars2.githubusercontent.com/u/12011826?s=80&v=4&s=40)](https://github.com/ianarsenault) | [![jaydeluca](https://avatars0.githubusercontent.com/u/7630696?s=80&v=4)](https://github.com/jaydeluca) | [![j-arsenault](https://avatars0.githubusercontent.com/u/11837811?s=80&v=4)](https://github.com/j-arsenault)  |  [![adigitalmonk](https://i.imgur.com/X1vPlj1.png?1)](https://github.com/adigitalmonk)  |
-| :--:|:--:|:--: | :--: |
-|  [ianarsenault](https://github.com/ianarsenault) | [jaydeluca](https://github.com/jaydeluca) | [j-arsenault](https://github.com/j-arsenault)  |  [adigitalmonk](https://github.com/adigitalmonk)  |
+|  [![ianarsenault](https://avatars2.githubusercontent.com/u/12011826?s=80&v=4&s=40)](https://github.com/ianarsenault) | [![jaydeluca](https://avatars0.githubusercontent.com/u/7630696?s=80&v=4)](https://github.com/jaydeluca) | [![j-arsenault](https://avatars0.githubusercontent.com/u/11837811?s=80&v=4)](https://github.com/j-arsenault)  |  [![adigitalmonk](https://i.imgur.com/X1vPlj1.png?1)](https://github.com/adigitalmonk)  | [![jkeys](https://avatars1.githubusercontent.com/u/11370032?s=80&v=4)](https://github.com/jkys)  |
+| :--:|:--:|:--: | :--: | :--: |
+|  [ianarsenault](https://github.com/ianarsenault) | [jaydeluca](https://github.com/jaydeluca) | [j-arsenault](https://github.com/j-arsenault)  |  [adigitalmonk](https://github.com/adigitalmonk)  | [jkeys](https://github.com/jkys)  |
