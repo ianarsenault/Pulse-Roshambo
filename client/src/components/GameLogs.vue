@@ -13,59 +13,67 @@
       </div>
     </section>
 
-    <div v-if="games && games.length > 0">
-      <div class="columns is-centered">
-        <div class="column is-three-quarters">
-          <table class="table is-bordered is-narrow is-hoverable is-fullwidth">
-            <thead>
-            <tr>
-              <th>Date</th>
-              <th>Player One</th>
-              <th>Player Two</th>
-              <th>Player One Throw</th>
-              <th>Player Two Throw</th>
-              <th>Winner</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr v-for="game in games">
-              <td>{{ moment(game.date).format('dddd, MMMM Do YYYY, h:mm a') }}</td>
-              <td>{{ game.playerOne }}</td>
-              <td>{{ game.playerTwo }}</td>
-              <td>{{ game.playerOneThrew }}</td>
-              <td>{{ game.playerTwoThrew }}</td>
-              <td>{{ game.winner }}</td>
-            </tr>
-            </tbody>
-          </table>
+    <loading-indicator :data-loaded="dataLoaded"></loading-indicator>
+    <template v-if="dataLoaded">
+      <div v-if="games && games.length > 0">
+        <div class="columns is-centered">
+          <div class="column is-half">
+            <table class="table is-bordered is-narrow is-hoverable is-fullwidth">
+              <thead>
+              <tr>
+                <th>Date</th>
+                <th>Player One</th>
+                <th>Player Two</th>
+                <th>Player One Throw</th>
+                <th>Player Two Throw</th>
+                <th>Winner</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr v-for="game in games">
+                <td>{{ moment(game.date).format('dddd, MMMM Do YYYY, h:mm a') }}</td>
+                <td>{{ game.playerOne }}</td>
+                <td>{{ game.playerTwo }}</td>
+                <td>{{ game.playerOneThrew }}</td>
+                <td>{{ game.playerTwoThrew }}</td>
+                <td>{{ game.winner }}</td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
-    </div>
-    <div v-else>
-      <div class="columns is-centered">
-        <div class="column is-4">
-          <div class="card">
-            <div class="card-image">
-              <figure class="image">
-                <img src="../assets/images/nothing2see.gif" alt="Nothing Here">
-              </figure>
+      <div v-else>
+        <div class="columns is-centered">
+          <div class="column is-4">
+            <div class="card">
+              <div class="card-image">
+                <figure class="image">
+                  <img src="../assets/images/nothing2see.gif" alt="Nothing Here">
+                </figure>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </template>
+
+
   </div>
 </template>
 
 <script>
   import GameLogsService from '@/services/GameLogsService'
   import moment from 'moment'
+  import LoadingIndicator from "./LoadingIndicator.vue";
   export default {
+    components: {LoadingIndicator},
     name: 'GameLogs',
     data () {
       return {
         games: [],
-        errors: []
+        errors: [],
+        dataLoaded: false
       }
     },
     mounted () {
@@ -76,11 +84,13 @@
         return moment(date);
       },
       async getAllGames () {
+        this.dataLoaded = false
         const response = await GameLogsService.fetchGames()
         response.data.gamelogs.sort(function (a, b) {
           return (moment(b.date)) - (moment(a.date))
         });
         this.games = response.data.gamelogs
+        this.dataLoaded = true
       }
     }
   }
