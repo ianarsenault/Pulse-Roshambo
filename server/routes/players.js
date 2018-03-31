@@ -43,7 +43,7 @@ module.exports = (app) => {
 
   // Update a player
   app.put('/players/:id', (req, res) => {
-    Players.updateOne(req.params._id, req.body).then(
+    Players.updateOne(req.params.id, req.body).then(
       (success) => {
         res.send({success: true});
       },
