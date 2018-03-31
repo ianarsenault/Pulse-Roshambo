@@ -98,6 +98,7 @@
     data() {
       return {
         data: [],
+        playerMap: [],
         nameOne: '',
         nameTwo: '',
         playerOne: null,
@@ -152,7 +153,7 @@
     },
     methods: {
       playGame() {
-        BattleService.submitBattle({player1: this.playerOne, player2: this.playerTwo}).then(res => {
+        BattleService.submitBattle({player1: this.playerMap[0][1], player2: this.playerMap[1][1]}).then(res => {
           this.gameResults = res.data
         })
       },
@@ -161,6 +162,7 @@
         let obj = response.data.players
         Object.keys(obj).forEach(key => {
           this.data.push(obj[key].name)
+          this.playerMap.push([obj[key].name, obj[key]._id])
         })
       }
     }

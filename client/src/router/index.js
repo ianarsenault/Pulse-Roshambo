@@ -3,8 +3,10 @@ import Router from 'vue-router'
 import Landing from '@/components/Landing'
 import NewPlayer from '@/components/NewPlayer'
 import Players from '@/components/Players'
-import LeaderBoard from '@/components/Leaderboard'
+import GameLogs from '@/components/GameLogs'
 import EditPlayer from '@/components/EditPlayer'
+import PlayerProfile from '@/components/PlayerProfile'
+import Leaderboard from '@/components/Leaderboard'
 
 Vue.use(Router)
 
@@ -17,22 +19,32 @@ export default new Router({
       component: Landing
     },
     {
-      path: '/New-Player',
+      path: '/newplayer',
       name: 'NewPlayer',
       component: NewPlayer
     },
     {
-      path: '/Players',
+      path: '/players',
       name: 'Players',
       component: Players
     },
     {
-      path: '/LeaderBoard',
-      name: 'LeaderBoard',
-      component: LeaderBoard
+      path: '/gamelogs',
+      name: 'GameLogs',
+      component: GameLogs
+    },
+    {
+      path: '/leaderboard',
+      name: 'Leaderboard',
+      component: Leaderboard
     },
     {
       path: '/player/:id',
+      name: 'PlayerProfile',
+      component: PlayerProfile
+    },
+    {
+      path: '/player/:id/edit',
       name: 'EditPlayer',
       component: EditPlayer
     }

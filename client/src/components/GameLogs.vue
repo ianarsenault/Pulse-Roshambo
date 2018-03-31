@@ -4,35 +4,37 @@
       <div class="hero-body">
         <div class="container has-text-centered">
           <h1 class="title">
-            Leaderboard
+            Game Logs
           </h1>
           <h2 class="subtitle">
-            Leaderboard of all Roshambo Players
+            A list of all ROSHAMBO games
           </h2>
         </div>
       </div>
     </section>
 
-    <div v-if="leaderboard && leaderboard.length > 0">
+    <div v-if="games && games.length > 0">
       <div class="columns is-centered">
         <div class="column is-half">
           <table class="table is-bordered is-narrow is-hoverable is-fullwidth">
             <thead>
             <tr>
-              <th>Player</th>
-              <th>Wins</th>
-              <th>Loses</th>
-              <th>Conquerer</th>
-              <th>Nemesis</th>
+              <th>Date</th>
+              <th>Player One</th>
+              <th>Player Two</th>
+              <th>Player One Throw</th>
+              <th>Player Two Throw</th>
+              <th>Winner</th>
             </tr>
             </thead>
             <tbody>
-            <tr v-for="record in leaderboard">
-              <td>{{ record.player }}</td>
-              <td>{{ record.wins }}</td>
-              <td>{{ record.losses }}</td>
-              <td>{{ record.conquerer ? record.conquerer : "Unkown" }}</td>
-              <td>{{ record.nemesis ? record.nemesis : "Unkown" }}</td>
+            <tr v-for="game in games">
+              <td>{{ moment(game.date).format('dddd, MMMM Do YYYY, h:mm a') }}</td>
+              <td>{{ game.playerOne }}</td>
+              <td>{{ game.playerTwo }}</td>
+              <td>{{ game.playerOneThrew }}</td>
+              <td>{{ game.playerTwoThrew }}</td>
+              <td>{{ game.winner }}</td>
             </tr>
             </tbody>
           </table>
@@ -56,25 +58,29 @@
 </template>
 
 <script>
-  import LeaderboardService from '@/services/LeaderboardService'
+  import GameLogsService from '@/services/GameLogsService'
+  import moment from 'moment'
   export default {
-    name: 'Leaderboard',
+    name: 'GameLogs',
     data () {
       return {
-        leaderboard: [],
+        games: [],
         errors: []
       }
     },
     mounted () {
-      this.fetchLeaderboard()
+      this.getAllGames()
     },
     methods: {
-      async fetchLeaderboard () {
-        const response = await LeaderboardService.fetchLeaderboard()
-        response.data.leaderboard.sort(function (playerOne, playerTwo) {
-          return playerTwo.wins - playerOne.wins
+      moment: function (date) {
+        return moment(date);
+      },
+      async getAllGames () {
+        const response = await GameLogsService.fetchGames()
+        response.data.gamelogs.sort(function (a, b) {
+          return (moment(b.date)) - (moment(a.date))
         });
-        this.leaderboard = response.data.leaderboard
+        this.games = response.data.gamelogs
       }
     }
   }

@@ -13,11 +13,11 @@
 
     <div id="navbarExampleTransparentExample" class="navbar-menu">
       <div class="navbar-start">
-        <router-link v-bind:to="{ name: 'LeaderBoard' }" class="navbar-item" active-class="link-is-active">
-           <span class="icon">
-              <i class="fas fa-chart-line"></i>
-           </span>
-          <span>Leaderboard</span>
+        <router-link v-bind:to="{ name: 'Landing' }" class="navbar-item" active-class="link-is-active" exact>
+          <span class="icon">
+            <i class="fas fa-hand-scissors"></i>
+          </span>
+          <span>Fight!</span>
         </router-link>
         <router-link v-bind:to="{ name: 'Players' }" class="navbar-item" active-class="link-is-active">
           <span class="icon">
@@ -25,11 +25,17 @@
           </span>
           <span>Players</span>
         </router-link>
-        <router-link v-bind:to="{ name: 'Landing' }" class="navbar-item" active-class="link-is-active" exact>
-          <span class="icon">
-            <i class="fas fa-hand-scissors"></i>
-          </span>
-          <span>Fight!</span>
+        <router-link v-bind:to="{ name: 'GameLogs' }" class="navbar-item" active-class="link-is-active">
+           <span class="icon">
+              <i class="fas fa-calendar-alt"></i>
+           </span>
+          <span>Game Logs</span>
+        </router-link>
+        <router-link v-bind:to="{ name: 'Leaderboard' }" class="navbar-item" active-class="link-is-active">
+           <span class="icon">
+              <i class="fas fa-chart-bar"></i>
+           </span>
+          <span>Leaderboard</span>
         </router-link>
       </div>
 

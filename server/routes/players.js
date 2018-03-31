@@ -1,11 +1,12 @@
 let Players = require("../models/players");
-let multer  = require('multer');
 
+let Leaderboard = require("../models/leaderboard");
 module.exports = (app) => {
   // Add new player
   app.post('/players', (req, res) => {
-    Players.addPlayer(req.body.name, req.body.nickname, req.body.chant, req.body.avatar).then(
+    Players.addPlayer(req.body.name, req.body.nickname, req.body.chant).then(
       (message) => {
+        Leaderboard.createPlayerLeaderBoard(message.user.id);
         res.send(message);
       },
       (err) => {
@@ -42,7 +43,13 @@ module.exports = (app) => {
 
   // Update a player
   app.put('/players/:id', (req, res) => {
-    Players.updateOne(req.params.id, req.body).then(
+    const playerObj = {
+      name: req.body.name,
+      nickname: req.body.nickname,
+      chant: req.body.chant
+    };
+
+    Players.updateOne(req.params.id, playerObj).then(
       (success) => {
         res.send({success: true});
       },
@@ -65,20 +72,3 @@ module.exports = (app) => {
       }
     );
   });
-
-  // Avatar upload
-  let storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-      cb(null, '../client/images/uploads')
-    },
-    filename: function (req, file, cb) {
-      let ext = file.originalname.substr(file.originalname.lastIndexOf('.') + 1);
-      cb(null, req.body.player+'.'+ext)
-    }
-  })
-
-  let upload = multer({ storage: storage })
-  app.post('/uploads', upload.single('image'), (req, res) => {
-    return res.json('success');
-  });
-};

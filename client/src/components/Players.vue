@@ -13,7 +13,7 @@
       </div>
     </section>
 
-    <div v-if="players.length > 0">
+    <div v-if="players && players.length > 0">
       <router-link v-bind:to="{ name: 'NewPlayer' }" class="button is-primary is-fullwidth u-margin--bottom">Add Player</router-link>
       <div class="columns is-centered">
         <div class="column is-half">
