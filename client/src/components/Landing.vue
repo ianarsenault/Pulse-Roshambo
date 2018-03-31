@@ -7,21 +7,22 @@
             <div class="card" v-bind:class="playerOneAdded">
               <header class="card-header">
                 <p class="card-header-title is-centered">
-                  PI Fighter One: {{ playerOne }}
+                  PI Fighter One: {{ playerOne ? playerOne.name : '' }}
                 </p>
               </header>
               <div class="card-content">
                 <b-autocomplete
-                  v-model="nameOne"
+                  v-model="placeHolder.p1"
                   :data="filteredPlayerOneDataArray"
+                  field="name"
                   placeholder="e.g. Michael!!!!!"
                   icon="magnify"
                   @select="option => playerOne = option">
                   <template slot="empty">No results - Please Add New Player</template>
                 </b-autocomplete>
 
-                <div v-if="gameResults.p1Throws" class="columns is-centered u-margin--top">
-                  <img :src="images[gameResults.p1Throws]" class="thrown-image">
+                <div v-if="gameResults.throwOne" class="columns is-centered u-margin--top">
+                  <img :src="images[gameResults.throwOne]" class="thrown-image">
                 </div>
 
               </div>
@@ -36,21 +37,22 @@
             <div class="card" v-bind:class="playerTwoAdded">
               <header class="card-header">
                 <p class="card-header-title is-centered">
-                  PI Fighter Two: {{ playerTwo }}
+                  PI Fighter Two: {{ playerTwo ? playerTwo.name : '' }}
                 </p>
               </header>
               <div class="card-content">
                 <b-autocomplete
-                  v-model="nameTwo"
+                  v-model="placeHolder.p2"
                   :data="filteredPlayerTwoDataArray"
+                  field="name"
                   placeholder="e.g. Michael!!!!!"
                   icon="magnify"
                   @select="option => playerTwo = option">
                   <template slot="empty">No results - Please Add New Player</template>
                 </b-autocomplete>
 
-                <div v-if="gameResults.p2Throws" class="columns is-centered u-margin--top">
-                  <img :src="images[gameResults.p2Throws]" class="thrown-image">
+                <div v-if="gameResults.throwTwo" class="columns is-centered u-margin--top">
+                  <img :src="images[gameResults.throwTwo]" class="thrown-image">
                 </div>
 
               </div>
@@ -60,7 +62,12 @@
 
         <div class="columns is-centered">
           <div class="column is-6" v-show="debounceBtn">
-            <a class="button is-large is-fullwidth is-primary" v-bind:class="showButton" @click="playGame">ROSHAMBO!</a>
+            <a
+              class="button is-large is-fullwidth is-primary"
+              v-bind:class="{ 'animated-delay fadeInUp': showButton}"
+              @click="playGame">
+              ROSHAMBO!
+            </a>
           </div>
         </div>
 
@@ -74,7 +81,7 @@
               </header>
               <div class="card-content u-text-center">
                 <p class="winner-title">
-                  {{ gameResults.winner }}
+                  {{ gameResults.winner.name }}
                 </p>
               </div>
             </div>
@@ -89,6 +96,8 @@
 <script>
   import PlayerService from '@/services/PlayerService'
   import BattleService from '@/services/BattleService'
+  import GameLogsService from '@/services/GameLogsService'
+  import LeaderboardService from '@/services/LeaderboardService'
 
   import Rock from '../assets/images/rock.svg';
   import Paper from '../assets/images/paper.svg';
@@ -97,12 +106,13 @@
   export default {
     data() {
       return {
-        data: [],
-        playerMap: [],
-        nameOne: '',
-        nameTwo: '',
-        playerOne: null,
-        playerTwo: null,
+        players: [],
+        placeHolder: {
+          p1: '',
+          p2: ''
+        },
+        playerOne: '',
+        playerTwo: '',
         displayBtn: false,
         gameResults: {},
         images: {
@@ -123,47 +133,48 @@
         return this.playerTwo ? 'player-added animated jackInTheBox' : '';
       },
       filteredPlayerOneDataArray() {
-        return this.data.filter((option) => {
-          return option
+        return this.players
+        if (!this.playerTwo) return this.players
+        return this.players.filter((option) => {
+          let name = option.name
+          return name
             .toString()
             .toLowerCase()
-            .indexOf(this.nameOne.toLowerCase()) >= 0
+            .indexOf(this.playerOne.name.toLowerCase()) >= 0
         })
       },
       filteredPlayerTwoDataArray() {
-        return this.data.filter((option) => {
-          return option
+        return this.players
+
+        if (!this.playerOne) return this.players
+        return this.players.filter((option) => {
+          let name = option.name
+          return name
             .toString()
             .toLowerCase()
-            .indexOf(this.nameTwo.toLowerCase()) >= 0
+            .indexOf(this.playerTwo.name.toLowerCase()) >= 0
         })
       },
       showButton () {
-        if (this.playerOne && this.playerTwo)  {
-          this.displayBtn = true
-          return 'animated-delay fadeInUp'
-        }
+        return this.playerOne && this.playerOne.name !== '' && this.playerTwo && this.playerTwo.name !== ''
       },
       debounceBtn: function () {
-        if (this.playerOne && this.playerTwo)  {
-          this.displayBtn = true
+        if (this.showButton)  {
           return 'animated-delay fadeInUp'
         }
       }
     },
     methods: {
       playGame() {
-        BattleService.submitBattle({player1: this.playerMap[0][1], player2: this.playerMap[1][1]}).then(res => {
+        BattleService.submitBattle({player1: this.playerOne, player2: this.playerTwo}).then(res => {
           this.gameResults = res.data
+          GameLogsService.addGame(res.data);
+          LeaderboardService.updateLeaderboards(res.data);
         })
       },
       async getPlayers() {
         const response = await PlayerService.fetchPlayers()
-        let obj = response.data.players
-        Object.keys(obj).forEach(key => {
-          this.data.push(obj[key].name)
-          this.playerMap.push([obj[key].name, obj[key]._id])
-        })
+        this.players = response.data.players
       }
     }
   }

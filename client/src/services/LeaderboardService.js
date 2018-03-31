@@ -9,8 +9,8 @@ function getConquerer(logs) {
   return null
 }
 
-function updateUserLeaderboardData(record, id) {
-  logs = GameLogsService.getPlayerGames(id)
+function updateUserLeaderboardData(record, player) {
+  logs = GameLogsService.getPlayerGames(player._id)
   record.nemesis = getNemesis(logs)
   record.conquerer = getConquerer(logs)
   return record
@@ -29,11 +29,11 @@ function createPlayerLeaderboard(params) {
 }
 
 function updateLeaderboards(battle) {
-  getPlayerLeaderboard({id: battle.playerOne}).then(function(data) {
+  getPlayerLeaderboard({id: battle.playerOne._id}).then(function(data) {
     playerOneRecord = data.data
   })
 
-  getPlayerLeaderboard({id: battle.playerTwo}).then(function(data) {
+  getPlayerLeaderboard({id: battle.playerTwo._id}).then(function(data) {
     playerTwoRecord = data.data
   })
 
