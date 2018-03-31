@@ -14,7 +14,7 @@ export default {
   },
 
   updatePlayer(params) {
-    return Api().put('players/' + params.id, params)
+    return Api().put('players/' + params._id, params)
   },
 
   deletePlayer(id) {
