@@ -126,8 +126,8 @@
       },
       createImage(files) {
         let imageSize = files[0].size
-        if (imageSize > 500000) {
-          // if image size > 500kb -- can be changed
+        if (imageSize > 80000) {
+          // if image size > 80kb -- can be changed
           this.errorMsg('Image Size is too large! Try a different image')
           this.reset()
           return
