@@ -15,7 +15,7 @@
 
     <div v-if="games && games.length > 0">
       <div class="columns is-centered">
-        <div class="column is-half">
+        <div class="column is-three-quarters">
           <table class="table is-bordered is-narrow is-hoverable is-fullwidth">
             <thead>
             <tr>

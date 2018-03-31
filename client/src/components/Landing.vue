@@ -133,21 +133,21 @@
         return this.playerTwo ? 'player-added animated jackInTheBox' : '';
       },
       filteredPlayerOneDataArray() {
-        if (!this.playerTwo) return this.players
-        return this.players.filter((option) => {
-          return option.name
-            .toString()
-            .toLowerCase()
-            .indexOf(this.playerTwo.name.toLowerCase()) === -1
-        })
-      },
-      filteredPlayerTwoDataArray() {
         if (!this.playerOne) return this.players
         return this.players.filter((option) => {
           return option.name
             .toString()
             .toLowerCase()
             .indexOf(this.playerOne.name.toLowerCase()) === -1
+        })
+      },
+      filteredPlayerTwoDataArray() {
+        if (!this.playerTwo) return this.players
+        return this.players.filter((option) => {
+          return option.name
+            .toString()
+            .toLowerCase()
+            .indexOf(this.playerTwo.name.toLowerCase()) === -1
         })
       },
       showButton () {
