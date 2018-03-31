@@ -133,26 +133,21 @@
         return this.playerTwo ? 'player-added animated jackInTheBox' : '';
       },
       filteredPlayerOneDataArray() {
-        return this.players
         if (!this.playerTwo) return this.players
         return this.players.filter((option) => {
-          let name = option.name
-          return name
+          return option.name
             .toString()
             .toLowerCase()
-            .indexOf(this.playerOne.name.toLowerCase()) >= 0
+            .indexOf(this.playerTwo.name.toLowerCase()) === -1
         })
       },
       filteredPlayerTwoDataArray() {
-        return this.players
-
         if (!this.playerOne) return this.players
         return this.players.filter((option) => {
-          let name = option.name
-          return name
+          return option.name
             .toString()
             .toLowerCase()
-            .indexOf(this.playerTwo.name.toLowerCase()) >= 0
+            .indexOf(this.playerOne.name.toLowerCase()) === -1
         })
       },
       showButton () {
