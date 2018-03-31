@@ -64,7 +64,6 @@
           </div>
         </div>
 
-
         <div class="columns is-centered" v-if="gameResults.winner">
           <div class="column is-4">
             <div class="card">
@@ -89,10 +88,12 @@
 
 <script>
   import PlayerService from '@/services/PlayerService'
-  import battle from '@/services/BattleEngine'
+  import BattleService from '@/services/BattleService'
+
   import Rock from '../assets/images/rock.svg';
   import Paper from '../assets/images/paper.svg';
   import Scissors from '../assets/images/scissors.svg';
+
   export default {
     data() {
       return {
@@ -151,7 +152,9 @@
     },
     methods: {
       playGame() {
-        this.gameResults = battle(this.playerOne, this.playerTwo)
+        BattleService.submitBattle({player1: this.playerOne, player2: this.playerTwo}).then(res => {
+          this.gameResults = res.data
+        })
       },
       async getPlayers() {
         const response = await PlayerService.fetchPlayers()

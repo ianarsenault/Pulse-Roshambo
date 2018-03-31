@@ -1,6 +1,5 @@
 let Players = require("../models/players");
 let multer  = require('multer');
-let path = require('path');
 
 module.exports = (app) => {
   // Add new player
@@ -83,4 +82,3 @@ module.exports = (app) => {
     return res.json('success');
   });
 };
-``

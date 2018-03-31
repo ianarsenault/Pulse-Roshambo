@@ -10,7 +10,7 @@ app.use(cors())
 
 // SET UP DATABASE DO NOT REMOVE
 const mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost:27017/players');
+mongoose.connect('mongodb://localhost:27017/roshambo');
 let db = mongoose.connection;
 db.on("error", console.error.bind(console, "connection error"));
 db.once("open", function(callback){
@@ -22,6 +22,7 @@ let GameLogs = require("../models/GameLogs");
 
 // configure routes
 require("../routes/players")(app);
+require("../routes/battle")(app);
 
 // app.listen(process.env.PORT || 8081)
 

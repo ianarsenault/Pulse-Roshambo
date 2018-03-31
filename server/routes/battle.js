@@ -1,3 +1,10 @@
+module.exports = (app) => {
+  // Add new player
+  app.post('/battle', (req, res) => {
+    res.send(battle(req.body.player1, req.body.player2));
+  });
+}
+
 function playerChoice(){
   return Math.floor(Math.random() * 3);
 }
@@ -23,4 +30,3 @@ const battle = (player1, player2) => {
   }
 }
 
-module.exports = battle;
