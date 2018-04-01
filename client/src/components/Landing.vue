@@ -4,7 +4,8 @@
       <div class="container">
         <div class="columns">
           <div class="column is-4 is-offset-1">
-            <div class="card" v-bind:class="playerOneAdded">
+
+            <div class="card" v-bind:class="playerOneAdded" v-if="!isBattle">
               <header class="card-header">
                 <p class="card-header-title is-centered">
                   PI Fighter One: {{ playerOne ? playerOne.name : '' }}
@@ -20,7 +21,16 @@
                   @select="option => playerOne = option">
                   <template slot="empty">No results - Please Add New Player</template>
                 </b-autocomplete>
+              </div>
+            </div>
 
+            <div class="card animated-delay-short fadeInDown" v-else>
+              <header class="card-header">
+                <p class="card-header-title is-centered">
+                  PI Fighter One: {{ playerOne ? playerOne.name : '' }}
+                </p>
+              </header>
+              <div class="card-content">
                 <div v-if="gameResults.throwOne" class="columns is-centered u-margin--top">
                   <img :src="images[gameResults.throwOne]" class="thrown-image">
                 </div>
@@ -30,11 +40,11 @@
           </div>
 
           <div class="column is-2">
-              <h1 class="versus has-text-centered">Vs.</h1>
+              <h1 class="versus has-text-centered">vs.</h1>
           </div>
 
           <div class="column is-4">
-            <div class="card" v-bind:class="playerTwoAdded">
+            <div class="card" v-bind:class="playerTwoAdded" v-if="!isBattle">
               <header class="card-header">
                 <p class="card-header-title is-centered">
                   PI Fighter Two: {{ playerTwo ? playerTwo.name : '' }}
@@ -50,18 +60,27 @@
                   @select="option => playerTwo = option">
                   <template slot="empty">No results - Please Add New Player</template>
                 </b-autocomplete>
+              </div>
+            </div>
 
+            <div class="card animated-delay-short fadeInDown" v-else>
+              <header class="card-header">
+                <p class="card-header-title is-centered">
+                  PI Fighter Two: {{ playerTwo ? playerTwo.name : '' }}
+                </p>
+              </header>
+              <div class="card-content">
                 <div v-if="gameResults.throwTwo" class="columns is-centered u-margin--top">
                   <img :src="images[gameResults.throwTwo]" class="thrown-image">
                 </div>
-
               </div>
             </div>
+
           </div>
         </div>
 
         <div class="columns is-centered">
-          <div class="column is-6" v-show="debounceBtn">
+          <div class="column is-6" v-show="debounceBtn" v-if="!isBattle">
             <a
               class="button is-large is-fullwidth is-primary"
               v-bind:class="{ 'animated-delay fadeInUp': showButton}"
@@ -71,9 +90,9 @@
           </div>
         </div>
 
-        <div class="columns is-centered" v-if="gameResults.winner">
+        <div class="columns is-centered" v-if="gameResults.winner && isBattle">
           <div class="column is-4">
-            <div class="card">
+            <div class="card animated-delay flipInX">
               <header class="card-header">
                 <p class="card-header-title is-centered">
                   Winner!
@@ -83,6 +102,14 @@
                 <p class="winner-title">
                   {{ gameResults.winner.name }}
                 </p>
+              </div>
+              <div class="card-content has-text-centered">
+                <a
+                  class="button is-fullwidth is-primary"
+                  v-bind:class="{ 'animated-delay zoomIn': showButton}"
+                  @click="refresh">
+                  New Match
+                </a>
               </div>
             </div>
           </div>
@@ -119,7 +146,8 @@
           Rock,
           Paper,
           Scissors
-        }
+        },
+        isBattle: false
       }
     },
     mounted () {
@@ -133,21 +161,21 @@
         return this.playerTwo ? 'player-added animated jackInTheBox' : '';
       },
       filteredPlayerOneDataArray() {
-        if (!this.playerOne) return this.players
-        return this.players.filter((option) => {
-          return option.name
-            .toString()
-            .toLowerCase()
-            .indexOf(this.playerOne.name.toLowerCase()) === -1
-        })
-      },
-      filteredPlayerTwoDataArray() {
         if (!this.playerTwo) return this.players
         return this.players.filter((option) => {
           return option.name
             .toString()
             .toLowerCase()
             .indexOf(this.playerTwo.name.toLowerCase()) === -1
+        })
+      },
+      filteredPlayerTwoDataArray() {
+        if (!this.playerOne) return this.players
+        return this.players.filter((option) => {
+          return option.name
+            .toString()
+            .toLowerCase()
+            .indexOf(this.playerOne.name.toLowerCase()) === -1
         })
       },
       showButton () {
@@ -161,6 +189,7 @@
     },
     methods: {
       playGame() {
+        this.isBattle = true
         BattleService.submitBattle({player1: this.playerOne, player2: this.playerTwo}).then(res => {
           this.gameResults = res.data
           GameLogsService.addGame(res.data);
@@ -170,6 +199,15 @@
       async getPlayers() {
         const response = await PlayerService.fetchPlayers()
         this.players = response.data.players
+      },
+      refresh() {
+        this.isBattle = false
+        this.placeHolder.p1 = ''
+        this.placeHolder.p2 = ''
+        this.playerOne = ''
+        this.playerTwo = ''
+        this.playerOneAdded()
+        this.playerTwoAdded()
       }
     }
   }

@@ -34,6 +34,17 @@ body {
   }
 }
 
+.animated-delay-short {
+  -webkit-animation-delay: 0.5s;
+  -moz-animation-delay: 0.5s;
+  -o-animation-delay: 0.5s;
+  animation-delay: 0.5s;
+  -webkit-animation-duration: 0.5s;
+  animation-duration: 0.5s;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+}
+
 .animated-delay {
   -webkit-animation-delay: 1s;
   -moz-animation-delay: 1s;
