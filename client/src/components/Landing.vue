@@ -40,7 +40,7 @@
           </div>
 
           <div class="column is-2">
-              <h1 class="versus has-text-centered">Vs.</h1>
+              <h1 class="versus has-text-centered">vs.</h1>
           </div>
 
           <div class="column is-4">
