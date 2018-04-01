@@ -1,22 +1,38 @@
 const factory = require('./database.js');
+let mongoose = require('mongoose');
+let Schema = mongoose.Schema;
 
 const schema = {
   date: Date,
-  playerOne: String,
+  playerOne: {
+    type: Schema.Types.ObjectId,
+    ref: 'Players'
+  },
   playerOneThrew: String,
-  playerTwo: String,
+  playerTwo: {
+    type: Schema.Types.ObjectId,
+    ref: 'Players'
+  },
   playerTwoThrew: String,
-  winner: String
+  winner: {
+    type: Schema.Types.ObjectId,
+    ref: 'Players'
+  }
 };
 
 const GameLogs = factory("GameLogs", schema);
 
 function fetchAll() {
     return new Promise((resolve, reject) => {
-        GameLogs.find({}, Object.keys(schema).join(" "), function (error, gameLogs) {
-           if (error) { reject(error); }
-            resolve(gameLogs);
-        }).sort({_id:-1})
+      GameLogs.find({})
+        .sort([['date', -1]])
+        .populate('playerOne')
+        .populate('playerTwo')
+        .populate('winner')
+        .exec(function (error, gameLogs) {
+        if (error) { reject(error); }
+        resolve(gameLogs);
+      })
     });
 }
 
