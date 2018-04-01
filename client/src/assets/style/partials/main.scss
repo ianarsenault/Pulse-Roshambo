@@ -28,6 +28,10 @@ body {
 
 .player-added {
   box-shadow: 0 2px 3px rgba(15, 243, 43, 0.5), 0 0 0 1px rgb(25, 193, 86);
+  input[type=text] {
+    border-color: #dbdbdb !important;
+    box-shadow: none !important;
+  }
 }
 
 .animated-delay {

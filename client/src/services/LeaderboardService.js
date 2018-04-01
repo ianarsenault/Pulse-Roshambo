@@ -37,7 +37,7 @@ function updateLeaderboards(battle) {
     playerTwoRecord = data.data
   })
 
-  winner = battle.winner
+  let winner = battle.winner
 
   if (winner == battle.playerOne) {
     playerOneRecord.wins++
