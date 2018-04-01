@@ -29,7 +29,7 @@ function fetchAll() {
         .populate('playerOne')
         .populate('playerTwo')
         .populate('winner')
-        .exec(function (error, gameLogs) {
+        .exec((error, gameLogs) => {
         if (error) { reject(error); }
         resolve(gameLogs);
       })
@@ -38,15 +38,21 @@ function fetchAll() {
 
 function fetchPlayerGames(id) {
     return new Promise((resolve, reject) => {
-        GameLogs.find({
-          $or:[
-              {playerOne:id},
-              {playerTwo:id}
-          ]}, Object.keys(schema).join(" "), function (error, gameLogs) {
-
-            if (error) { reject(error); }
-            resolve(gameLogs);
+      GameLogs.find({
+        $or:[
+          {playerOne:id},
+          {playerTwo:id}
+        ]})
+        .sort([['date', -1]])
+        .populate('playerOne')
+        .populate('playerTwo')
+        .populate('winner')
+        .exec((error, gameLogs) => {
+          if (error) { reject(error); }
+          resolve(gameLogs);
         })
+
+
     });
 }
 

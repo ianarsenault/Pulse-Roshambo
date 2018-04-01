@@ -34,32 +34,28 @@
           </div>
           <div class="column is-7">
             <div v-if="games && games.length > 0">
-              <div class="columns is-left">
-                <div class="column is-half">
-                  <table class="table is-bordered is-narrow is-hoverable is-fullwidth">
-                    <thead>
-                    <tr>
-                      <th>Date</th>
-                      <th>Player One</th>
-                      <th>Player Two</th>
-                      <th>Player One Throw</th>
-                      <th>Player Two Throw</th>
-                      <th>Winner</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr v-for="game in games">
-                      <td>{{ moment(game.date).format('dddd, MMMM Do YYYY, h:mm a') }}</td>
-                      <td>{{ game.playerOne }}</td>
-                      <td>{{ game.playerTwo }}</td>
-                      <td>{{ game.playerOneThrew }}</td>
-                      <td>{{ game.playerTwoThrew }}</td>
-                      <td>{{ game.winner }}</td>
-                    </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
+              <table class="table is-bordered is-narrow is-hoverable is-fullwidth">
+                <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>Player One</th>
+                  <th>Player Two</th>
+                  <th>Player One Throw</th>
+                  <th>Player Two Throw</th>
+                  <th>Winner</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr v-for="game in games">
+                  <td>{{ moment(game.date).format('dddd, MMMM Do YYYY, h:mm a') }}</td>
+                  <td>{{ game.playerOne.name }}</td>
+                  <td>{{ game.playerTwo.name }}</td>
+                  <td>{{ game.playerOneThrew }}</td>
+                  <td>{{ game.playerTwoThrew }}</td>
+                  <td>{{ game.winner.name }}</td>
+                </tr>
+                </tbody>
+              </table>
             </div>
             <div v-else>
               <div class="columns is-centered">
