@@ -24,14 +24,14 @@
               </div>
             </div>
 
-            <div class="card animated-delay fadeInDown" v-else>
+            <div class="card" v-else>
               <header class="card-header">
                 <p class="card-header-title is-centered">
                   PI Fighter One: {{ playerOne ? playerOne.name : '' }}
                 </p>
               </header>
               <div class="card-content">
-                <div v-if="gameResults.throwOne" class="columns is-centered u-margin--top">
+                <div v-if="gameResults.throwOne" class="columns is-centered u-margin--top animated-delay-short fadeInDown">
                   <img :src="images[gameResults.throwOne]" class="thrown-image">
                 </div>
 
@@ -63,14 +63,14 @@
               </div>
             </div>
 
-            <div class="card animated-delay fadeInDown" v-else>
+            <div class="card" v-else>
               <header class="card-header">
                 <p class="card-header-title is-centered">
                   PI Fighter Two: {{ playerTwo ? playerTwo.name : '' }}
                 </p>
               </header>
               <div class="card-content">
-                <div v-if="gameResults.throwTwo" class="columns is-centered u-margin--top">
+                <div v-if="gameResults.throwTwo" class="columns is-centered u-margin--top animated-delay-short fadeInDown">
                   <img :src="images[gameResults.throwTwo]" class="thrown-image">
                 </div>
               </div>
@@ -88,19 +88,11 @@
               ROSHAMBO!
             </a>
           </div>
-          <div class="column is-6" v-show="debounceBtn" v-else>
-            <a
-              class="button is-large is-fullwidth is-primary"
-              v-bind:class="{ 'animated-delay zoomIn': showButton}"
-              @click="refresh">
-              New Match
-            </a>
-          </div>
         </div>
 
         <div class="columns is-centered" v-if="gameResults.winner && isBattle">
           <div class="column is-4">
-            <div class="card animated-delay fadeInUp">
+            <div class="card animated-delay flipInX">
               <header class="card-header">
                 <p class="card-header-title is-centered">
                   Winner!
@@ -110,6 +102,14 @@
                 <p class="winner-title">
                   {{ gameResults.winner.name }}
                 </p>
+              </div>
+              <div class="card-content has-text-centered">
+                <a
+                  class="button is-fullwidth is-primary"
+                  v-bind:class="{ 'animated-delay zoomIn': showButton}"
+                  @click="refresh">
+                  New Match
+                </a>
               </div>
             </div>
           </div>
