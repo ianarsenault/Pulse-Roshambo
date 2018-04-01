@@ -22,7 +22,12 @@ function fetchAll() {
 
 function fetchPlayerGames(id) {
     return new Promise((resolve, reject) => {
-        GameLogs.find({playerOne:id}, Object.keys(schema).join(" "), function (error, gameLogs) {
+        GameLogs.find({
+          $or:[
+              {playerOne:id},
+              {playerTwo:id}
+          ]}, Object.keys(schema).join(" "), function (error, gameLogs) {
+
             if (error) { reject(error); }
             resolve(gameLogs);
         })
@@ -39,11 +44,12 @@ function addGame(date, playerOne, playerTwo, throwOne, throwTwo, winner) {
       winner: winner
     });
     return new Promise((resolve, reject) => {
-        new_game.save(function (error) {
+        new_game.save(function (error, gamelog) {
             if (error) {
                 reject(error);
             }
             resolve({
+                gamelog: gamelog,
                 success: true,
                 message: 'Game was recorded successfully!'
             });

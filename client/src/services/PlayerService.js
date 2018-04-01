@@ -14,11 +14,15 @@ export default {
   },
 
   updatePlayer(params) {
-    return Api().put('players/' + params.id, params)
+    return Api().put('players/' + params._id, params)
   },
 
   deletePlayer(id) {
     return Api().delete('players/' + id)
+  },
+
+  uploadAvatar(params) {
+    return Api().post('uploads', params, { headers: { 'Content-Type': 'multipart/form-data' } })
   }
 
 }

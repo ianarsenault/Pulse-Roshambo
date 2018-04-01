@@ -3,7 +3,7 @@
     <div class="hero-body">
       <div class="container">
         <div class="columns">
-          <div class="column is-4">
+          <div class="column is-3">
             <div class="card">
               <header class="card-header">
                 <p class="card-header-title is-centered">
@@ -32,6 +32,49 @@
               </div>
             </div>
           </div>
+          <div class="column is-7">
+            <div v-if="games && games.length > 0">
+              <div class="columns is-left">
+                <div class="column is-half">
+                  <table class="table is-bordered is-narrow is-hoverable is-fullwidth">
+                    <thead>
+                    <tr>
+                      <th>Date</th>
+                      <th>Player One</th>
+                      <th>Player Two</th>
+                      <th>Player One Throw</th>
+                      <th>Player Two Throw</th>
+                      <th>Winner</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr v-for="game in games">
+                      <td>{{ moment(game.date).format('dddd, MMMM Do YYYY, h:mm a') }}</td>
+                      <td>{{ game.playerOne }}</td>
+                      <td>{{ game.playerTwo }}</td>
+                      <td>{{ game.playerOneThrew }}</td>
+                      <td>{{ game.playerTwoThrew }}</td>
+                      <td>{{ game.winner }}</td>
+                    </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+            <div v-else>
+              <div class="columns is-centered">
+                <div class="column is-4">
+                  <div class="card">
+                    <div class="card-image">
+                      <figure class="image">
+                        <img src="../assets/images/nothing2see.gif" alt="Nothing Here">
+                      </figure>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -41,6 +84,7 @@
 <script>
   import PlayerService from '@/services/PlayerService'
   import GameLogsService from '@/services/GameLogsService'
+  import moment from 'moment'
 
   export default {
     name: 'PlayerProfile',
@@ -58,6 +102,9 @@
       this.getPlayerGames()
     },
     methods: {
+      moment: function (date) {
+        return moment(date);
+      },
       async getPlayer () {
         const response = await PlayerService.getPlayer({
           id: this.$route.params.id
@@ -70,7 +117,8 @@
         const response = await GameLogsService.getPlayerGames({
           id: this.$route.params.id
         })
-        this.games = response.data.gamelogs
+        this.games = response.data
+        console.log(this.games)
       }
     }
   }
