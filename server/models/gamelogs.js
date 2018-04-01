@@ -25,6 +25,7 @@ const GameLogs = factory("GameLogs", schema);
 function fetchAll() {
     return new Promise((resolve, reject) => {
       GameLogs.find({})
+        .sort([['date', -1]])
         .populate('playerOne')
         .populate('playerTwo')
         .populate('winner')
