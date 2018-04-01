@@ -24,14 +24,14 @@
               </div>
             </div>
 
-            <div class="card" v-else>
+            <div class="card animated-delay-short fadeInDown" v-else>
               <header class="card-header">
                 <p class="card-header-title is-centered">
                   PI Fighter One: {{ playerOne ? playerOne.name : '' }}
                 </p>
               </header>
               <div class="card-content">
-                <div v-if="gameResults.throwOne" class="columns is-centered u-margin--top animated-delay-short fadeInDown">
+                <div v-if="gameResults.throwOne" class="columns is-centered u-margin--top">
                   <img :src="images[gameResults.throwOne]" class="thrown-image">
                 </div>
 
@@ -63,14 +63,14 @@
               </div>
             </div>
 
-            <div class="card" v-else>
+            <div class="card animated-delay-short fadeInDown" v-else>
               <header class="card-header">
                 <p class="card-header-title is-centered">
                   PI Fighter Two: {{ playerTwo ? playerTwo.name : '' }}
                 </p>
               </header>
               <div class="card-content">
-                <div v-if="gameResults.throwTwo" class="columns is-centered u-margin--top animated-delay-short fadeInDown">
+                <div v-if="gameResults.throwTwo" class="columns is-centered u-margin--top">
                   <img :src="images[gameResults.throwTwo]" class="thrown-image">
                 </div>
               </div>
