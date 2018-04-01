@@ -17,7 +17,7 @@
     <template v-if="dataLoaded">
       <div v-if="games && games.length > 0">
         <div class="columns is-centered">
-          <div class="column is-three-quarters">
+          <div class="column is-8">
             <table class="table is-bordered is-narrow is-hoverable is-fullwidth">
               <thead>
               <tr>
@@ -32,11 +32,11 @@
               <tbody>
               <tr v-for="game in games">
                 <td>{{ moment(game.date).format('dddd, MMMM Do YYYY, h:mm a') }}</td>
-                <td>{{ game.playerOne }}</td>
-                <td>{{ game.playerTwo }}</td>
+                <td>{{ game.playerOne.name }}</td>
+                <td>{{ game.playerTwo.name }}</td>
                 <td>{{ game.playerOneThrew }}</td>
                 <td>{{ game.playerTwoThrew }}</td>
-                <td>{{ game.winner }}</td>
+                <td>{{ game.winner.name }}</td>
               </tr>
               </tbody>
             </table>
