@@ -127,7 +127,7 @@
         if (!files) {
           return
         }
-        this.createImage(files);
+        this.createImage(files)
       },
       createImage(files) {
         let imageSize = files[0].size
@@ -137,10 +137,10 @@
           this.reset()
           return
         }
-        let reader = new FileReader();
+        let reader = new FileReader()
         reader.onload = (e) => {
           this.player.avatar = e.target.result
-        };
+        }
         reader.readAsDataURL(files[0])
       }
 //      uploadImage(e) {
@@ -148,10 +148,10 @@
 //        if(!file) {
 //          return
 //        }
-//        let reader = new FileReader();
+//        let reader = new FileReader()
 //        reader.onload = (e) => {
 //          this.player.avatar = e.target.result
-//        };
+//        }
 //        reader.readAsDataURL(file)
 //      }
     }

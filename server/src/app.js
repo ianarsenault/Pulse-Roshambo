@@ -9,23 +9,23 @@ app.use(bodyParser.json())
 app.use(cors())
 
 // SET UP DATABASE DO NOT REMOVE
-const mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost:27017/roshambo');
-let db = mongoose.connection;
-db.on("error", console.error.bind(console, "connection error"));
+const mongoose = require('mongoose')
+mongoose.connect('mongodb://localhost:27017/roshambo')
+let db = mongoose.connection
+db.on("error", console.error.bind(console, "connection error"))
 db.once("open", function(callback){
-    console.log("Connection Succeeded");
-});
+    console.log("Connection Succeeded")
+})
 // END DATABASE SETUP
 
 // configure routes
-require("../routes/players")(app);
-require("../routes/battle")(app);
-require("../routes/gamelogs")(app);
-require("../routes/leaderboard")(app);
+require("../routes/players")(app)
+require("../routes/battle")(app)
+require("../routes/gamelogs")(app)
+require("../routes/leaderboard")(app)
 
 // app.listen(process.env.PORT || 8081)
 
-require('express-debug')(app);
+require('express-debug')(app)
 
-module.exports = app;
+module.exports = app

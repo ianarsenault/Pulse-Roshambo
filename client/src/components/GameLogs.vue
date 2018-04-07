@@ -96,7 +96,7 @@
     },
     methods: {
       moment: function (date) {
-        return moment(date);
+        return moment(date)
       },
       async getAllGames () {
         this.dataLoaded = false
@@ -110,6 +110,6 @@
 
 <style>
   .rc {
-    border-radius: 25px !important;
+    border-radius: 25px !important
   }
 </style>

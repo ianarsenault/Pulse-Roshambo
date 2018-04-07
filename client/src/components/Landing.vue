@@ -126,9 +126,9 @@
   import GameLogsService from '@/services/GameLogsService'
   import LeaderboardService from '@/services/LeaderboardService'
 
-  import Rock from '../assets/images/rock.svg';
-  import Paper from '../assets/images/paper.svg';
-  import Scissors from '../assets/images/scissors.svg';
+  import Rock from '../assets/images/rock.svg'
+  import Paper from '../assets/images/paper.svg'
+  import Scissors from '../assets/images/scissors.svg'
 
   export default {
     data() {
@@ -155,10 +155,10 @@
     },
     computed: {
       playerOneAdded() {
-        return this.playerOne ?  'player-added animated jackInTheBox' : '';
+        return this.playerOne ?  'player-added animated jackInTheBox' : ''
       },
       playerTwoAdded() {
-        return this.playerTwo ? 'player-added animated jackInTheBox' : '';
+        return this.playerTwo ? 'player-added animated jackInTheBox' : ''
       },
       filteredPlayerOneDataArray() {
         if (!this.playerTwo) return this.players
@@ -192,8 +192,8 @@
         this.isBattle = true
         BattleService.submitBattle({player1: this.playerOne, player2: this.playerTwo}).then(res => {
           this.gameResults = res.data
-          GameLogsService.addGame(res.data);
-          LeaderboardService.updateLeaderboards(res.data);
+          GameLogsService.addGame(res.data)
+          LeaderboardService.updateLeaderboards(res.data)
         })
       },
       async getPlayers() {
