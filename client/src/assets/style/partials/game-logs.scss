@@ -1,11 +1,97 @@
-
 .log {
+  display: flex;
+  justify-content: space-around;
+
+  @media (max-width: 1000px) {
+  flex-direction: column;
+    margin: 0 10px;
+}
+
+  &-result {
+
+    font-weight: bold;
+    font-size: 16px;
+    width: 100%;
+    text-align: center;
+    padding: 5px;
+    color: white;
+
+    @media (max-width: 1000px) {
+      margin: 20px;
+      width: auto;
+      padding: 5px 75px;
+    }
+
+    &--winner {
+      background-color: rgba(green, 0.7);
+    }
+
+    &--loser {
+      background-color: rgba(red, 0.7);
+    }
+  }
+
+  &-summary {
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    p {
+      font-weight: 600;
+    }
+
+    @media (max-width: 1000px) {
+      padding: 20px 0;
+      border-top: 1px solid #dadada;
+      border-bottom: 1px solid #dadada;
+    }
+
+  }
+
+  &-throws {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    img {
+      margin: 5px 15px;
+    }
+
+    &--image {
+      width: 100px;
+      height: auto;
+    }
+
+    @media (max-width: 1000px) {
+      padding: 0;
+    }
+
+  }
 
   &-player {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    padding: 10px 20px;
+    align-items: center;
+    @media (max-width: 1000px) {
+      padding: 5px;
+    }
 
     &--name {
       font-weight: bold;
       font-size: 20px;
+      text-align: center;
+
+      @media (max-width: 1000px) {
+        margin: 10px;
+      }
+    }
+
+    &--avatar {
+      width: 75px;
+      height: auto;
     }
 
   }
