@@ -15,6 +15,24 @@
 
     <loading-indicator :data-loaded="dataLoaded"></loading-indicator>
     <template v-if="dataLoaded">
+
+      <div class="columns is-centered">
+        <div class="column is-8">
+          <div v-for="game in games" class="columns ">
+            <div class="column is-full card u-margin--bottom">
+              <div class="card-content">
+                <div class="log-player">
+                  <p class="log-player--name">{{ game.playerOne.name }}</p>
+
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
       <div v-if="games && games.length > 0">
         <div class="columns is-centered">
           <div class="column is-8">
