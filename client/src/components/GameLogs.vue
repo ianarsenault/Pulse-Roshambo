@@ -107,9 +107,3 @@
     }
   }
 </script>
-
-<style>
-  .rc {
-    border-radius: 25px !important
-  }
-</style>

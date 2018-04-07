@@ -2,7 +2,7 @@
   <nav class="navbar is-transparent">
     <div class="navbar-brand">
       <router-link v-bind:to="{ name: 'Landing' }" class="navbar-item" exact>
-        <img :src="logo" alt="Tier 3" style="width: 100px height: auto">
+        <img :src="logo" alt="Tier 3" style="width: 100px; height: auto;">
       </router-link>
       <div class="navbar-burger burger" data-target="navbarExampleTransparentExample">
         <span></span>
