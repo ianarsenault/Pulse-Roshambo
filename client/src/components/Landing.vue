@@ -21,6 +21,9 @@
                   @select="option => playerOne = option">
                   <template slot="empty">No results - Please Add New Player</template>
                 </b-autocomplete>
+                <div class="battle-image" v-if="playerOne">
+                  <img :src="playerOne.avatar" class="avatar">
+                </div>
               </div>
             </div>
 
@@ -60,6 +63,9 @@
                   @select="option => playerTwo = option">
                   <template slot="empty">No results - Please Add New Player</template>
                 </b-autocomplete>
+                <div class="battle-image" v-if="playerTwo">
+                  <img :src="playerTwo.avatar" class="avatar">
+                </div>
               </div>
             </div>
 
@@ -102,6 +108,9 @@
                 <p class="winner-title">
                   {{ gameResults.winner.name }}
                 </p>
+                <div class="battle-image">
+                  <img :src="gameResults.winner.avatar" class="avatar">
+                </div>
               </div>
               <div class="card-content has-text-centered">
                 <a
