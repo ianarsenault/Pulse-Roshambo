@@ -54,7 +54,7 @@
 </template>
 
 <script>
-  import logo from '../assets/images/death2.svg';
+  import logo from '../assets/images/death2.svg'
 
   export default {
     name: 'Navigation',

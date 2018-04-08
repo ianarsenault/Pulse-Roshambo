@@ -12,5 +12,4 @@ export default {
   addGame(params) {
     return Api().post('gamelogs', params)
   }
-
 }

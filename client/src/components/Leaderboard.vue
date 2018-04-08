@@ -73,15 +73,9 @@
         const response = await LeaderboardService.fetchLeaderboard()
         response.data.leaderboard.sort(function (playerOne, playerTwo) {
           return playerTwo.wins - playerOne.wins
-        });
+        })
         this.leaderboard = response.data.leaderboard
       }
     }
   }
 </script>
-
-<style>
-  .rc {
-    border-radius: 25px !important;
-  }
-</style>

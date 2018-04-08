@@ -15,31 +15,36 @@
 
     <loading-indicator :data-loaded="dataLoaded"></loading-indicator>
     <template v-if="dataLoaded">
-      <div v-if="games && games.length > 0">
-        <div class="columns is-centered">
-          <div class="column is-8">
-            <table class="table is-bordered is-narrow is-hoverable is-fullwidth">
-              <thead>
-              <tr>
-                <th>Date</th>
-                <th>Player One</th>
-                <th>Player Two</th>
-                <th>Player One Throw</th>
-                <th>Player Two Throw</th>
-                <th>Winner</th>
-              </tr>
-              </thead>
-              <tbody>
-              <tr v-for="game in games">
-                <td>{{ moment(game.date).format('dddd, MMMM Do YYYY, h:mm a') }}</td>
-                <td>{{ game.playerOne.name }}</td>
-                <td>{{ game.playerTwo.name }}</td>
-                <td>{{ game.playerOneThrew }}</td>
-                <td>{{ game.playerTwoThrew }}</td>
-                <td>{{ game.winner.name }}</td>
-              </tr>
-              </tbody>
-            </table>
+
+      <div class="columns is-centered" v-if="games && games.length > 0">
+        <div class="column is-8">
+          <div v-for="game in games" class="columns">
+            <div class="column is-full card u-margin--bottom">
+              <div class="log">
+
+                <div class="log-player">
+                  <p class="log-player--name">{{ game.playerOne.name }}</p>
+                  <img :src="game.playerOne.avatar" class="log-player--avatar">
+                  <game-result :winner="game.winner" :player="game.playerOne"></game-result>
+                </div>
+
+                <div class="log-summary">
+                  <p>{{ moment(game.date).format('dddd, MMMM Do YYYY, h:mm a') }}</p>
+
+                  <div class="log-throws">
+                      <img :src="images[game.playerOneThrew]" class="log-throws--image">
+                      <img :src="images[game.playerTwoThrew]" class="log-throws--image">
+                  </div>
+                </div>
+
+                <div class="log-player">
+                  <p class="log-player--name">{{ game.playerTwo.name }}</p>
+                  <img :src="game.playerTwo.avatar" class="log-player--avatar">
+                  <game-result :winner="game.winner" :player="game.playerTwo"></game-result>
+                </div>
+
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -58,22 +63,32 @@
       </div>
     </template>
 
-
   </div>
 </template>
 
 <script>
   import GameLogsService from '@/services/GameLogsService'
   import moment from 'moment'
-  import LoadingIndicator from "./LoadingIndicator.vue";
+  import LoadingIndicator from "./LoadingIndicator.vue"
+  import GameResult from "./GameResult.vue"
+
+  import Rock from '../assets/images/rock.svg'
+  import Paper from '../assets/images/paper.svg'
+  import Scissors from '../assets/images/scissors.svg'
+
   export default {
-    components: {LoadingIndicator},
+    components: {LoadingIndicator, GameResult},
     name: 'GameLogs',
     data () {
       return {
         games: [],
         errors: [],
-        dataLoaded: false
+        dataLoaded: false,
+        images: {
+          Rock,
+          Paper,
+          Scissors
+        },
       }
     },
     mounted () {
@@ -81,7 +96,7 @@
     },
     methods: {
       moment: function (date) {
-        return moment(date);
+        return moment(date)
       },
       async getAllGames () {
         this.dataLoaded = false
@@ -92,9 +107,3 @@
     }
   }
 </script>
-
-<style>
-  .rc {
-    border-radius: 25px !important;
-  }
-</style>

@@ -127,20 +127,20 @@
         if (!files) {
           return
         }
-        this.createImage(files);
+        this.createImage(files)
       },
       createImage(files) {
         let imageSize = files[0].size
-        if (imageSize > 80000) {
-          // if image size > 80kb -- can be changed
+        if (imageSize > 40000) {
+          // if image size > 40kb
           this.errorMsg('Image Size is too large! Try a different image')
           this.reset()
           return
         }
-        let reader = new FileReader();
+        let reader = new FileReader()
         reader.onload = (e) => {
           this.player.avatar = e.target.result
-        };
+        }
         reader.readAsDataURL(files[0])
       }
 //      uploadImage(e) {
@@ -148,10 +148,10 @@
 //        if(!file) {
 //          return
 //        }
-//        let reader = new FileReader();
+//        let reader = new FileReader()
 //        reader.onload = (e) => {
 //          this.player.avatar = e.target.result
-//        };
+//        }
 //        reader.readAsDataURL(file)
 //      }
     }

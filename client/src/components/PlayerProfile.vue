@@ -99,7 +99,7 @@
     },
     methods: {
       moment: function (date) {
-        return moment(date);
+        return moment(date)
       },
       async getPlayer () {
         const response = await PlayerService.getPlayer({

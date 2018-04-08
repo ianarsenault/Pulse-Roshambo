@@ -1,6 +1,6 @@
-const factory = require('./database.js');
-let mongoose = require('mongoose');
-let Schema = mongoose.Schema;
+const factory = require('./database.js')
+let mongoose = require('mongoose')
+let Schema = mongoose.Schema
 
 const schema = {
   date: Date,
@@ -18,9 +18,9 @@ const schema = {
     type: Schema.Types.ObjectId,
     ref: 'Players'
   }
-};
+}
 
-const GameLogs = factory("GameLogs", schema);
+const GameLogs = factory("GameLogs", schema)
 
 function fetchAll() {
     return new Promise((resolve, reject) => {
@@ -30,10 +30,10 @@ function fetchAll() {
         .populate('playerTwo')
         .populate('winner')
         .exec((error, gameLogs) => {
-        if (error) { reject(error); }
-        resolve(gameLogs);
+        if (error) { reject(error) }
+        resolve(gameLogs)
       })
-    });
+    })
 }
 
 function fetchPlayerGames(id) {
@@ -48,12 +48,12 @@ function fetchPlayerGames(id) {
         .populate('playerTwo')
         .populate('winner')
         .exec((error, gameLogs) => {
-          if (error) { reject(error); }
-          resolve(gameLogs);
+          if (error) { reject(error) }
+          resolve(gameLogs)
         })
 
 
-    });
+    })
 }
 
 function addGame(date, playerOne, playerTwo, throwOne, throwTwo, winner) {
@@ -64,23 +64,23 @@ function addGame(date, playerOne, playerTwo, throwOne, throwTwo, winner) {
       playerTwo: playerTwo,
       playerTwoThrew: throwTwo,
       winner: winner
-    });
+    })
     return new Promise((resolve, reject) => {
         new_game.save(function (error, gamelog) {
             if (error) {
-                reject(error);
+                reject(error)
             }
             resolve({
                 gamelog: gamelog,
                 success: true,
                 message: 'Game was recorded successfully!'
-            });
-        });
-    });
+            })
+        })
+    })
 }
 
 module.exports = {
   fetchAll,
   fetchPlayerGames,
   addGame
-};
+}

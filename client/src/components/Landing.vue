@@ -21,6 +21,9 @@
                   @select="option => playerOne = option">
                   <template slot="empty">No results - Please Add New Player</template>
                 </b-autocomplete>
+                <div class="battle-image" v-if="playerOne">
+                  <img :src="playerOne.avatar" class="avatar">
+                </div>
               </div>
             </div>
 
@@ -60,6 +63,9 @@
                   @select="option => playerTwo = option">
                   <template slot="empty">No results - Please Add New Player</template>
                 </b-autocomplete>
+                <div class="battle-image" v-if="playerTwo">
+                  <img :src="playerTwo.avatar" class="avatar">
+                </div>
               </div>
             </div>
 
@@ -102,6 +108,12 @@
                 <p class="winner-title">
                   {{ gameResults.winner.name }}
                 </p>
+                <div class="battle-image">
+                  <img :src="gameResults.winner.avatar" class="avatar">
+                </div>
+                <p class="winner-title">
+                  {{ gameResults.winner.chant }}
+                </p>
               </div>
               <div class="card-content has-text-centered">
                 <a
@@ -126,9 +138,9 @@
   import GameLogsService from '@/services/GameLogsService'
   import LeaderboardService from '@/services/LeaderboardService'
 
-  import Rock from '../assets/images/rock.svg';
-  import Paper from '../assets/images/paper.svg';
-  import Scissors from '../assets/images/scissors.svg';
+  import Rock from '../assets/images/rock.svg'
+  import Paper from '../assets/images/paper.svg'
+  import Scissors from '../assets/images/scissors.svg'
 
   export default {
     data() {
@@ -155,27 +167,39 @@
     },
     computed: {
       playerOneAdded() {
-        return this.playerOne ?  'player-added animated jackInTheBox' : '';
+        return this.playerOne ?  'player-added animated jackInTheBox' : ''
       },
       playerTwoAdded() {
-        return this.playerTwo ? 'player-added animated jackInTheBox' : '';
+        return this.playerTwo ? 'player-added animated jackInTheBox' : ''
       },
       filteredPlayerOneDataArray() {
-        if (!this.playerTwo) return this.players
-        return this.players.filter((option) => {
-          return option.name
+        return this.players.filter(player => {
+          return player.name
             .toString()
             .toLowerCase()
-            .indexOf(this.playerTwo.name.toLowerCase()) === -1
+            .indexOf(this.placeHolder.p1.toLowerCase()) >= 0
+        }).filter(player => {
+          return this.playerTwo
+              ? player.name
+                .toString()
+                .toLowerCase()
+                .indexOf(this.playerTwo.name.toLowerCase()) === -1
+              : player
         })
       },
       filteredPlayerTwoDataArray() {
-        if (!this.playerOne) return this.players
-        return this.players.filter((option) => {
-          return option.name
+        return this.players.filter(player => {
+          return player.name
             .toString()
             .toLowerCase()
-            .indexOf(this.playerOne.name.toLowerCase()) === -1
+            .indexOf(this.placeHolder.p2.toLowerCase()) >= 0
+        }).filter(player => {
+          return this.playerOne
+            ? player.name
+              .toString()
+              .toLowerCase()
+              .indexOf(this.playerOne.name.toLowerCase()) === -1
+            : player
         })
       },
       showButton () {
@@ -192,8 +216,8 @@
         this.isBattle = true
         BattleService.submitBattle({player1: this.playerOne, player2: this.playerTwo}).then(res => {
           this.gameResults = res.data
-          GameLogsService.addGame(res.data);
-          LeaderboardService.updateLeaderboards(res.data);
+          GameLogsService.addGame(res.data)
+          LeaderboardService.updateLeaderboards(res.data)
         })
       },
       async getPlayers() {
