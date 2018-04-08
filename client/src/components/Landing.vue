@@ -179,13 +179,12 @@
             .toLowerCase()
             .indexOf(this.placeHolder.p1.toLowerCase()) >= 0
         }).filter(player => {
-          if (this.playerTwo) {
-            return player.name
-              .toString()
-              .toLowerCase()
-              .indexOf(this.playerTwo.name.toLowerCase()) === -1
-          }
-          return player
+          return this.playerTwo
+              ? player.name
+                .toString()
+                .toLowerCase()
+                .indexOf(this.playerTwo.name.toLowerCase()) === -1
+              : player
         })
       },
       filteredPlayerTwoDataArray() {
@@ -195,13 +194,12 @@
             .toLowerCase()
             .indexOf(this.placeHolder.p2.toLowerCase()) >= 0
         }).filter(player => {
-          if (this.playerOne) {
-            return player.name
+          return this.playerOne
+            ? player.name
               .toString()
               .toLowerCase()
               .indexOf(this.playerOne.name.toLowerCase()) === -1
-          }
-          return player
+            : player
         })
       },
       showButton () {
