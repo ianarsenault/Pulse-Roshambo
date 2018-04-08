@@ -111,6 +111,9 @@
                 <div class="battle-image">
                   <img :src="gameResults.winner.avatar" class="avatar">
                 </div>
+                <p class="winner-title">
+                  {{ gameResults.winner.chant }}
+                </p>
               </div>
               <div class="card-content has-text-centered">
                 <a
