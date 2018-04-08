@@ -37,11 +37,12 @@ function addPlayer(name, nickname, chant, avatar) {
     avatar: avatar
   })
   return new Promise((resolve, reject) => {
-    new_player.save(function (error) {
+    new_player.save(function (error, user) {
       if (error) {
         reject(error)
       }
       resolve({
+        user: user,
         success: true,
         message: 'Player was saved successfully'
       })
