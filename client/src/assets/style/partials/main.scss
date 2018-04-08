@@ -65,3 +65,18 @@ body {
   width: 150px;
   height: auto;
 }
+
+.bottom-space {
+  margin-bottom: 2rem;
+}
+
+.shadow-animate  {
+  box-shadow: 0 2px 3px rgba(10, 10, 10, 0.1), 0 0 0 1px rgba(10, 10, 10, 0.1);
+  -webkit-transition: box-shadow .25s;
+  &:hover {
+    -webkit-transition: box-shadow .25s;
+    -webkit-box-shadow: 0px 79px 77px -20px rgba(199, 199, 199, 1);
+    -moz-box-shadow: 0px 79px 77px -20px rgba(199, 199, 199, 1);
+    box-shadow: 0px 79px 77px -20px rgba(199, 199, 199, 1);
+  }
+}

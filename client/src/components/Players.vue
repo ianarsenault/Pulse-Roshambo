@@ -19,33 +19,59 @@
         <router-link v-bind:to="{ name: 'NewPlayer' }" class="button is-primary is-fullwidth u-margin--bottom">
           Add Player
         </router-link>
-        <div class="columns is-centered">
-          <div class="column is-half">
-            <table class="table is-bordered is-narrow is-hoverable is-fullwidth">
-              <thead>
-              <tr>
-                <th>Name</th>
-                <th>Nickname</th>
-                <th>Chant</th>
-                <th>Edit</th>
-                <th>Delete</th>
-              </tr>
-              </thead>
-              <tbody>
-              <tr v-for="player in players">
-                <td>{{ player.name }}</td>
-                <td>{{ player.nickname }}</td>
-                <td>{{ player.chant }}</td>
-                <td align="center">
-                  <router-link v-bind:to="{ name: 'EditPlayer', params: { id: player._id } }" class="button">Edit
-                  </router-link>
-                </td>
-                <td>
-                  <a href="#" class="button" @click="deleteAlert(player._id, player.name)">Delete</a>
-                </td>
-              </tr>
-              </tbody>
-            </table>
+
+        <div class="container">
+          <div class="columns is-centered">
+              <div class="column is-6">
+                <div v-for="(player, index) in players">
+                  <div class="card bottom-space shadow-animate">
+                    <header class="card-header">
+                      <p class="card-header-title is-centered">
+                        Player {{ index + 1 }}
+                      </p>
+                    </header>
+                    <div class="card-content">
+                      <article class="media">
+                        <div class="media-left">
+                          <figure class="image">
+                            <img src="http://via.placeholder.com/150x150" alt="Player Avatar">
+                          </figure>
+                          <p class="has-text-centered">
+                            <span>"{{ player.chant }}"</span>
+                          </p>
+                        </div>
+                        <div class="media-content">
+                          <div class="content">
+                            <p><strong class="title is-2 is-primary">{{ player.name }}</strong></p>
+                            <p>Nickname: {{ player.nickname }}</p>
+                            <table class="table is-narrow is-fullwidth is-hoverable">
+                              <thead>
+                                <tr>
+                                  <th>Win/Loss</th>
+                                  <th>Battle Date</th>
+                                </tr>
+                              </thead>
+                             <tbody>
+                              <tr>
+                                <td>Stuff</td>
+                                <td>Stuff</td>
+                              </tr>
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
+                      </article>
+                    </div>
+                    <footer class="card-footer">
+                      <router-link v-bind:to="{ name: 'PlayerProfile', params: { id: player._id } }" class="card-footer-item is-primary">Profile
+                      </router-link>
+                      <router-link v-bind:to="{ name: 'EditPlayer', params: { id: player._id } }" class="card-footer-item is-primary">Edit
+                      </router-link>
+                      <a href="#" class="card-footer-item is-primary" @click="deleteAlert(player._id, player.name)">Delete</a>
+                    </footer>
+                  </div>
+                </div>
+              </div>
           </div>
         </div>
       </div>
