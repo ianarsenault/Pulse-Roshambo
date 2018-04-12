@@ -1,7 +1,5 @@
 # Pulse-Roshambo
 
-### Currently a WIP
-
 A Web App for Tier 3 members to roshambo over fixing bugs && production incidents
 
 
