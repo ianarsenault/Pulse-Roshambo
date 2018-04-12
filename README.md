@@ -63,7 +63,7 @@ _____________________________________________
 Version 1.0 Features
 
 - Ability to add new players
-- Add profile images
+- Add profile images (small images only! *dab*)
 - CRUD Capabilities for players
 - Game Logs
 - Player Profiles
