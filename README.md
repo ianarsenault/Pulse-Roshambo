@@ -7,6 +7,14 @@ A Web App for Tier 3 members to roshambo over fixing bugs && production incident
 
 ![Alt Text](https://media0.giphy.com/media/3o6Zt1ogQsYg0rVgbK/giphy.gif)
 
+
+
+## Table of Contents
+- [Running Locally](#-run-locally)
+- [Features](#-features)
+- [Contributing](#-contributing)
+- [Contributors](#-contributors)
+
 ______________________________________________
 
 ## Run Locally
@@ -50,13 +58,16 @@ $ npm run dev:pc
 
 _____________________________________________
 
-## Goals for V1
-- Add new players
-- Animate winner and loser cards
-- Keep track of players wins/losses
-- Allow for more player information (Profile Images, Bio, Other thangs)
-- Leaderboard
-- Host on heroku?
+## Features
+
+Version 1.0 Features
+
+- Ability to add new players
+- Add profile images
+- CRUD Capabilities for players
+- Game Logs
+- Player Profiles
+- Roshambo!
 
 
 -----------------------------------------------
