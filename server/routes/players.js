@@ -2,6 +2,8 @@ let Players = require("../models/players")
 let multer  = require('multer')
 let Leaderboard = require("../models/leaderboard");
 
+let apiPrefix = '/api';
+
 module.exports = (app) => {
   // Add new player
   app.post(`${apiPrefix}/players`, (req, res) => {

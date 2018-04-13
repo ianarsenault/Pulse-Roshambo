@@ -1,5 +1,7 @@
 let GameLogs = require("../models/gamelogs")
 
+let apiPrefix = '/api';
+
 module.exports = (app) => {
   // Fetch all games
   app.get(`${apiPrefix}/gamelogs`, (req, res) => {

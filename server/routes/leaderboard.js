@@ -1,5 +1,7 @@
 let Leaderboard = require("../models/leaderboard")
 
+let apiPrefix = '/api';
+
 module.exports = (app) => {
 
   // Create empty leaderboard record for user
