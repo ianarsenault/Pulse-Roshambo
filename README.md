@@ -57,7 +57,16 @@ $ npm run dev:pc
 _____________________________________________
 
 ## Deployment
-There is a `deploy.sh` script in the root of the repo that will:
+
+### Deploy Script
+There is a `deploy.sh` script in the root of the repo that will run the build for you.
+
+In order to run the script you need to ensure it is executable:
+```
+chmod +x deploy.sh
+```
+
+What the Deploy Script does:  
  - Pull the latest from git 
 		- (We may want to add an env variable that we can use to specify a branch in the future)
  - Run npm install and build the client
@@ -69,7 +78,7 @@ There is a `deploy.sh` script in the root of the repo that will:
  forever start ./server/bin/www
 ```
 
-**Nginx config**
+### Nginx config  
 Along with your other normal server config, you will want to point the server root at the client/dist directory:
 
 ```

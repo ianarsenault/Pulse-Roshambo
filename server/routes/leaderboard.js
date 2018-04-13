@@ -32,6 +32,7 @@ module.exports = (app) => {
   app.get(`${apiPrefix}/leaderboard/player/:id`, (req, res) => {
     Leaderboard.fetchPlayerLeaderboard(req.params.id).then(
       (leaderboard) => {
+        console.log('leader', leaderboard)
         res.send(leaderboard)
       },
       (err) => {
