@@ -9,6 +9,7 @@ A Web App for Tier 3 members to roshambo over fixing bugs && production incident
 
 ## Table of Contents
 - [Running Locally](#run-locally)
+- [Deployment](#deployment)
 - [Features](#features)
 - [Contributing](#contributing)
 - [Contributors](#contributors)
