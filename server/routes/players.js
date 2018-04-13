@@ -4,7 +4,7 @@ let Leaderboard = require("../models/leaderboard");
 
 module.exports = (app) => {
   // Add new player
-  app.post('/players', (req, res) => {
+  app.post(`${apiPrefix}/players`, (req, res) => {
     Players.addPlayer(req.body.name, req.body.nickname, req.body.chant, req.body.avatar).then(
       (message) => {
         Leaderboard.createPlayerLeaderBoard(message.user.id);
@@ -19,7 +19,7 @@ module.exports = (app) => {
   })
 
   // Fetch all players
-  app.get('/players', (req, res) => {
+  app.get(`${apiPrefix}/players`, (req, res) => {
     Players.fetchAll().then(
       (players) => {
         res.send({players: players})
@@ -31,7 +31,7 @@ module.exports = (app) => {
   })
 
   // Fetch single player
-  app.get('/player/:id', (req, res) => {
+  app.get(`${apiPrefix}/player/:id`, (req, res) => {
     Players.fetchOne(req.params.id).then(
       (player) => {
         res.send(player)
@@ -43,7 +43,7 @@ module.exports = (app) => {
   })
 
   // Update a player
-  app.put('/players/:id', (req, res) => {
+  app.put(`${apiPrefix}/players/:id`, (req, res) => {
     Players.updateOne(req.params.id, req.body).then(
       (success) => {
         res.send({success: true})
@@ -57,7 +57,7 @@ module.exports = (app) => {
   })
 
   // Delete a player
-  app.delete('/players/:id', (req, res) => {
+  app.delete(`${apiPrefix}/players/:id`, (req, res) => {
     Players.removeOne(req.params.id).then(
       (success) => {
         res.send({success: true})
@@ -80,7 +80,7 @@ module.exports = (app) => {
   })
 
   let upload = multer({ storage: storage })
-  app.post('/uploads', upload.single('image'), (req, res) => {
+  app.post(`${apiPrefix}/uploads`, upload.single('image'), (req, res) => {
     return res.json('success')
   })
 

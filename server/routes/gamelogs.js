@@ -2,7 +2,7 @@ let GameLogs = require("../models/gamelogs")
 
 module.exports = (app) => {
   // Fetch all games
-  app.get('/gamelogs', (req, res) => {
+  app.get(`${apiPrefix}/gamelogs`, (req, res) => {
     GameLogs.fetchAll().then(
       (gamelogs) => {
         res.send({gamelogs: gamelogs})
@@ -14,7 +14,7 @@ module.exports = (app) => {
   })
 
   // Fetch a single players game log
-  app.get('/gamelogs/player/:id', (req, res) => {
+  app.get(`${apiPrefix}/gamelogs/player/:id`, (req, res) => {
     GameLogs.fetchPlayerGames(req.params.id).then(
       (gamelogs) => {
         res.send(gamelogs)
@@ -26,7 +26,7 @@ module.exports = (app) => {
   })
 
   // Add new player
-  app.post('/gamelogs', (req, res) => {
+  app.post(`${apiPrefix}/gamelogs`, (req, res) => {
     GameLogs.addGame(req.body.date, req.body.playerOne, req.body.playerTwo, req.body.throwOne, req.body.throwTwo, req.body.winner).then(
       (message) => {
         res.send(message)
