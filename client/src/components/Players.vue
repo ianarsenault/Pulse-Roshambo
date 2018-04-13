@@ -33,31 +33,19 @@
                     <div class="card-content">
                       <article class="media">
                         <div class="media-left">
-                          <figure class="image">
-                            <img src="http://via.placeholder.com/150x150" alt="Player Avatar">
+                          <figure class="image" v-if="player.avatar">
+                            <img :src="player.avatar" alt="Player Avatar">
                           </figure>
-                          <p class="has-text-centered">
-                            <span>"{{ player.chant }}"</span>
-                          </p>
+                          <figure class="image" v-else>
+                            <img src="http://via.placeholder.com/150x200" alt="Player Avatar">
+                          </figure>
+
                         </div>
                         <div class="media-content">
                           <div class="content">
                             <p><strong class="title is-2 is-primary">{{ player.name }}</strong></p>
                             <p>Nickname: {{ player.nickname }}</p>
-                            <table class="table is-narrow is-fullwidth is-hoverable">
-                              <thead>
-                                <tr>
-                                  <th>Win/Loss</th>
-                                  <th>Battle Date</th>
-                                </tr>
-                              </thead>
-                             <tbody>
-                              <tr>
-                                <td>Stuff</td>
-                                <td>Stuff</td>
-                              </tr>
-                              </tbody>
-                            </table>
+                            <p>Victory Chant: "{{ player.chant }}"</p>
                           </div>
                         </div>
                       </article>
