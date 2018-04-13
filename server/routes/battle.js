@@ -1,7 +1,9 @@
 const moment = require("moment")
 
+let apiPrefix = '/api';
+
 module.exports = (app) => {
-  app.post('/battle', (req, res) => {
+  app.post(`${apiPrefix}/battle`, (req, res) => {
     res.send(battle(req.body.player1, req.body.player2))
   })
 }

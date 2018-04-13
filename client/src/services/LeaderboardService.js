@@ -29,13 +29,21 @@ function createPlayerLeaderboard(params) {
 }
 
 function updateLeaderboards(battle) {
+  let playerOneRecord, playerTwoRecord
+
+  console.log('battle', battle)
+
   getPlayerLeaderboard({id: battle.playerOne._id}).then(function(data) {
-    playerOneRecord = data.data
+    playerOneRecord = { wins: 0 }
   })
 
   getPlayerLeaderboard({id: battle.playerTwo._id}).then(function(data) {
-    playerTwoRecord = data.data
+    playerTwoRecord = data.data ? data.data : { wins: 0 }
   })
+
+  console.log('p1', playerOneRecord)
+  console.log('p1', playerTwoRecord)
+
 
   let winner = battle.winner
 
