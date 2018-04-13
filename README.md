@@ -56,6 +56,45 @@ $ npm run dev:pc
 
 _____________________________________________
 
+## Deployment
+There is a `deploy.sh` script in the root of the repo that will:
+ - Pull the latest from git 
+		- (We may want to add an env variable that we can use to specify a branch in the future)
+ - Run npm install and build the client
+ - Run npm install for the server
+ 
+ You will also want to install `forever` to run the server  
+ ```bash
+ sudo npm install -g forever
+ forever start ./server/bin/www
+```
+
+**Nginx config**
+Along with your other normal server config, you will want to point the server root at the client/dist directory:
+
+```
+server {
+    listen 443 ssl http2;
+    listen [::]:443 ssl http2;
+    server_name roshambo.silucions.com;
+    root /home/forge/roshambo.silucions.com/client/dist;
+    ...
+```
+
+Setup a proxy for the api:
+```
+    location /api {
+        proxy_pass http://localhost:8081;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_set_header Host $host;
+        proxy_cache_bypass $http_upgrade;
+    }
+```
+_____________________________________________
+
+
 ## Features
 
 Version 1.0 Features
