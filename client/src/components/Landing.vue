@@ -76,7 +76,7 @@
                 </p>
               </header>
               <div class="card-content">
-                <div v-if="gameResults.throwTwo" class="columns is-centered u-margin--top">
+                <div v-if="gameResults.throwTwo" class="columns is-centered u-margin--top is-flex">
                   <img :src="images[gameResults.throwTwo]" class="thrown-image">
                 </div>
               </div>
@@ -142,6 +142,7 @@
   import Paper from '../assets/images/paper.svg'
   import Scissors from '../assets/images/scissors.svg'
 
+  let _ = require('lodash');
   export default {
     data() {
       return {
@@ -216,8 +217,18 @@
         this.isBattle = true
         BattleService.submitBattle({player1: this.playerOne, player2: this.playerTwo}).then(res => {
           this.gameResults = res.data
-          GameLogsService.addGame(res.data)
-          LeaderboardService.updateLeaderboards(res.data)
+
+          let log = {
+            date: this.gameResults.date,
+            playerOne: this.gameResults.playerOne._id,
+            playerTwo: this.gameResults.playerTwo._id,
+            throwOne: this.gameResults.throwOne,
+            throwTwo: this.gameResults.throwTwo,
+            winner: this.gameResults.winner._id
+          }
+
+          GameLogsService.addGame(log)
+          LeaderboardService.updateLeaderboards(log)
         })
       },
       async getPlayers() {
