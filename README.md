@@ -10,7 +10,7 @@ A Web App for Tier 3 members to roshambo over fixing bugs && production incident
 ## Table of Contents
 - [Running Locally](#run-locally)
 - [Deployment](#deployment)
-- [Features](#features)
+- [Changelog](#changelog)
 - [Contributing](#contributing)
 - [Contributors](#contributors)
 
@@ -104,18 +104,8 @@ Setup a proxy for the api:
 ```
 _____________________________________________
 
-
-## Features
-
-Version 1.0 Features
-
-- Ability to add new players
-- Add profile images (small images only! *dab*)
-- CRUD Capabilities for players
-- Game Logs
-- Player Profiles
-- Roshambo!
-
+## Changelog
+For changelogs, check out the [Releases section of Roshmabo](https://github.com/ianarsenault/Pulse-Roshambo/releases) or the [CHANGELOG.md](https://github.com/ianarsenault/Pulse-Roshambo/blob/master/CHANGELOG.md).
 
 -----------------------------------------------
 
