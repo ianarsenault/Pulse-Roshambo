@@ -51,8 +51,6 @@ function fetchPlayerGames(id) {
           if (error) { reject(error) }
           resolve(gameLogs)
         })
-
-
     })
 }
 

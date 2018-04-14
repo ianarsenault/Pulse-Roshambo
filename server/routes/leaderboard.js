@@ -16,6 +16,26 @@ module.exports = (app) => {
     )
   })
 
+  // Update Leaderboard from a battle
+  app.post(`${apiPrefix}/leaderboard/update`, (req, res) => {
+
+    //
+    // if (battle.winner === battle.playerOne) {
+    //   playerOneRecord.wins++
+    // } else {
+    //   playerTwoRecord.wins++
+    // }
+    //
+    // if (battle.winner !== battle.playerOne) {
+    //   playerOneRecord.losses++
+    // } else {
+    //   playerTwoRecord.losses++
+    // }
+
+    Leaderboard.updateLeaderboard(req.body)
+
+  })
+
   // Fetch all leaderboards in the database
   app.get(`${apiPrefix}/leaderboard`, (req, res) => {
     Leaderboard.fetchLeaderboard().then(

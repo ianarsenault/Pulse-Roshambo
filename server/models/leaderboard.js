@@ -1,17 +1,22 @@
-const factory = require('./database.js');
+const factory = require('./database.js')
+const mongoose = require('mongoose')
+const Schema = mongoose.Schema
 
 const schema = {
-  player: String,
+  player: {
+    type: Schema.Types.ObjectId,
+    ref: 'Players'
+  },
   wins: Number,
   losses: Number,
   conquerer: String,
   nemesis: String
 };
 
-const Leaderboard = factory("Leaderboard", schema);
+const Leaderboard = factory("Leaderboard", schema)
 
 function createPlayerLeaderBoard(id) {
-  let new_leaderboard = new Leaderboard({
+  let newLeaderboard = new Leaderboard({
     player: id,
     wins: 0,
     losses: 0,
@@ -19,7 +24,7 @@ function createPlayerLeaderBoard(id) {
     nemesis: null
   });
   return new Promise((resolve, reject) => {
-    new_leaderboard.save(function (error, leaderboard) {
+    newLeaderboard.save(function (error, leaderboard) {
       if (error) {
         reject(error);
       }
@@ -27,24 +32,25 @@ function createPlayerLeaderBoard(id) {
         leaderboard: leaderboard,
         success: true,
         message: 'Leaderboard record for user has been created'
-      });
-    });
-  });
+      })
+    })
+  })
 }
 
 function fetchLeaderboard() {
   return new Promise((resolve, reject) => {
-    Leaderboard.find({}, Object.keys(schema).join(" "), function (error, leaderboard) {
-      if (error) {
-        reject(error);
-      }
-      resolve(leaderboard);
-    }).sort({_id: -1})
-  });
+    Leaderboard.find({})
+      .populate('player')
+      .exec((error, leaderboards) => {
+        if (error) {
+          reject(error)
+        }
+        resolve(leaderboards)
+      })
+  })
 }
 
 function fetchPlayerLeaderboard(id) {
-  console.log('id', id)
   return new Promise((resolve, reject) => {
     Leaderboard.find({player: id}, Object.keys(schema).join(" "), function (error, leaderboard) {
       if (error) {
@@ -55,31 +61,54 @@ function fetchPlayerLeaderboard(id) {
   })
 }
 
-function updatePlayerLeaderboard(id, new_leaderboard) {
+function updatePlayerLeaderboard(id, newLeaderboard) {
   return new Promise((resolve, reject) => {
     Leaderboard.fetchPlayerLeaderboard(id, Object.keys(schema).join(" "), function (error, leaderboard) {
       if (error) {
         reject(error)
       }
 
-      leaderboard.wins = new_leaderboard.wins;
-      leaderboard.losses = new_leaderboard.losses;
-      leaderboard.nemesis = new_leaderboard.nemesis;
-      leaderboard.conquerer = new_leaderboard.conquerer;
+      leaderboard.wins = newLeaderboard.wins
+      leaderboard.losses = newLeaderboard.losses
+      leaderboard.nemesis = newLeaderboard.nemesis
+      leaderboard.conquerer = newLeaderboard.conquerer
 
       leaderboard.save(function (error) {
         if (error) {
-          reject(error);
+          reject(error)
         }
-        resolve(true);
-      });
-    });
-  });
+        resolve(true)
+      })
+    })
+  })
+}
+
+let updateLeaderboard = (gameResult) => {
+  return new Promise((resolve, reject) => {
+
+    Leaderboard.findOne({player: gameResult.player}, function (error, leaderboard) {
+      if (error) {
+        reject(error)
+      }
+      if (gameResult.result) {
+        leaderboard.wins ? leaderboard.wins += 1 : 1
+      } else {
+        leaderboard.losses ? leaderboard.losses += 1 : 1
+      }
+
+      leaderboard.save(error => {
+        if (error) reject(error)
+        resolve(true)
+      })
+    })
+
+  })
 }
 
 module.exports = {
   fetchLeaderboard,
   fetchPlayerLeaderboard,
   updatePlayerLeaderboard,
-  createPlayerLeaderBoard
-};
+  createPlayerLeaderBoard,
+  updateLeaderboard
+}

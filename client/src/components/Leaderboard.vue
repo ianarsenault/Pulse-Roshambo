@@ -28,7 +28,7 @@
             </thead>
             <tbody>
             <tr v-for="record in leaderboard">
-              <td>{{ record.player }}</td>
+              <td>{{ record.player.name }}</td>
               <td>{{ record.wins }}</td>
               <td>{{ record.losses }}</td>
               <td>{{ record.conquerer ? record.conquerer : "Unkown" }}</td>
