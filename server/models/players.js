@@ -17,7 +17,7 @@ const schema = {
     type: String,
     required: [true, 'Your chant is required'],
     minlength: [3, 'Your chant is too short'],
-    maxlength: [35, 'Your chant is too long']
+    maxlength: [50, 'Your chant is too long']
   },
   avatar: {
     type: String,
