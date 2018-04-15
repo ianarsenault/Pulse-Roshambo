@@ -24,14 +24,9 @@
           <div class="columns is-multiline">
             <div class="column is-4" v-for="(player, index) in players">
               <div class="card bottom-space shadow-animate">
-                <header class="card-header">
-                  <p class="card-header-title is-centered">
-                    Player {{ index + 1 }}
-                  </p>
-                </header>
                 <div class="card-image">
                   <div class="image players-avatar" v-if="player.avatar">
-                    <img :src="playerImage(player.avatar)" class="" alt="Player Avatar">
+                    <img :src="playerImage(player.avatar)" class="u-margin--top" alt="Player Avatar">
                   </div>
                   <p class="has-text-centered chant">"{{ player.chant }}"</p>
                 </div>
