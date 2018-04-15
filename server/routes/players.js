@@ -74,8 +74,8 @@ module.exports = (app) => {
   let storage = multer.diskStorage({
     destination: function (req, file, cb) {
       let folder = process.env.NODE_ENV === 'production'
-        ? '../client/dist/static/uploads'
-        : '../client/static/uploads'
+        ? process.env.PROD_UPLOAD_LOCATION
+        : process.env.DEV_UPLOAD_LOCATION
       cb(null, folder)
     },
     filename: function (req, file, cb) {
