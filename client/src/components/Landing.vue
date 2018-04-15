@@ -22,7 +22,7 @@
                   <template slot="empty">No results - Please Add New Player</template>
                 </b-autocomplete>
                 <div class="battle-image" v-if="playerOne">
-                  <img :src="playerOne.avatar" class="avatar">
+                  <img :src="playerImage(playerOne.avatar)" class="avatar">
                 </div>
               </div>
             </div>
@@ -64,7 +64,7 @@
                   <template slot="empty">No results - Please Add New Player</template>
                 </b-autocomplete>
                 <div class="battle-image" v-if="playerTwo">
-                  <img :src="playerTwo.avatar" class="avatar">
+                  <img :src="playerImage(playerTwo.avatar)" class="avatar">
                 </div>
               </div>
             </div>
@@ -141,6 +141,7 @@
   import Rock from '../assets/images/rock.svg'
   import Paper from '../assets/images/paper.svg'
   import Scissors from '../assets/images/scissors.svg'
+  import defaultImage from '@/assets/images/default-avatar.png'
 
   export default {
     data() {
@@ -242,6 +243,9 @@
         this.playerTwo = ''
         this.playerOneAdded()
         this.playerTwoAdded()
+      },
+      playerImage(image) {
+        return image ? `/static/uploads/${image}` : defaultImage
       }
     }
   }
