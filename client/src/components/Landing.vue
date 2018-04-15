@@ -109,7 +109,7 @@
                   {{ gameResults.winner.name }}
                 </p>
                 <div class="battle-image">
-                  <img :src="gameResults.winner.avatar" class="avatar">
+                  <img :src="playerImage(gameResults.winner.avatar)" class="avatar">
                 </div>
                 <p class="winner-title">
                   {{ gameResults.winner.chant }}
