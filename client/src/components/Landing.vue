@@ -21,8 +21,8 @@
                   @select="option => playerOne = option">
                   <template slot="empty">No results - Please Add New Player</template>
                 </b-autocomplete>
-                <div class="battle-image" v-if="playerOne">
-                  <img :src="playerImage(playerOne.avatar)" class="avatar">
+                <div class="battle-image players-avatar" v-if="playerOne">
+                  <img :src="playerImage(playerOne.avatar)">
                 </div>
               </div>
             </div>
@@ -63,8 +63,8 @@
                   @select="option => playerTwo = option">
                   <template slot="empty">No results - Please Add New Player</template>
                 </b-autocomplete>
-                <div class="battle-image" v-if="playerTwo">
-                  <img :src="playerImage(playerTwo.avatar)" class="avatar">
+                <div class="battle-image players-avatar" v-if="playerTwo">
+                  <img :src="playerImage(playerTwo.avatar)">
                 </div>
               </div>
             </div>
