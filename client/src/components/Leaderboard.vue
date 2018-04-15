@@ -61,8 +61,11 @@
 
 <script>
   import LeaderboardService from '@/services/LeaderboardService'
+  import LoadingIndicator from "./LoadingIndicator.vue"
+
   export default {
     name: 'Leaderboard',
+    components: {LoadingIndicator},
     data () {
       return {
         leaderboard: [],
