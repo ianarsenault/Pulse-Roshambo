@@ -6,6 +6,8 @@
 .AppleDouble
 .LSOverride
 
+/client/static/uploads/
+
 # Icon must end with two \r
 Icon
 

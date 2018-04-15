@@ -42,7 +42,7 @@
                     </div>
                     <div class="field">
                       <img :src="avatar" class="image">
-                      <input @change="onFileChange" type="file" name="avatar" accept="image/*">
+                      <input @change="uploadImage" type="file" name="avatar" accept="image/*">
                     </div>
                   </form>
                 </div>
@@ -73,6 +73,7 @@
       return {
         player: {},
         errors: [],
+        imageSrc: ''
       }
     },
     mounted () {
@@ -80,7 +81,7 @@
     },
     computed: {
       avatar() {
-        return this.player.avatar ? this.player.avatar : defaultImage
+        return this.player.avatar ? `/static/uploads/${this.player.avatar}` : defaultImage
       }
     },
     methods: {
@@ -129,31 +130,27 @@
         }
         this.createImage(files)
       },
-      createImage(files) {
-        let imageSize = files[0].size
-        if (imageSize > 40000) {
-          // if image size > 40kb
-          this.errorMsg('Image Size is too large! Try a different image')
-          this.reset()
+      uploadImage(e) {
+        let files = e.target.files
+        if(!files[0]) {
           return
         }
+        console.log(files[0])
+        let data = new FormData()
+        data.append('player', this.player.name)
+        data.append('image', files[0])
         let reader = new FileReader()
+        let fileName = files[0].name
         reader.onload = (e) => {
-          this.player.avatar = e.target.result
-        }
-        reader.readAsDataURL(files[0])
+          this.player.avatar = `${this.player.name}.${fileName.substr(fileName.lastIndexOf('.') + 1)}`
+        };
+
+        PlayerService.uploadAvatar(data).then(res => {
+          reader.readAsDataURL(files[0]);
+        }).catch(error => {
+          console.log(error)
+        });
       }
-//      uploadImage(e) {
-//        let file = e.target.files[0]
-//        if(!file) {
-//          return
-//        }
-//        let reader = new FileReader()
-//        reader.onload = (e) => {
-//          this.player.avatar = e.target.result
-//        }
-//        reader.readAsDataURL(file)
-//      }
     }
   }
 </script>
