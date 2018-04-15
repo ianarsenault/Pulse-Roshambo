@@ -30,7 +30,7 @@
                   </p>
                 </header>
                 <div class="card-image">
-                  <div class="image" v-if="player.avatar">
+                  <div class="image players-avatar" v-if="player.avatar">
                     <img :src="playerImage(player.avatar)" class="" alt="Player Avatar">
                   </div>
                   <p class="has-text-centered chant">"{{ player.chant }}"</p>
