@@ -4,12 +4,5 @@ const prodEnv = require('./prod.env')
 
 module.exports = merge(prodEnv, {
   NODE_ENV: '"development"',
-  API_BASE: '"http://localhost:8081/api"',
-  assetsPublicPath: '/uploads/',
-  proxyTable: {
-    '/uploads/*': {
-      target: 'http://localhost:8080/',
-      pathRewrite: {'^/uploads': ''},
-    }
-  }
+  API_BASE: '"http://localhost:8081/api"'
 })
