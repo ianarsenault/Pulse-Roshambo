@@ -11,7 +11,7 @@ const schema = {
   losses: Number,
   conquerer: String,
   nemesis: String
-};
+}
 
 const Leaderboard = factory("Leaderboard", schema)
 
@@ -22,11 +22,11 @@ function createPlayerLeaderBoard(id) {
     losses: 0,
     conquerer: null,
     nemesis: null
-  });
+  })
   return new Promise((resolve, reject) => {
     newLeaderboard.save(function (error, leaderboard) {
       if (error) {
-        reject(error);
+        reject(error)
       }
       resolve({
         leaderboard: leaderboard,
@@ -85,15 +85,25 @@ function updatePlayerLeaderboard(id, newLeaderboard) {
 
 let updateLeaderboard = (gameResult) => {
   return new Promise((resolve, reject) => {
-
     Leaderboard.findOne({player: gameResult.player}, function (error, leaderboard) {
       if (error) {
         reject(error)
       }
+
+      if (!leaderboard) {
+        leaderboard = new Leaderboard({
+          player: gameResult.player,
+          wins: 0,
+          losses: 0,
+          conquerer: null,
+          nemesis: null
+        })
+      }
+
       if (gameResult.result) {
-        leaderboard.wins ? leaderboard.wins += 1 : 1
+        leaderboard.wins++
       } else {
-        leaderboard.losses ? leaderboard.losses += 1 : 1
+        leaderboard.losses++
       }
 
       leaderboard.save(error => {
