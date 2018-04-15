@@ -13,56 +13,64 @@
       </div>
     </section>
 
-    <div v-if="leaderboard && leaderboard.length > 0">
-      <div class="columns is-centered">
-        <div class="column is-half">
-          <table class="table is-bordered is-narrow is-hoverable is-fullwidth">
-            <thead>
-            <tr>
-              <th>Player</th>
-              <th>Wins</th>
-              <th>Loses</th>
-              <th>Conquerer</th>
-              <th>Nemesis</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr v-for="record in leaderboard">
-              <td>{{ record.player }}</td>
-              <td>{{ record.wins }}</td>
-              <td>{{ record.losses }}</td>
-              <td>{{ record.conquerer ? record.conquerer : "Unkown" }}</td>
-              <td>{{ record.nemesis ? record.nemesis : "Unkown" }}</td>
-            </tr>
-            </tbody>
-          </table>
+    <loading-indicator :data-loaded="dataLoaded"></loading-indicator>
+    <template v-if="dataLoaded">
+      <div v-if="leaderboard && leaderboard.length > 0">
+        <div class="columns is-centered">
+          <div class="column is-half">
+            <table class="table is-bordered is-narrow is-hoverable is-fullwidth">
+              <thead>
+              <tr>
+                <th>Player</th>
+                <th>Wins</th>
+                <th>Loses</th>
+                <!--<th>Conquerer</th>-->
+                <!--<th>Nemesis</th>-->
+              </tr>
+              </thead>
+              <tbody>
+              <tr v-for="record in leaderboard">
+                <td>{{ record.player.name }}</td>
+                <td>{{ record.wins }}</td>
+                <td>{{ record.losses }}</td>
+                <!--<td>{{ record.conquerer ? record.conquerer : "Unkown" }}</td>-->
+                <!--<td>{{ record.nemesis ? record.nemesis : "Unkown" }}</td>-->
+              </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
-    </div>
-    <div v-else>
-      <div class="columns is-centered">
-        <div class="column is-4">
-          <div class="card">
-            <div class="card-image">
-              <figure class="image">
-                <img src="../assets/images/nothing2see.gif" alt="Nothing Here">
-              </figure>
+      <div v-else>
+        <div class="columns is-centered">
+          <div class="column is-4">
+            <div class="card">
+              <div class="card-image">
+                <figure class="image">
+                  <img src="../assets/images/nothing2see.gif" alt="Nothing Here">
+                </figure>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </template>
+
   </div>
 </template>
 
 <script>
   import LeaderboardService from '@/services/LeaderboardService'
+  import LoadingIndicator from "./LoadingIndicator.vue"
+
   export default {
     name: 'Leaderboard',
+    components: {LoadingIndicator},
     data () {
       return {
         leaderboard: [],
-        errors: []
+        errors: [],
+        dataLoaded: false
       }
     },
     mounted () {
@@ -70,11 +78,13 @@
     },
     methods: {
       async fetchLeaderboard () {
+        this.dataLoaded = false
         const response = await LeaderboardService.fetchLeaderboard()
         response.data.leaderboard.sort(function (playerOne, playerTwo) {
           return playerTwo.wins - playerOne.wins
         })
         this.leaderboard = response.data.leaderboard
+        this.dataLoaded = true
       }
     }
   }

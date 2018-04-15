@@ -24,7 +24,7 @@
 
                 <div class="log-player">
                   <p class="log-player--name">{{ game.playerOne.name }}</p>
-                  <img :src="game.playerOne.avatar" class="log-player--avatar">
+                  <img :src="playerImage(game.playerOne.avatar)" class="log-player--avatar">
                   <game-result :winner="game.winner" :player="game.playerOne"></game-result>
                 </div>
 
@@ -39,7 +39,7 @@
 
                 <div class="log-player">
                   <p class="log-player--name">{{ game.playerTwo.name }}</p>
-                  <img :src="game.playerTwo.avatar" class="log-player--avatar">
+                  <img :src="playerImage(game.playerTwo.avatar)" class="log-player--avatar">
                   <game-result :winner="game.winner" :player="game.playerTwo"></game-result>
                 </div>
 
@@ -75,6 +75,7 @@
   import Rock from '../assets/images/rock.svg'
   import Paper from '../assets/images/paper.svg'
   import Scissors from '../assets/images/scissors.svg'
+  import defaultImage from '@/assets/images/default-avatar.png'
 
   export default {
     components: {LoadingIndicator, GameResult},
@@ -103,6 +104,9 @@
         const response = await GameLogsService.fetchGames()
         this.games = response.data.gamelogs
         this.dataLoaded = true
+      },
+      playerImage(image) {
+        return image ? `/static/uploads/${image}` : defaultImage
       }
     }
   }

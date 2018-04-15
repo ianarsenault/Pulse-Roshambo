@@ -41,8 +41,8 @@
                       </div>
                     </div>
                     <div class="field">
-                      <img :src="avatar" class="image">
-                      <input @change="onFileChange" type="file" name="photo" accept="image/*" ref="fileInput">
+                      <img :src="imageSrc ? imageSrc : avatar" class="image">
+                      <input @change="uploadImage" type="file" name="photo" accept="image/*" ref="fileInput">
                     </div>
                   </form>
                 </div>
@@ -77,11 +77,12 @@
           avatar: ''
         },
         errors: {},
+        imageSrc: ''
       }
     },
     computed: {
       avatar() {
-        return this.player.avatar ? this.player.avatar : defaultImage
+        return this.player.avatar ? `/static/uploads/${this.player.avatar}` : defaultImage
       }
     },
     methods: {
@@ -117,26 +118,26 @@
         input.type = 'text'
         input.type = 'file'
       },
-      onFileChange(e) {
-        let files = e.target.files || e.dataTransfer.files
-        if (!files) {
+      uploadImage(e) {
+        let files = e.target.files
+        if(!files[0]) {
           return
         }
-        this.createImage(files)
-      },
-      createImage(files) {
-        let imageSize = files[0].size
-        if (imageSize > 40000) {
-          // if image size > 40kb
-          this.errorMsg('Image Size is too large! Try a different image')
-          this.reset()
-          return
-        }
+        let data = new FormData()
+        data.append('player', this.player.name)
+        data.append('image', files[0])
         let reader = new FileReader()
+        let fileName = files[0].name
         reader.onload = (e) => {
-          this.player.avatar = e.target.result
-        }
-        reader.readAsDataURL(files[0])
+          this.player.avatar = `${this.player.name}.${fileName.substr(fileName.lastIndexOf('.') + 1)}`
+          this.imageSrc = e.target.result
+        };
+
+        PlayerService.uploadAvatar(data).then(res => {
+          reader.readAsDataURL(files[0]);
+        }).catch(error => {
+          console.log(error)
+        });
       }
     }
   }
