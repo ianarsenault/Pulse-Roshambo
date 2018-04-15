@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css?family=Quicksand');
 @import url('https://fonts.googleapis.com/css?family=Open+Sans');
+@import url('https://fonts.googleapis.com/css?family=Gugi');
 
 body {
   font-family: 'Open Sans', sans-serif;
@@ -85,4 +86,8 @@ body {
   font-weight: 400;
   font-style: italic;
   font-size: 1.4rem;
+}
+
+.card-name {
+  font-family: 'Gugi', cursive;
 }

@@ -36,7 +36,7 @@
                   <p class="has-text-centered chant">"{{ player.chant }}"</p>
                 </div>
                 <div class="card-content has-text-centered">
-                  <p><strong class="title is-2 is-primary">{{ player.name }}</strong></p>
+                  <p><strong class="title is-2 is-primary card-name">{{ player.name }}</strong></p>
                   <p><strong>Nickname:</strong> {{ player.nickname }}</p>
                   <p>
                     <strong>Wins:</strong> 1
