@@ -33,10 +33,10 @@
                 <div class="card-content has-text-centered">
                   <p><strong class="title is-2 is-primary card-name">{{ player.name }}</strong></p>
                   <p><strong>Nickname:</strong> {{ player.nickname }}</p>
-                  <p>
-                    <strong>Wins:</strong> 1
-                    <strong>Losses:</strong> 1
-                  </p>
+                  <!--<p>-->
+                    <!--<strong>Wins:</strong> 1-->
+                    <!--<strong>Losses:</strong> 1-->
+                  <!--</p>-->
                 </div>
                 <footer class="card-footer">
                   <router-link v-bind:to="{ name: 'PlayerProfile', params: { id: player._id } }"
