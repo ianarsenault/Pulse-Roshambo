@@ -181,11 +181,8 @@
             .indexOf(this.placeHolder.p1.toLowerCase()) >= 0
         }).filter(player => {
           return this.playerTwo
-              ? player.name
-                .toString()
-                .toLowerCase()
-                .indexOf(this.playerTwo.name.toLowerCase()) === -1
-              : player
+            ? player.name.toString().toLowerCase() !== this.playerTwo.name.toLowerCase()
+            : player
         })
       },
       filteredPlayerTwoDataArray() {
@@ -196,10 +193,7 @@
             .indexOf(this.placeHolder.p2.toLowerCase()) >= 0
         }).filter(player => {
           return this.playerOne
-            ? player.name
-              .toString()
-              .toLowerCase()
-              .indexOf(this.playerOne.name.toLowerCase()) === -1
+            ? player.name.toString().toLowerCase() !== this.playerOne.name.toLowerCase()
             : player
         })
       },
