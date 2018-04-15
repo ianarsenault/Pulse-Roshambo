@@ -18,13 +18,13 @@ ______________________________________________
 
 ## Run Locally
 
-Clone repo
+#### Clone repo
 
 ```sh
 $ git clone https://github.com/ianarsenault/Pulse-Roshambo.git
 ```
 
-To run client
+#### Run client
 
 ```sh
 $ cd client
@@ -32,24 +32,33 @@ $ npm install
 $ npm run dev
 ```
 
-[Install MongoDB](https://treehouse.github.io/installation-guides/mac/mongo-mac.html)
+#### To run server locally:  
 
-To run MongoDB
+First [Install MongoDB](https://treehouse.github.io/installation-guides/mac/mongo-mac.html) if not already installed  
 
+To run it:  
 ```sh
 $ mongod
 ```
 
+Next you will need to configure an env file
+```bash
+cp /server/example.env .env
+```
+  
+Open the newly created .env file and update the environment:
+```
+NODE_ENV="dev"
+```
 
-To run server
-
+Now you're ready to run the server:  
 ```sh
 $ cd server
 $ npm install
 $ npm run dev
 ```
 
-For PC
+#### For PC
 
 ```sh
 $ npm run dev:pc
@@ -59,8 +68,18 @@ _____________________________________________
 
 ## Deployment
 
+ You will need to first install `forever` to run the server
+ ```bash
+ sudo npm install -g forever
+```
+
+The command to manually run the server using `forever`:  
+```bash
+forever start ./server/bin/www
+```
+
 ### Deploy Script
-There is a `deploy.sh` script in the root of the repo that will run the build for you.
+There is a `deploy.sh` script in the root of the repo that will run the build for you and start the server.
 
 In order to run the script you need to ensure it is executable:
 ```
@@ -71,13 +90,10 @@ What the Deploy Script does:
  - Pull the latest from git 
 		- (We may want to add an env variable that we can use to specify a branch in the future)
  - Run npm install and build the client
+ - Create the directory for file uploads
  - Run npm install for the server
+ - Trigger the `forever` command to keep the server running
  
- You will also want to install `forever` to run the server  
- ```bash
- sudo npm install -g forever
- forever start ./server/bin/www
-```
 
 ### Nginx config  
 Along with your other normal server config, you will want to point the server root at the client/dist directory:
