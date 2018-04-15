@@ -15,7 +15,7 @@ const schema = {
 
 const Leaderboard = factory("Leaderboard", schema)
 
-function createPlayerLeaderBoard(id) {
+const createPlayerLeaderBoard = (id) => {
   let newLeaderboard = new Leaderboard({
     player: id,
     wins: 0,
@@ -37,7 +37,7 @@ function createPlayerLeaderBoard(id) {
   })
 }
 
-function fetchLeaderboard() {
+const fetchLeaderboard = () => {
   return new Promise((resolve, reject) => {
     Leaderboard.find({})
       .populate('player')
@@ -50,7 +50,7 @@ function fetchLeaderboard() {
   })
 }
 
-function fetchPlayerLeaderboard(id) {
+const fetchPlayerLeaderboard = (id) => {
   return new Promise((resolve, reject) => {
     Leaderboard.find({player: id}, Object.keys(schema).join(" "), function (error, leaderboard) {
       if (error) {
@@ -61,7 +61,7 @@ function fetchPlayerLeaderboard(id) {
   })
 }
 
-function updatePlayerLeaderboard(id, newLeaderboard) {
+const updatePlayerLeaderboard = (id, newLeaderboard) => {
   return new Promise((resolve, reject) => {
     Leaderboard.fetchPlayerLeaderboard(id, Object.keys(schema).join(" "), function (error, leaderboard) {
       if (error) {
@@ -83,7 +83,7 @@ function updatePlayerLeaderboard(id, newLeaderboard) {
   })
 }
 
-let updateLeaderboard = (gameResult) => {
+const updateLeaderboard = (gameResult) => {
   return new Promise((resolve, reject) => {
     Leaderboard.findOne({player: gameResult.player}, function (error, leaderboard) {
       if (error) {

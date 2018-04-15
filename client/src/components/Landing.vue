@@ -142,7 +142,6 @@
   import Paper from '../assets/images/paper.svg'
   import Scissors from '../assets/images/scissors.svg'
 
-  let _ = require('lodash');
   export default {
     data() {
       return {
