@@ -21,45 +21,40 @@
         </router-link>
 
         <div class="container">
-          <div class="columns is-centered">
-              <div class="column is-6">
-                <div v-for="(player, index) in players">
-                  <div class="card bottom-space shadow-animate">
-                    <header class="card-header">
-                      <p class="card-header-title is-centered">
-                        Player {{ index + 1 }}
-                      </p>
-                    </header>
-                    <div class="card-content">
-                      <article class="media">
-                        <div class="media-left">
-                          <figure class="image" v-if="player.avatar">
-                            <img :src="player.avatar" alt="Player Avatar">
-                          </figure>
-                          <figure class="image" v-else>
-                            <img src="http://via.placeholder.com/150x200" alt="Player Avatar">
-                          </figure>
-
-                        </div>
-                        <div class="media-content">
-                          <div class="content">
-                            <p><strong class="title is-2 is-primary">{{ player.name }}</strong></p>
-                            <p>Nickname: {{ player.nickname }}</p>
-                            <p>Victory Chant: "{{ player.chant }}"</p>
-                          </div>
-                        </div>
-                      </article>
-                    </div>
-                    <footer class="card-footer">
-                      <router-link v-bind:to="{ name: 'PlayerProfile', params: { id: player._id } }" class="card-footer-item is-primary">Profile
-                      </router-link>
-                      <router-link v-bind:to="{ name: 'EditPlayer', params: { id: player._id } }" class="card-footer-item is-primary">Edit
-                      </router-link>
-                      <a href="#" class="card-footer-item is-primary" @click="deleteAlert(player._id, player.name)">Delete</a>
-                    </footer>
+          <div class="columns is-multiline">
+            <div class="column is-4" v-for="(player, index) in players">
+              <div class="card bottom-space shadow-animate">
+                <header class="card-header">
+                  <p class="card-header-title is-centered">
+                    Player {{ index + 1 }}
+                  </p>
+                </header>
+                <div class="card-image">
+                  <div class="image" v-if="player.avatar">
+                    <img :src="playerImage(player.avatar)" class="" alt="Player Avatar">
                   </div>
+                  <p class="has-text-centered chant">"{{ player.chant }}"</p>
                 </div>
+                <div class="card-content has-text-centered">
+                  <p><strong class="title is-2 is-primary">{{ player.name }}</strong></p>
+                  <p><strong>Nickname:</strong> {{ player.nickname }}</p>
+                  <p>
+                    <strong>Wins:</strong> 1
+                    <strong>Losses:</strong> 1
+                  </p>
+                </div>
+                <footer class="card-footer">
+                  <router-link v-bind:to="{ name: 'PlayerProfile', params: { id: player._id } }"
+                               class="card-footer-item is-primary">Profile
+                  </router-link>
+                  <router-link v-bind:to="{ name: 'EditPlayer', params: { id: player._id } }"
+                               class="card-footer-item is-primary">Edit
+                  </router-link>
+                  <a href="#" class="card-footer-item is-primary"
+                     @click="deleteAlert(player._id, player.name)">Delete</a>
+                </footer>
               </div>
+            </div>
           </div>
         </div>
       </div>
@@ -88,6 +83,8 @@
 <script>
   import PlayerService from '@/services/PlayerService'
   import LoadingIndicator from "./LoadingIndicator.vue"
+
+  import defaultImage from '@/assets/images/default-avatar.png'
 
   export default {
     components: {LoadingIndicator},
@@ -134,6 +131,9 @@
             })
           }
         })
+      },
+      playerImage(image) {
+        return image ? `/static/uploads/${image}` : defaultImage
       }
     }
   }
