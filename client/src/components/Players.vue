@@ -19,33 +19,37 @@
         <router-link v-bind:to="{ name: 'NewPlayer' }" class="button is-primary is-fullwidth u-margin--bottom">
           Add Player
         </router-link>
-        <div class="columns is-centered">
-          <div class="column is-half">
-            <table class="table is-bordered is-narrow is-hoverable is-fullwidth">
-              <thead>
-              <tr>
-                <th>Name</th>
-                <th>Nickname</th>
-                <th>Chant</th>
-                <th>Edit</th>
-                <th>Delete</th>
-              </tr>
-              </thead>
-              <tbody>
-              <tr v-for="player in players">
-                <td>{{ player.name }}</td>
-                <td>{{ player.nickname }}</td>
-                <td>{{ player.chant }}</td>
-                <td align="center">
-                  <router-link v-bind:to="{ name: 'EditPlayer', params: { id: player._id } }" class="button">Edit
+
+        <div class="container">
+          <div class="columns is-multiline">
+            <div class="column is-4" v-for="(player, index) in players">
+              <div class="card bottom-space shadow-animate">
+                <div class="card-image">
+                  <div class="image players-avatar">
+                    <img :src="playerImage(player.avatar)" class="u-margin--top" alt="Player Avatar">
+                  </div>
+                  <p class="has-text-centered chant">"{{ player.chant }}"</p>
+                </div>
+                <div class="card-content has-text-centered">
+                  <p><strong class="title is-2 is-primary card-name">{{ player.name }}</strong></p>
+                  <p><strong>Nickname:</strong> {{ player.nickname }}</p>
+                  <!--<p>-->
+                    <!--<strong>Wins:</strong> 1-->
+                    <!--<strong>Losses:</strong> 1-->
+                  <!--</p>-->
+                </div>
+                <footer class="card-footer">
+                  <router-link v-bind:to="{ name: 'PlayerProfile', params: { id: player._id } }"
+                               class="card-footer-item is-primary">Profile
                   </router-link>
-                </td>
-                <td>
-                  <a href="#" class="button" @click="deleteAlert(player._id, player.name)">Delete</a>
-                </td>
-              </tr>
-              </tbody>
-            </table>
+                  <router-link v-bind:to="{ name: 'EditPlayer', params: { id: player._id } }"
+                               class="card-footer-item is-primary">Edit
+                  </router-link>
+                  <a href="#" class="card-footer-item is-primary"
+                     @click="deleteAlert(player._id, player.name)">Delete</a>
+                </footer>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -74,6 +78,8 @@
 <script>
   import PlayerService from '@/services/PlayerService'
   import LoadingIndicator from "./LoadingIndicator.vue"
+
+  import defaultImage from '@/assets/images/default-avatar.png'
 
   export default {
     components: {LoadingIndicator},
@@ -120,6 +126,9 @@
             })
           }
         })
+      },
+      playerImage(image) {
+        return image ? `/static/uploads/${image}` : defaultImage
       }
     }
   }
