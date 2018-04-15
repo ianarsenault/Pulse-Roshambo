@@ -41,7 +41,7 @@
                       </div>
                     </div>
                     <div class="field">
-                      <img :src="avatar" class="image">
+                      <img :src="imageSrc ? imageSrc : avatar" class="image">
                       <input @change="uploadImage" type="file" name="avatar" accept="image/*">
                     </div>
                   </form>
@@ -123,19 +123,11 @@
         input.type = 'text'
         input.type = 'file'
       },
-      onFileChange(e) {
-        let files = e.target.files || e.dataTransfer.files
-        if (!files) {
-          return
-        }
-        this.createImage(files)
-      },
       uploadImage(e) {
         let files = e.target.files
         if(!files[0]) {
           return
         }
-        console.log(files[0])
         let data = new FormData()
         data.append('player', this.player.name)
         data.append('image', files[0])
@@ -143,6 +135,7 @@
         let fileName = files[0].name
         reader.onload = (e) => {
           this.player.avatar = `${this.player.name}.${fileName.substr(fileName.lastIndexOf('.') + 1)}`
+          this.imageSrc = e.target.result
         };
 
         PlayerService.uploadAvatar(data).then(res => {
