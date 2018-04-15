@@ -51,13 +51,11 @@ function fetchPlayerGames(id) {
           if (error) { reject(error) }
           resolve(gameLogs)
         })
-
-
     })
 }
 
 function addGame(date, playerOne, playerTwo, throwOne, throwTwo, winner) {
-    let new_game = new GameLogs({
+    let newGame = new GameLogs({
       date: date,
       playerOne: playerOne,
       playerOneThrew: throwOne,
@@ -66,7 +64,7 @@ function addGame(date, playerOne, playerTwo, throwOne, throwTwo, winner) {
       winner: winner
     })
     return new Promise((resolve, reject) => {
-        new_game.save(function (error, gamelog) {
+        newGame.save(function (error, gamelog) {
             if (error) {
                 reject(error)
             }

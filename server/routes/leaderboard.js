@@ -16,6 +16,18 @@ module.exports = (app) => {
     )
   })
 
+  // Update Leaderboard from a battle
+  app.post(`${apiPrefix}/leaderboard/update`, (req, res) => {
+    Leaderboard.updateLeaderboard(req.body).then(
+      (leaderboard) => {
+        res.send({leaderboard: leaderboard})
+      },
+      (err) => {
+        console.error(err)
+      }
+    )
+  })
+
   // Fetch all leaderboards in the database
   app.get(`${apiPrefix}/leaderboard`, (req, res) => {
     Leaderboard.fetchLeaderboard().then(
