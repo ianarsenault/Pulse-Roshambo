@@ -47,6 +47,7 @@ function fetchPlayerGames(id) {
         .populate('playerOne')
         .populate('playerTwo')
         .populate('winner')
+        .limit(3)
         .exec((error, gameLogs) => {
           if (error) { reject(error) }
           resolve(gameLogs)
