@@ -64,4 +64,17 @@ module.exports = (app) => {
       }
     )
   })
+
+  // Delete a player from leaderboard
+  app.delete(`${apiPrefix}/leaderboard/:id`, (req, res) => {
+    Leaderboard.removePlayerLeaderboard(req.params.id).then(
+      (success) => {
+        res.send({success: true})
+      },
+      (err) => {
+        console.error(err)
+      }
+    )
+  })
+
 }

@@ -115,10 +115,24 @@ const updateLeaderboard = (gameResult) => {
   })
 }
 
+const removePlayerLeaderboard = (player) => {
+  return new Promise((resolve, reject) => {
+    Leaderboard.remove({
+      player: player
+    }, function (error, player) {
+      if (error) {
+        reject(error)
+      }
+      resolve(true)
+    })
+  })
+}
+
 module.exports = {
   fetchLeaderboard,
   fetchPlayerLeaderboard,
   updatePlayerLeaderboard,
   createPlayerLeaderBoard,
-  updateLeaderboard
+  updateLeaderboard,
+  removePlayerLeaderboard
 }

@@ -61,8 +61,10 @@ module.exports = (app) => {
   // Delete a player
   app.delete(`${apiPrefix}/players/:id`, (req, res) => {
     Players.removeOne(req.params.id).then(
-      (success) => {
-        res.send({success: true})
+      (message) => {
+        // DELETE USER FROM LEADERBOARD
+        Leaderboard.removePlayerLeaderboard(message.user._id)
+        res.send(message.success)
       },
       (err) => {
         console.error(err)
