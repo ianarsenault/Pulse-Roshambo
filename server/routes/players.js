@@ -1,15 +1,15 @@
 let Players = require("../models/players")
 let multer  = require('multer')
-let Leaderboard = require("../models/leaderboard");
+let Leaderboard = require("../models/leaderboard")
 
-let apiPrefix = '/api';
+let apiPrefix = '/api'
 
 module.exports = (app) => {
   // Add new player
   app.post(`${apiPrefix}/players`, (req, res) => {
     Players.addPlayer(req.body.name, req.body.nickname, req.body.chant, req.body.avatar).then(
       (message) => {
-        Leaderboard.createPlayerLeaderBoard(message.user.id);
+        Leaderboard.createPlayerLeaderBoard(message.user.id)
         res.send(message)
       },
       (err) => {
