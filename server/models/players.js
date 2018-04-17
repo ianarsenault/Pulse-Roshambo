@@ -105,7 +105,11 @@ function removeOne(id) {
       if (error) {
         reject(error)
       }
-      resolve(true)
+      resolve({
+        player: player,
+        success: true,
+        message: 'Player was successfully deleted'
+      })
     })
   })
 }

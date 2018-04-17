@@ -46,7 +46,7 @@
                                class="card-footer-item is-primary">Edit
                   </router-link>
                   <a href="#" class="card-footer-item is-primary"
-                     @click="deleteAlert(player._id, player.name)">Delete</a>
+                     @click="deleteAlert(player)">Delete</a>
                 </footer>
               </div>
             </div>
@@ -105,20 +105,20 @@
         this.players = response.data.players
         this.dataLoaded = true
       },
-      async deletePlayer(id) {
-        await PlayerService.deletePlayer(id)
-        this.getPlayers()
-        this.$router.push({name: 'Players'})
+      async deletePlayer(player) {
+        await PlayerService.deletePlayer(player._id)
+        let index = this.players.indexOf(player)
+        this.players.splice(index, 1)
       },
-      deleteAlert(id, name) {
+      deleteAlert(player) {
         this.$snackbar.open({
           duration: 5000,
-          message: 'Do you want to delete  ' + name + '? ',
+          message: 'Do you want to delete  ' + player.name + '? ',
           type: 'is-danger',
           position: 'is-bottom',
           actionText: 'Yes',
           onAction: () => {
-            this.deletePlayer(id)
+            this.deletePlayer(player)
             this.$toast.open({
               message: 'Player Deleted',
               type: 'is-danger',
