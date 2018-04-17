@@ -63,7 +63,7 @@ module.exports = (app) => {
     Players.removeOne(req.params.id).then(
       (message) => {
         // DELETE USER FROM LEADERBOARD
-        Leaderboard.removePlayerLeaderboard(message.user._id)
+        Leaderboard.removePlayerLeaderboard(req.params.id)
         res.send(message.success)
       },
       (err) => {
