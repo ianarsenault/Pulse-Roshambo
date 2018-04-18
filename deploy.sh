@@ -27,15 +27,15 @@ cd ${DEPLOY_DIR}
 
 # Application Build
 git pull
-mkdir tmp
-cp -r ./client/dist/static/uploads tmp
+mkdir ./tmp
+cp -r ./client/dist/static/uploads ./tmp
 cd client
 npm install --production
 npm run build
 mkdir ./dist/static/uploads
 cd ..
-cp -r tmp ./client/dist/static/uploads
-rm -r tmp
+cp -r ./tmp ./client/dist/static/uploads
+rm -r ./tmp
 cd server
 cp example.env .env
 npm install --production
