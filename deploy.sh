@@ -26,19 +26,26 @@ echo "Execute commands in deployment directory"
 cd ${DEPLOY_DIR}
 
 # Application Build
+echo "Building Roshambo..."
 git pull
+echo "Create temporary folder"
 mkdir ./tmp
+echo "Backing up Uploads"
 cp -r ./client/dist/static/uploads ./tmp
 cd client
+echo "Build client"
 npm install --production
 npm run build
 mkdir ./dist/static/uploads
 cd ..
+echo "Put images back"
 cp -r ./tmp ./client/dist/static/uploads
 rm -r ./tmp
 cd server
+echo "Building server"
 cp example.env .env
 npm install --production
+echo "Starting server"
 forever stopall
 forever start ./bin/www
 
