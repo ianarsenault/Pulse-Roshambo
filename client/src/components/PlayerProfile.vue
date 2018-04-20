@@ -165,7 +165,7 @@
       },
       async getPlayerGames () {
         const response = await GameLogsService.getPlayerGames({
-          id: this.$route.params.id
+          id: this.$route.params.id,
         })
         this.games = response.data
         this.dataLoaded = true

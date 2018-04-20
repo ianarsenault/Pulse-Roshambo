@@ -36,7 +36,7 @@ function fetchAll() {
     })
 }
 
-function fetchPlayerGames(id) {
+function fetchPlayerGames(id, limit = 3) {
     return new Promise((resolve, reject) => {
       GameLogs.find({
         $or:[
@@ -47,7 +47,7 @@ function fetchPlayerGames(id) {
         .populate('playerOne')
         .populate('playerTwo')
         .populate('winner')
-        .limit(3)
+        .limit(limit)
         .exec((error, gameLogs) => {
           if (error) { reject(error) }
           resolve(gameLogs)
