@@ -27,12 +27,12 @@
                     {{ player.chant }}
                   </div>
                   <!--<div class="field">-->
-                    <!--<label class="label">Conquered: </label>-->
-                    <!--&lt;!&ndash; {{ conquered }} &ndash;&gt;-->
+                  <!--<label class="label">Conquered: </label>-->
+                  <!--&lt;!&ndash; {{ conquered }} &ndash;&gt;-->
                   <!--</div>-->
                   <!--<div class="field">-->
-                    <!--<label class="label">Nemesis: </label>-->
-                    <!--&lt;!&ndash; {{ nemesis }} &ndash;&gt;-->
+                  <!--<label class="label">Nemesis: </label>-->
+                  <!--&lt;!&ndash; {{ nemesis }} &ndash;&gt;-->
                   <!--</div>-->
                 </div>
               </div>
@@ -73,47 +73,23 @@
             </div>
 
             <loading-indicator :data-loaded="dataLoaded"></loading-indicator>
-            <template v-if="dataLoaded">
-              <div v-if="games && games.length > 0"
-                   v-for="game in games"
-                   class="columns is-centered">
-                <div class="column is-11 card u-margin--bottom">
-                  <div class="log">
+            <div v-if="games && games.length > 0"
+                 v-for="game in games"
+                 class="columns is-centered">
+              <div class="column is-11">
+                <game-card :game="game"></game-card>
+              </div>
+            </div>
 
-                    <div class="log-player">
-                      <p class="log-player--name">{{ game.playerOne.name }}</p>
-                      <img :src="playerImage(game.playerOne.avatar)" class="log-player--avatar">
-                      <game-result :winner="game.winner" :player="game.playerOne"></game-result>
-                    </div>
-
-                    <div class="log-summary">
-                      <p>{{ moment(game.date).format('dddd, MMMM Do YYYY, h:mm a') }}</p>
-
-                      <div class="log-throws">
-                        <img :src="images[game.playerOneThrew]" class="log-throws--image">
-                        <img :src="images[game.playerTwoThrew]" class="log-throws--image">
-                      </div>
-                    </div>
-
-                    <div class="log-player">
-                      <p class="log-player--name">{{ game.playerTwo.name }}</p>
-                      <img :src="playerImage(game.playerTwo.avatar)" class="log-player--avatar">
-                      <game-result :winner="game.winner" :player="game.playerTwo"></game-result>
-                    </div>
-
-                  </div>
+            <div v-else>
+              <div class="columns is-centered">
+                <div class="column is-half">
+                  <figure class="image">
+                    <img src="../assets/images/nothing2see.gif" alt="Nothing Here">
+                  </figure>
                 </div>
               </div>
-              <div v-else>
-                <div class="columns is-centered">
-                  <div class="column is-half">
-                    <figure class="image">
-                      <img src="../assets/images/nothing2see.gif" alt="Nothing Here">
-                    </figure>
-                  </div>
-                </div>
-              </div>
-            </template>
+            </div>
           </div>
         </div>
       </div>
@@ -126,30 +102,22 @@
   import GameLogsService from '@/services/GameLogsService'
   import moment from 'moment'
   import LoadingIndicator from "./LoadingIndicator.vue"
-  import GameResult from "./GameResult.vue"
+  import GameCard from "./GameCard.vue"
 
   import defaultImage from '@/assets/images/default-avatar.png'
-  import Rock from '../assets/images/rock.svg'
-  import Paper from '../assets/images/paper.svg'
-  import Scissors from '../assets/images/scissors.svg'
 
   export default {
-    components: {LoadingIndicator, GameResult},
     name: 'PlayerProfile',
-    data () {
+    components: {LoadingIndicator, GameCard},
+    data() {
       return {
         player: [],
         games: [],
         errors: [],
         dataLoaded: false,
-        images: {
-          Rock,
-          Paper,
-          Scissors
-        },
       }
     },
-    mounted () {
+    mounted() {
       this.getPlayer()
       this.getPlayerGames()
     },
@@ -157,13 +125,13 @@
       moment: function (date) {
         return moment(date)
       },
-      async getPlayer () {
+      async getPlayer() {
         const response = await PlayerService.getPlayer({
           id: this.$route.params.id
         })
         this.player = response.data
       },
-      async getPlayerGames () {
+      async getPlayerGames() {
         const response = await GameLogsService.getPlayerGames({
           id: this.$route.params.id,
         })
