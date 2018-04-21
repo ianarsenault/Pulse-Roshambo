@@ -16,8 +16,10 @@
     <loading-indicator :data-loaded="dataLoaded"></loading-indicator>
 
     <template v-if="dataLoaded && games && games.length > 0">
-      <div v-for="game in games" class="columns" style="margin: 0 10%;">
-        <game-card :game="game"></game-card>
+      <div v-for="game in games" class="columns is-centered" style="margin: 0 10%;">
+        <div class="column is-three-quarters">
+          <game-card :game="game"></game-card>
+        </div>
       </div>
     </template>
 

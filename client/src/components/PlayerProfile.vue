@@ -76,7 +76,9 @@
             <div v-if="games && games.length > 0"
                  v-for="game in games"
                  class="columns is-centered">
-              <game-card :game="game"></game-card>
+              <div class="column is-11">
+                <game-card :game="game"></game-card>
+              </div>
             </div>
 
             <div v-else>
