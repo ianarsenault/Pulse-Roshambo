@@ -27,12 +27,12 @@
                     {{ player.chant }}
                   </div>
                   <!--<div class="field">-->
-                    <!--<label class="label">Conquered: </label>-->
-                    <!--&lt;!&ndash; {{ conquered }} &ndash;&gt;-->
+                  <!--<label class="label">Conquered: </label>-->
+                  <!--&lt;!&ndash; {{ conquered }} &ndash;&gt;-->
                   <!--</div>-->
                   <!--<div class="field">-->
-                    <!--<label class="label">Nemesis: </label>-->
-                    <!--&lt;!&ndash; {{ nemesis }} &ndash;&gt;-->
+                  <!--<label class="label">Nemesis: </label>-->
+                  <!--&lt;!&ndash; {{ nemesis }} &ndash;&gt;-->
                   <!--</div>-->
                 </div>
               </div>
@@ -73,8 +73,23 @@
             </div>
 
             <loading-indicator :data-loaded="dataLoaded"></loading-indicator>
-            <games :data-loaded="dataLoaded"></games>
+            <div v-if="games && games.length > 0"
+                 v-for="game in games"
+                 class="columns is-centered">
+              <div class="column is-12 card u-margin--bottom">
+                  <games :game="game" />
+              </div>
+            </div>
 
+            <div v-else>
+              <div class="columns is-centered">
+                <div class="column is-half">
+                  <figure class="image">
+                    <img src="../assets/images/nothing2see.gif" alt="Nothing Here">
+                  </figure>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -91,27 +106,19 @@
   import Games from "./Games.vue"
 
   import defaultImage from '@/assets/images/default-avatar.png'
-  import Rock from '../assets/images/rock.svg'
-  import Paper from '../assets/images/paper.svg'
-  import Scissors from '../assets/images/scissors.svg'
 
   export default {
     components: {LoadingIndicator, GameResult, Games},
     name: 'PlayerProfile',
-    data () {
+    data() {
       return {
         player: [],
         games: [],
         errors: [],
         dataLoaded: false,
-        images: {
-          Rock,
-          Paper,
-          Scissors
-        },
       }
     },
-    mounted () {
+    mounted() {
       this.getPlayer()
       this.getPlayerGames()
     },
@@ -119,13 +126,13 @@
       moment: function (date) {
         return moment(date)
       },
-      async getPlayer () {
+      async getPlayer() {
         const response = await PlayerService.getPlayer({
           id: this.$route.params.id
         })
         this.player = response.data
       },
-      async getPlayerGames () {
+      async getPlayerGames() {
         const response = await GameLogsService.getPlayerGames({
           id: this.$route.params.id,
         })
