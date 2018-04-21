@@ -100,14 +100,13 @@
   import GameLogsService from '@/services/GameLogsService'
   import moment from 'moment'
   import LoadingIndicator from "./LoadingIndicator.vue"
-  import GameResult from "./GameResult.vue"
   import GameCard from "./GameCard.vue"
 
   import defaultImage from '@/assets/images/default-avatar.png'
 
   export default {
     name: 'PlayerProfile',
-    components: {LoadingIndicator, GameResult, GameCard},
+    components: {LoadingIndicator, GameCard},
     data() {
       return {
         player: [],

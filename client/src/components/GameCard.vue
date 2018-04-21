@@ -41,6 +41,7 @@
   export default {
     name: 'GameCard',
     props: ['game'],
+    components: {GameResult},
     data() {
       return {
         images: {
