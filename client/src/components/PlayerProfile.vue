@@ -76,9 +76,7 @@
             <div v-if="games && games.length > 0"
                  v-for="game in games"
                  class="columns is-centered">
-              <div class="column is-12 card u-margin--bottom">
-                  <games :game="game" />
-              </div>
+              <game-card :game="game"></game-card>
             </div>
 
             <div v-else>
@@ -103,13 +101,13 @@
   import moment from 'moment'
   import LoadingIndicator from "./LoadingIndicator.vue"
   import GameResult from "./GameResult.vue"
-  import Games from "./Games.vue"
+  import GameCard from "./GameCard.vue"
 
   import defaultImage from '@/assets/images/default-avatar.png'
 
   export default {
-    components: {LoadingIndicator, GameResult, Games},
     name: 'PlayerProfile',
+    components: {LoadingIndicator, GameResult, GameCard},
     data() {
       return {
         player: [],
