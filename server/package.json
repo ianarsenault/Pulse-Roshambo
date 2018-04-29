@@ -7,16 +7,18 @@
     "start": "node ./bin/www",
     "dev": "DEBUG=server:* nodemon ./bin/www",
     "dev:pc": "SET DEBUG=server:* & nodemon ./bin/www",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha -R spec test/*-spec.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.18.2",
+    "chai": "^4.1.2",
     "cors": "^2.8.4",
     "dotenv": "^5.0.1",
     "express": "^4.16.3",
+    "mocha": "^5.1.1",
     "moment": "^2.22.0",
     "mongoose": "^5.0.10",
     "morgan": "^1.9.0",
