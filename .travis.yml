@@ -17,7 +17,18 @@ script:
   - ./travis_build.sh
 
 # Customize when the notification emails are sent.
+#notifications:
+#    slack: pulse-roshambo:c7OLG5LF7Eg7Zd2JrMqYxQkm
+#    on_success: never
+#    on_failure: always
+
 notifications:
-    slack: pulse-roshambo:c7OLG5LF7Eg7Zd2JrMqYxQkm
-    on_success: never
-    on_failure: always
+  slack:
+    rooms:
+      - pulse-roshambo:b6Rake1B1OmhMQSz5rTmzBNp#general
+      - pulse-roshambo:b6Rake1B1OmhMQSz5rTmzBNp#random
+  on_success: always
+  on_failure: always
+  email:
+    on_success: always # default: change
+    on_failure: always # default: always
