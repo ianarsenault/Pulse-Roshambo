@@ -1,6 +1,6 @@
 # Pulse-Roshambo
 
-+[![Build Status](https://travis-ci.org/ianarsenault/Pulse-Roshambo.svg?branch=master)](https://travis-ci.org/ianarsenault/Pulse-Roshambo)
+[![Build Status](https://travis-ci.org/ianarsenault/Pulse-Roshambo.svg?branch=master)](https://travis-ci.org/ianarsenault/Pulse-Roshambo)
 
 A Web App for Tier 3 members to roshambo over fixing bugs && production incidents
 
