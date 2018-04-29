@@ -16,17 +16,11 @@ services: mongodb
 script:
   - ./travis_build.sh
 
-# Customize when the notification emails are sent.
-#notifications:
-#    slack: pulse-roshambo:c7OLG5LF7Eg7Zd2JrMqYxQkm
-#    on_success: never
-#    on_failure: always
 
 notifications:
   slack:
     rooms:
       - pulse-roshambo:b6Rake1B1OmhMQSz5rTmzBNp#general
-      - pulse-roshambo:b6Rake1B1OmhMQSz5rTmzBNp#random
   on_success: always
   on_failure: always
   email:
