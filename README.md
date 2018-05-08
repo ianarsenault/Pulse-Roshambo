@@ -43,7 +43,7 @@ $ mongod
 
 Next you will need to configure an env file
 ```bash
-cp /server/example.env .env
+cp ./server/example.env .env
 ```
   
 Open the newly created .env file and update the environment:
@@ -68,6 +68,9 @@ _____________________________________________
 
 ## Deployment
 
+Follow these instructions to get mongodb setup on ubuntu
+https://docs.mongodb.com/manual/tutorial/install-mongodb-on-ubuntu/  
+  
  You will need to first install `forever` to run the server
  ```bash
  sudo npm install -g forever

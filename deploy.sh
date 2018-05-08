@@ -36,7 +36,7 @@ cd client
 echo "Build client"
 npm install --production
 npm run build
-mkdir ./dist/static/uploads
+mkdir -p ./dist/static/uploads
 cd ..
 echo "Put images back"
 cp -r ./tmp ./client/dist/static/uploads
