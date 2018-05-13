@@ -27,6 +27,9 @@ const schema = {
   },
   losses: {
     type: Number
+  },
+  archived: {
+    type: Boolean
   }
 }
 
@@ -37,7 +40,8 @@ function addPlayer(name, nickname, chant, avatar) {
     name: name,
     nickname: nickname,
     chant: chant,
-    avatar: avatar
+    avatar: avatar,
+    archived: false
   })
   return new Promise((resolve, reject) => {
     new_player.save(function (error, user) {
@@ -55,7 +59,7 @@ function addPlayer(name, nickname, chant, avatar) {
 
 function fetchAll() {
   return new Promise((resolve, reject) => {
-    Players.find({}, Object.keys(schema).join(" "), function (error, players) {
+    Players.find({ archived: false }, Object.keys(schema).join(" "), function (error, players) {
       if (error) {
         reject(error)
       }
@@ -97,6 +101,25 @@ function updateOne(id, playerObj) {
   })
 }
 
+function archiveOne(id) {
+  return new Promise((resolve, reject) => {
+    Players.findById(id, Object.keys(schema).join(" "), function (error, player) {
+      if (error) {
+        reject(error)
+      }
+
+      player.archived = true;
+
+      player.save(function (error) {
+        if (error) {
+          reject(error)
+        }
+        resolve(true)
+      })
+    })
+  })
+}
+
 function removeOne(id) {
   return new Promise((resolve, reject) => {
     Players.remove({
@@ -119,5 +142,6 @@ module.exports = {
   fetchAll,
   fetchOne,
   updateOne,
-  removeOne
+  removeOne,
+  archiveOne
 }

@@ -43,7 +43,7 @@ $ mongod
 
 Next you will need to configure an env file
 ```bash
-cp ./server/example.env .env
+cp server/example.env server/.env
 ```
   
 Open the newly created .env file and update the environment:

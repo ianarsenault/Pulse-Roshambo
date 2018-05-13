@@ -71,6 +71,20 @@ module.exports = (app) => {
     )
   })
 
+  // Archive a player
+  app.put(`${apiPrefix}/players/archive/:id`, (req, res) => {
+    Players.archiveOne(req.params.id).then(
+      (success) => {
+        res.send({success: true})
+      },
+      (err) => {
+        res.send(err)
+      }
+    ).catch(function (error) {
+      return error
+    })
+  })
+
   // Avatar upload
   let storage = multer.diskStorage({
     destination: function (req, file, cb) {

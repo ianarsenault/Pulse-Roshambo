@@ -106,7 +106,7 @@
         this.dataLoaded = true
       },
       async deletePlayer(player) {
-        await PlayerService.deletePlayer(player._id)
+        await PlayerService.archivePlayer(player._id)
         let index = this.players.indexOf(player)
         this.players.splice(index, 1)
       },
