@@ -21,6 +21,10 @@ export default {
     return Api().delete('players/' + id)
   },
 
+  archivePlayer(id) {
+    return Api().put('players/archive/' + id)
+  },
+
   uploadAvatar(params) {
     return Api().post('uploads', params, { headers: { 'Content-Type': 'multipart/form-data' } })
   }
