@@ -1,0 +1,30 @@
+# Required to run your project under the correct environment.
+language: node_js
+
+# Versions of NodeJS you want your project run with.
+node_js:
+  - "6"
+  - "stable"
+
+# Cache dependencies to speed up build
+cache:
+  directories:
+    - "node_modules"
+
+# Run services
+services: mongodb
+
+# Commands you want to run that will verify your build.
+script:
+  - ./travis_build.sh
+
+# Setup notifications
+notifications:
+  slack:
+    rooms:
+      - pulse-roshambo:b6Rake1B1OmhMQSz5rTmzBNp#general
+    on_success: always
+    on_failure: always
+  email:
+    on_success: never
+    on_failure: always
