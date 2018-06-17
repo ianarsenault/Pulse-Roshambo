@@ -135,7 +135,6 @@
     mounted() {
       this.getPlayer()
       this.getPlayerGames()
-      this.loadGraphs()
       this.tabs[0].isActive = true
     },
     methods: {
