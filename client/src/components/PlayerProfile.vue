@@ -53,11 +53,10 @@
 
             <div class="tabs is-boxed">
               <ul>
-                <!-- v-bind:class="isTabActive" -->
-                <li v-for="tab in tabs" v-bind:class="{'is-active': tab[0]}">
-                  <a @click.prevent="setActiveTab(tab.name)">
+                <li v-for="tab in tabs" v-bind:class="{'is-active': tab.isActive}">
+                  <a @click="selectTab(tab)">
                     <span class="icon is-small">
-                      <i  v-bind:class=[tab.icon.class]  aria-hidden="true"></i>
+                      <i  v-bind:class=[tab.icon]  aria-hidden="true"></i>
                     </span>
                     <span> {{ tab.displayName }} </span>
                   </a>
@@ -67,26 +66,30 @@
 
             <loading-indicator :data-loaded="dataLoaded"></loading-indicator>
 
-            <div v-if="(games && games.length > 0) || !showStats"
-                 v-for="game in games"
-                 class="columns is-centered">
-              <div class="column is-11">
-                <game-card :game="game"></game-card>
+            <div v-if="!showStats">
+              <div v-if="(games && games.length > 0)"
+                   v-for="game in games"
+                   class="columns is-centered">
+                <div class="column is-11">
+                  <game-card :game="game"></game-card>
+                </div>
               </div>
-            </div>
-            <div v-else>
-              <div class="columns is-centered">
-                <div class="column is-half">
-                  <figure class="image">
-                    <img src="../assets/images/nothing2see.gif" alt="Nothing Here">
-                  </figure>
+              <div v-else>
+                <div class="columns is-centered">
+                  <div class="column is-half">
+                    <figure class="image">
+                      <img src="../assets/images/nothing2see.gif" alt="Nothing Here">
+                    </figure>
+                  </div>
                 </div>
               </div>
             </div>
-            <div v-if="showStats">
+
+            <div v-show="showStats">
               <canvas id="barChart" width="400" height="200"></canvas>
               <canvas id="pieChart" width="400" height="200"></canvas>
             </div>
+
           </div>
         </div>
       </div>
@@ -113,35 +116,27 @@
         games: [],
         errors: [],
         dataLoaded: false,
+        isActive: false,
+        showStats: false,
         tabs: [
           {
             name: 'battles',
             displayName: 'Recent Battles',
-            icon: {
-              class: 'fas fa-list-alt'
-            }
+            icon: 'fas fa-list-alt'
 
           }, {
             name: 'stats',
             displayName: 'Player Statistics',
-            icon: {
-              class: 'fas fa-signal'
-            }
+            icon: 'fas fa-signal'
           }
-        ],
-        activeTabName: null
+        ]
       }
     },
     mounted() {
       this.getPlayer()
       this.getPlayerGames()
       this.loadGraphs()
-      this.activeTabName = this.tabs[0].name
-    },
-    computed: {
-      isTabActive() {
-        return 'is-active'
-      }
+      this.tabs[0].isActive = true
     },
     methods: {
       moment: function (date) {
@@ -184,16 +179,21 @@
       playerImage(image) {
         return image ? `/static/uploads/${image}` : defaultImage
       },
-      setActiveTab(name) {
-        this.activeTabName = name
-        console.log(this.activeTabName)
-      },
-      displayTabContent(name) {
-        return this.activeTabName === name
+      selectTab(selectedTab) {
+        this.tabs.forEach(
+          function(tab){
+            tab.isActive = (selectedTab.name === tab.name)
+          }
+        )
+        if (selectedTab.name === 'stats') {
+          this.showStats = true
+          this.loadGraphs()
+        } else {
+          this.showStats = false
+        }
       },
       loadGraphs() {
         let barchart = document.getElementById("barChart")
-
         let winsData = {
           label: '# of Wins',
           data: [32],
@@ -201,7 +201,6 @@
           borderColor: 'rgba(0, 128, 0, 1)',
           borderWidth: 1
         }
-
         let lossesData = {
           label: '# of Losses',
           data: [22],
@@ -209,7 +208,6 @@
           borderColor: 'rgba(190, 67, 78,1)',
           borderWidth: 1
         }
-
         let barChart = new Chart(barchart, {
           type: 'bar',
           data: {
@@ -230,10 +228,7 @@
           }
         })
 
-
         let piechart = document.getElementById("pieChart")
-
-
         let pieChart = new Chart(piechart, {
           type: 'pie',
           data: {
@@ -250,6 +245,7 @@
             }
           }
         })
+
       }
     }
   }
