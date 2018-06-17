@@ -26,14 +26,6 @@
                     <label class="label">Chant: </label>
                     {{ player.chant }}
                   </div>
-                  <!--<div class="field">-->
-                  <!--<label class="label">Conquered: </label>-->
-                  <!--&lt;!&ndash; {{ conquered }} &ndash;&gt;-->
-                  <!--</div>-->
-                  <!--<div class="field">-->
-                  <!--<label class="label">Nemesis: </label>-->
-                  <!--&lt;!&ndash; {{ nemesis }} &ndash;&gt;-->
-                  <!--</div>-->
                 </div>
               </div>
               <footer class="card-footer">
@@ -53,7 +45,7 @@
                     Player Overview
                   </h1>
                   <h2 class="subtitle">
-                    Most Recent Battles and more!
+                    Most Recent Battles and Player Statistics!
                   </h2>
                 </div>
               </div>
@@ -61,26 +53,27 @@
 
             <div class="tabs is-boxed">
               <ul>
-                <li class="is-active">
-                  <a>
+                <!-- v-bind:class="isTabActive" -->
+                <li v-for="tab in tabs" v-bind:class="{'is-active': tab[0]}">
+                  <a @click.prevent="setActiveTab(tab.name)">
                     <span class="icon is-small">
-                      <i class="fas fa-list-alt" aria-hidden="true"></i>
+                      <i  v-bind:class=[tab.icon.class]  aria-hidden="true"></i>
                     </span>
-                    <span>Recent Battles</span>
+                    <span> {{ tab.displayName }} </span>
                   </a>
                 </li>
               </ul>
             </div>
 
             <loading-indicator :data-loaded="dataLoaded"></loading-indicator>
-            <div v-if="games && games.length > 0"
+
+            <div v-if="(games && games.length > 0) || !showStats"
                  v-for="game in games"
                  class="columns is-centered">
               <div class="column is-11">
                 <game-card :game="game"></game-card>
               </div>
             </div>
-
             <div v-else>
               <div class="columns is-centered">
                 <div class="column is-half">
@@ -89,6 +82,10 @@
                   </figure>
                 </div>
               </div>
+            </div>
+            <div v-if="showStats">
+              <canvas id="barChart" width="400" height="200"></canvas>
+              <canvas id="pieChart" width="400" height="200"></canvas>
             </div>
           </div>
         </div>
@@ -103,6 +100,7 @@
   import moment from 'moment'
   import LoadingIndicator from "./LoadingIndicator.vue"
   import GameCard from "./GameCard.vue"
+  import chartjs from 'chart.js'
 
   import defaultImage from '@/assets/images/default-avatar.png'
 
@@ -115,11 +113,35 @@
         games: [],
         errors: [],
         dataLoaded: false,
+        tabs: [
+          {
+            name: 'battles',
+            displayName: 'Recent Battles',
+            icon: {
+              class: 'fas fa-list-alt'
+            }
+
+          }, {
+            name: 'stats',
+            displayName: 'Player Statistics',
+            icon: {
+              class: 'fas fa-signal'
+            }
+          }
+        ],
+        activeTabName: null
       }
     },
     mounted() {
       this.getPlayer()
       this.getPlayerGames()
+      this.loadGraphs()
+      this.activeTabName = this.tabs[0].name
+    },
+    computed: {
+      isTabActive() {
+        return 'is-active'
+      }
     },
     methods: {
       moment: function (date) {
@@ -161,6 +183,73 @@
       },
       playerImage(image) {
         return image ? `/static/uploads/${image}` : defaultImage
+      },
+      setActiveTab(name) {
+        this.activeTabName = name
+        console.log(this.activeTabName)
+      },
+      displayTabContent(name) {
+        return this.activeTabName === name
+      },
+      loadGraphs() {
+        let barchart = document.getElementById("barChart")
+
+        let winsData = {
+          label: '# of Wins',
+          data: [32],
+          backgroundColor: 'rgba(0, 128, 0, 0.2)',
+          borderColor: 'rgba(0, 128, 0, 1)',
+          borderWidth: 1
+        }
+
+        let lossesData = {
+          label: '# of Losses',
+          data: [22],
+          backgroundColor: 'rgba(190, 67, 78, 0.2)',
+          borderColor: 'rgba(190, 67, 78,1)',
+          borderWidth: 1
+        }
+
+        let barChart = new Chart(barchart, {
+          type: 'bar',
+          data: {
+            datasets: [winsData, lossesData]
+          },
+          options: {
+            title: {
+              display: true,
+              text: 'Name\'s Win Loss Bar Graph'
+            },
+            scales: {
+              yAxes: [{
+                ticks: {
+                  beginAtZero: true
+                }
+              }]
+            }
+          }
+        })
+
+
+        let piechart = document.getElementById("pieChart")
+
+
+        let pieChart = new Chart(piechart, {
+          type: 'pie',
+          data: {
+            labels: ["Wins", "Losses"],
+            datasets: [{
+              backgroundColor: ["rgba(0, 128, 0, 1)", "rgba(190, 67, 78,1)"],
+              data: [32, 22]
+            }]
+          },
+          options: {
+            title: {
+              display: true,
+              text: 'Name\'s Win Loss Pie Chart'
+            }
+          }
+        })
       }
     }
   }
