@@ -86,8 +86,16 @@
             </div>
 
             <div v-show="showStats">
-              <canvas id="barChart" width="400" height="200"></canvas>
-              <canvas id="pieChart" width="400" height="200"></canvas>
+              <div class="columns is-centered">
+                <div class="column is-11">
+                  <div class="card bottom-space">
+                    <canvas id="barChart" width="400" height="200"></canvas>
+                  </div>
+                  <div class="card bottom-space">
+                    <canvas id="pieChart" width="400" height="200"></canvas>
+                  </div>
+                </div>
+              </div>
             </div>
 
           </div>
@@ -192,7 +200,7 @@
         }
       },
       loadGraphs() {
-        let barchart = document.getElementById("barChart")
+        let barchart = document.getElementById("barChart").getContext("2d")
         let winsData = {
           label: '# of Wins',
           data: [32],
@@ -227,23 +235,26 @@
           }
         })
 
-        let piechart = document.getElementById("pieChart")
+        let piechart = document.getElementById("pieChart").getContext("2d")
         let pieChart = new Chart(piechart, {
           type: 'pie',
           data: {
-            labels: ["Wins", "Losses"],
+            labels: ["Rock", "Paper", "Scissors"],
             datasets: [{
-              backgroundColor: ["rgba(0, 128, 0, 1)", "rgba(190, 67, 78,1)"],
-              data: [32, 22]
+              backgroundColor: ['#87B2D6', '#A8E0FF', '#05668D'],
+              data: [12, 14, 9]
             }]
           },
           options: {
             title: {
               display: true,
-              text: 'Name\'s Win Loss Pie Chart'
+              text: 'Name\'s Most Thrown Hand'
             }
           }
         })
+
+        pieChart.update()
+        barChart.update()
 
       }
     }
