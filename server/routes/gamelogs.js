@@ -40,4 +40,28 @@ module.exports = (app) => {
       return error
     })
   })
+
+  // Fetch a single players wins
+  app.get(`${apiPrefix}/gamelogs/player/wins/:id`, (req, res) => {
+    GameLogs.fetchPlayerWins(req.params.id).then(
+      (gamelogs) => {
+        res.send(gamelogs)
+      },
+      (err) => {
+        console.error(err)
+      }
+    )
+  })
+
+  // Fetch a single players losses
+  app.get(`${apiPrefix}/gamelogs/player/losses/:id`, (req, res) => {
+    GameLogs.fetchPlayerLosses(req.params.id).then(
+      (gamelogs) => {
+        res.send(gamelogs)
+      },
+      (err) => {
+        console.error(err)
+      }
+    )
+  })
 }

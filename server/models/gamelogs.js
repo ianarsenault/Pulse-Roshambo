@@ -78,8 +78,36 @@ function addGame(date, playerOne, playerTwo, throwOne, throwTwo, winner) {
     })
 }
 
+function fetchPlayerWins(id) {
+  return new Promise((resolve, reject) => {
+    GameLogs.find({winner: id}, function (error, gamelog) {
+      if (error) {
+        reject(error)
+      }
+      resolve(gamelog)
+    })
+  })
+}
+
+function fetchPlayerLosses(id) {
+  return new Promise((resolve, reject) => {
+    GameLogs.find({
+      $or:[
+        {playerOne:id},
+        {playerTwo:id}
+      ]})
+      .where({ winner: { $ne: id } } )
+      .exec((error, gameLogs) => {
+        if (error) { reject(error) }
+        resolve(gameLogs)
+      })
+  })
+}
+
 module.exports = {
   fetchAll,
   fetchPlayerGames,
-  addGame
+  addGame,
+  fetchPlayerWins,
+  fetchPlayerLosses
 }

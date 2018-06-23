@@ -91,9 +91,9 @@
                   <div class="card bottom-space">
                     <canvas id="barChart" width="400" height="200"></canvas>
                   </div>
-                  <div class="card bottom-space">
-                    <canvas id="pieChart" width="400" height="200"></canvas>
-                  </div>
+                  <!--<div class="card bottom-space">-->
+                    <!--&lt;!&ndash;<canvas id="pieChart" width="400" height="200"></canvas>&ndash;&gt;-->
+                  <!--</div>-->
                 </div>
               </div>
             </div>
@@ -137,12 +137,16 @@
             displayName: 'Player Statistics',
             icon: 'fas fa-signal'
           }
-        ]
+        ],
+        winCount: null,
+        lossCount: null
       }
     },
     mounted() {
       this.getPlayer()
       this.getPlayerGames()
+      this.getPlayerWinCount()
+      this.getPlayerLossCount()
       this.tabs[0].isActive = true
     },
     methods: {
@@ -161,6 +165,18 @@
         })
         this.games = response.data
         this.dataLoaded = true
+      },
+      async getPlayerWinCount() {
+        const response = await GameLogsService.getPlayerWinsCount({
+          id: this.$route.params.id,
+        })
+        this.winCount = response.data.length
+      },
+      async getPlayerLossCount() {
+        const response = await GameLogsService.getPlayerLossCount({
+          id: this.$route.params.id,
+        })
+        this.lossCount = response.data.length
       },
       async deletePlayer(id) {
         await PlayerService.deletePlayer(id)
@@ -203,14 +219,14 @@
         let barchart = document.getElementById("barChart").getContext("2d")
         let winsData = {
           label: '# of Wins',
-          data: [32],
+          data: [this.winCount],
           backgroundColor: 'rgba(0, 128, 0, 0.2)',
           borderColor: 'rgba(0, 128, 0, 1)',
           borderWidth: 1
         }
         let lossesData = {
           label: '# of Losses',
-          data: [22],
+          data: [this.lossCount],
           backgroundColor: 'rgba(190, 67, 78, 0.2)',
           borderColor: 'rgba(190, 67, 78,1)',
           borderWidth: 1
@@ -223,12 +239,14 @@
           options: {
             title: {
               display: true,
-              text: 'Name\'s Win Loss Bar Graph'
+              text: this.player.name + '\'s Win Loss Data',
+              fontSize: 18
             },
             scales: {
               yAxes: [{
                 ticks: {
-                  beginAtZero: true
+                  beginAtZero: true,
+                  stepSize: 1
                 }
               }]
             }
