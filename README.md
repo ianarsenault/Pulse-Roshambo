@@ -23,15 +23,15 @@ ______________________________________________
 #### Clone repo
 
 ```sh
-$ git clone https://github.com/ianarsenault/Pulse-Roshambo.git
+git clone https://github.com/ianarsenault/Pulse-Roshambo.git
 ```
 
 #### Run client
 
 ```sh
-$ cd client
-$ npm install
-$ npm run dev
+cd client
+npm install
+npm run dev
 ```
 
 #### To run server locally:  
@@ -40,7 +40,7 @@ First [Install MongoDB](https://treehouse.github.io/installation-guides/mac/mong
 
 To run it:  
 ```sh
-$ mongod
+mongod
 ```
 
 Next you will need to configure an env file
@@ -55,15 +55,15 @@ NODE_ENV="dev"
 
 Now you're ready to run the server:  
 ```sh
-$ cd server
-$ npm install
-$ npm run dev
+cd server
+npm install
+npm run dev
 ```
 
 #### For PC
 
 ```sh
-$ npm run dev:pc
+npm run dev:pc
 ```
 
 _____________________________________________
@@ -74,8 +74,8 @@ Follow these instructions to get mongodb setup on ubuntu
 https://docs.mongodb.com/manual/tutorial/install-mongodb-on-ubuntu/  
   
  You will need to first install `forever` to run the server
- ```bash
- sudo npm install -g forever
+```bash
+sudo npm install -g forever
 ```
 
 The command to manually run the server using `forever`:  
@@ -114,14 +114,14 @@ server {
 
 Setup a proxy for the api:
 ```
-    location /api {
-        proxy_pass http://localhost:8081;
-        proxy_http_version 1.1;
-        proxy_set_header Upgrade $http_upgrade;
-        proxy_set_header Connection 'upgrade';
-        proxy_set_header Host $host;
-        proxy_cache_bypass $http_upgrade;
-    }
+location /api {
+    proxy_pass http://localhost:8081;
+    proxy_http_version 1.1;
+    proxy_set_header Upgrade $http_upgrade;
+    proxy_set_header Connection 'upgrade';
+    proxy_set_header Host $host;
+    proxy_cache_bypass $http_upgrade;
+}
 ```
 _____________________________________________
 
