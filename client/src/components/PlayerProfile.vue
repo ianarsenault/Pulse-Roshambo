@@ -86,7 +86,44 @@
             </div>
 
             <div v-show="showStats">
-              <!--<button :click="loadGraphs()">Redraw graphs</button>-->
+              <div class="columns">
+                <div class="column is-4">
+                  <div class="card">
+                    <div class="card-content has-text-centered">
+                      <p class="title is-5">
+                        Games Played
+                      </p>
+                      <p class="subtitle">
+                        {{ playerStats.gamesCount }}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div class="column is-4">
+                  <div class="card">
+                    <div class="card-content has-text-centered">
+                      <p class="title is-5">
+                        Games Won
+                      </p>
+                      <p class="subtitle">
+                        {{ playerStats.winCount }}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div class="column is-4">
+                  <div class="card">
+                    <div class="card-content has-text-centered">
+                      <p class="title is-5">
+                        Overall Average
+                      </p>
+                      <p class="subtitle">
+                        {{ playerStats.average }}%
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
               <div class="columns is-centered">
                 <div class="column is-11">
                   <div class="card bottom-space">
@@ -140,11 +177,13 @@
           }
         ],
         playerStats: {
+          gamesCount: 0,
           winCount: 0,
           lossCount: 0,
           rockCount: 0,
           scissorCount: 0,
           paperCount: 0,
+          average: 0,
           stats: null
         }
       }
@@ -152,9 +191,12 @@
     mounted() {
       this.getPlayer()
       this.getPlayerGames()
+      this.getPlayerGameCount()
       this.getPlayerWinCount()
       this.getPlayerLossCount()
+      /** WIP **/
       this.getPlayerThrows()
+      /** END WIP **/
       this.tabs[0].isActive = true
     },
     methods: {
@@ -174,11 +216,18 @@
         this.games = response.data
         this.dataLoaded = true
       },
+      async getPlayerGameCount() {
+        const response = await GameLogsService.getPlayerGameCount({
+          id: this.$route.params.id,
+        })
+        this.playerStats.gamesCount = response.data.count
+      },
       async getPlayerWinCount() {
         const response = await GameLogsService.getPlayerWinsCount({
           id: this.$route.params.id,
         })
         this.playerStats.winCount = response.data.length
+        this.playerStats.average = (this.playerStats.winCount / this.playerStats.gamesCount ).toFixed(2)
       },
       async getPlayerLossCount() {
         const response = await GameLogsService.getPlayerLossCount({
@@ -186,12 +235,14 @@
         })
         this.playerStats.lossCount = response.data.length
       },
+      /** WIP **/
       async getPlayerThrows() {
         const response = await GameLogsService.getPlayerThrows({
           id: this.$route.params.id,
         })
         this.playerStats.stats = response.data
       },
+      /** END WIP **/
       async deletePlayer(id) {
         await PlayerService.deletePlayer(id)
         this.$router.push({name: 'Players'})
@@ -230,7 +281,6 @@
         }
       },
       loadGraphs() {
-        console.log('draw graphs')
         let barchart = document.getElementById("barChart").getContext("2d")
         let winsData = {
           label: '# of Wins',

@@ -104,17 +104,9 @@ function fetchPlayerLosses(id) {
   })
 }
 
-function FetchPlayerThrows(id) {
+/** WIP **/
+function fetchPlayerThrows(id) {
   return new Promise((resolve, reject) => {
-
-    // GameLogs.aggregate(
-    //   {$unwind: '$GameLogs'},
-    //   {$group: {:''}},
-    // ).exec((error, gameLogs) => {
-    //   if (error) { reject(error) }
-    //   resolve(gameLogs)
-    // })
-
 
     GameLogs.aggregate({
       $or:[
@@ -127,7 +119,24 @@ function FetchPlayerThrows(id) {
         resolve(gameLogs)
       })
 
+  })
+}
+/** END WIP **/
 
+function fetchPlayerGameCount(id) {
+  return new Promise((resolve, reject) => {
+    GameLogs.find({
+      $or:[
+        {playerOne:id},
+        {playerTwo:id}
+      ]})
+      .count((error, count) => {
+        if (error) { reject(error) }
+        let games = {
+          count: count
+        }
+        resolve(games)
+      })
   })
 }
 
@@ -137,5 +146,6 @@ module.exports = {
   addGame,
   fetchPlayerWins,
   fetchPlayerLosses,
-  FetchPlayerThrows
+  fetchPlayerThrows,
+  fetchPlayerGameCount
 }
