@@ -86,14 +86,15 @@
             </div>
 
             <div v-show="showStats">
+              <!--<button :click="loadGraphs()">Redraw graphs</button>-->
               <div class="columns is-centered">
                 <div class="column is-11">
                   <div class="card bottom-space">
                     <canvas id="barChart" width="400" height="200"></canvas>
                   </div>
-                  <!--<div class="card bottom-space">-->
-                    <!--&lt;!&ndash;<canvas id="pieChart" width="400" height="200"></canvas>&ndash;&gt;-->
-                  <!--</div>-->
+                  <div class="card bottom-space">
+                    <canvas id="pieChart" width="400" height="200"></canvas>
+                  </div>
                 </div>
               </div>
             </div>
@@ -138,8 +139,14 @@
             icon: 'fas fa-signal'
           }
         ],
-        winCount: null,
-        lossCount: null
+        playerStats: {
+          winCount: 0,
+          lossCount: 0,
+          rockCount: 0,
+          scissorCount: 0,
+          paperCount: 0,
+          stats: null
+        }
       }
     },
     mounted() {
@@ -147,6 +154,7 @@
       this.getPlayerGames()
       this.getPlayerWinCount()
       this.getPlayerLossCount()
+      this.getPlayerThrows()
       this.tabs[0].isActive = true
     },
     methods: {
@@ -170,13 +178,19 @@
         const response = await GameLogsService.getPlayerWinsCount({
           id: this.$route.params.id,
         })
-        this.winCount = response.data.length
+        this.playerStats.winCount = response.data.length
       },
       async getPlayerLossCount() {
         const response = await GameLogsService.getPlayerLossCount({
           id: this.$route.params.id,
         })
-        this.lossCount = response.data.length
+        this.playerStats.lossCount = response.data.length
+      },
+      async getPlayerThrows() {
+        const response = await GameLogsService.getPlayerThrows({
+          id: this.$route.params.id,
+        })
+        this.playerStats.stats = response.data
       },
       async deletePlayer(id) {
         await PlayerService.deletePlayer(id)
@@ -216,20 +230,21 @@
         }
       },
       loadGraphs() {
+        console.log('draw graphs')
         let barchart = document.getElementById("barChart").getContext("2d")
         let winsData = {
           label: '# of Wins',
-          data: [this.winCount],
-          backgroundColor: 'rgba(0, 128, 0, 0.2)',
-          borderColor: 'rgba(0, 128, 0, 1)',
-          borderWidth: 1
+          data: [this.playerStats.winCount],
+          backgroundColor: 'rgba(0, 128, 0, 1)',
+          borderColor: 'rgba(0, 128, 0, 0.2)',
+          borderWidth: 3
         }
         let lossesData = {
           label: '# of Losses',
-          data: [this.lossCount],
-          backgroundColor: 'rgba(190, 67, 78, 0.2)',
-          borderColor: 'rgba(190, 67, 78,1)',
-          borderWidth: 1
+          data: [this.playerStats.lossCount],
+          backgroundColor: 'rgba(190, 67, 78, 1)',
+          borderColor: 'rgba(190, 67, 78, 0.2)',
+          borderWidth: 3
         }
         let barChart = new Chart(barchart, {
           type: 'bar',
@@ -259,14 +274,15 @@
           data: {
             labels: ["Rock", "Paper", "Scissors"],
             datasets: [{
-              backgroundColor: ['#87B2D6', '#A8E0FF', '#05668D'],
+              backgroundColor: ['#d62d1e', '#ff634a', '#ff9300'],
               data: [12, 14, 9]
             }]
           },
           options: {
             title: {
               display: true,
-              text: 'Name\'s Most Thrown Hand'
+              text: this.player.name + '\'s Most Thrown Hand',
+              fontSize: 18
             }
           }
         })

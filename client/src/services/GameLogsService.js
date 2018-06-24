@@ -17,6 +17,10 @@ export default {
     return Api().get('gamelogs/player/losses/' + params.id)
   },
 
+  getPlayerThrows(params) {
+    return Api().get('gamelogs/player/throws/' + params.id)
+  },
+
   addGame(params) {
     return Api().post('gamelogs', params)
   }

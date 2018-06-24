@@ -64,4 +64,16 @@ module.exports = (app) => {
       }
     )
   })
+
+  // Fetch a player throws
+  app.get(`${apiPrefix}/gamelogs/player/throws/:id`, (req, res) => {
+    GameLogs.FetchPlayerThrows(req.params.id).then(
+      (gamelogs) => {
+        res.send(gamelogs)
+      },
+      (err) => {
+        console.error(err)
+      }
+    )
+  })
 }

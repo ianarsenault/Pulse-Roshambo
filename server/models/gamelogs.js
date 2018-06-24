@@ -104,10 +104,38 @@ function fetchPlayerLosses(id) {
   })
 }
 
+function FetchPlayerThrows(id) {
+  return new Promise((resolve, reject) => {
+
+    // GameLogs.aggregate(
+    //   {$unwind: '$GameLogs'},
+    //   {$group: {:''}},
+    // ).exec((error, gameLogs) => {
+    //   if (error) { reject(error) }
+    //   resolve(gameLogs)
+    // })
+
+
+    GameLogs.aggregate({
+      $or:[
+        {playerOne:id},
+        {playerTwo:id}
+      ]})
+      .where({ $cond: { if: { $eq: [ "playerOne", id ] }, then: "playerOneThrew", else: "playerTwoThrew" } } )
+      .exec((error, gameLogs) => {
+        if (error) { reject(error) }
+        resolve(gameLogs)
+      })
+
+
+  })
+}
+
 module.exports = {
   fetchAll,
   fetchPlayerGames,
   addGame,
   fetchPlayerWins,
-  fetchPlayerLosses
+  fetchPlayerLosses,
+  FetchPlayerThrows
 }
