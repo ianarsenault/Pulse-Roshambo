@@ -240,14 +240,12 @@
         })
         this.playerStats.lossCount = response.data.length
       },
-      /** WIP **/
       async getPlayerThrows() {
         const response = await GameLogsService.getPlayerThrows({
           id: this.$route.params.id,
         })
         this.playerStats.stats = response.data
       },
-      /** END WIP **/
       async deletePlayer(id) {
         await PlayerService.deletePlayer(id)
         this.$router.push({name: 'Players'})
@@ -336,7 +334,11 @@
             labels: ["Rock", "Paper", "Scissors"],
             datasets: [{
               backgroundColor: ['#d62d1e', '#ff634a', '#ff9300'],
-              data: [12, 14, 9]
+              data: [
+                this.playerStats.stats[0].Rock,
+                this.playerStats.stats[0].Paper,
+                this.playerStats.stats[0].Scissors
+              ]
             }]
           },
           options: {

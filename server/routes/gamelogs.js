@@ -65,19 +65,17 @@ module.exports = (app) => {
     )
   })
 
-  /** WIP **/
   // Fetch player throws
   app.get(`${apiPrefix}/gamelogs/player/throws/:id`, (req, res) => {
     GameLogs.fetchPlayerThrows(req.params.id).then(
-      (gamelogs) => {
-        res.send(gamelogs)
+      (throwCount) => {
+        res.send(throwCount)
       },
       (err) => {
         console.error(err)
       }
     )
   })
-  /** END WIP **/
 
   // Fetch a players game count
   app.get(`${apiPrefix}/gamelogs/player/games/count/:id`, (req, res) => {
