@@ -17,6 +17,7 @@
     "buefy": "^0.6.3",
     "bulma": "^0.6.2",
     "chart.js": "^2.7.2",
+    "chartjs-plugin-deferred": "^1.0.1",
     "express-debug": "^1.1.1",
     "lodash": "^4.17.5",
     "moment": "^2.21.0",

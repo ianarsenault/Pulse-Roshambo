@@ -107,17 +107,7 @@ function fetchPlayerLosses(id) {
 /** WIP **/
 function fetchPlayerThrows(id) {
   return new Promise((resolve, reject) => {
-
-    GameLogs.aggregate({
-      $or:[
-        {playerOne:id},
-        {playerTwo:id}
-      ]})
-      .where({ $cond: { if: { $eq: [ "playerOne", id ] }, then: "playerOneThrew", else: "playerTwoThrew" } } )
-      .exec((error, gameLogs) => {
-        if (error) { reject(error) }
-        resolve(gameLogs)
-      })
+    // TODO....
 
   })
 }

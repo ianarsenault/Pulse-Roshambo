@@ -150,6 +150,7 @@
   import LoadingIndicator from "./LoadingIndicator.vue"
   import GameCard from "./GameCard.vue"
   import chartjs from 'chart.js'
+  import chartsdefered from 'chartjs-plugin-deferred'
 
   import defaultImage from '@/assets/images/default-avatar.png'
 
@@ -227,7 +228,11 @@
           id: this.$route.params.id,
         })
         this.playerStats.winCount = response.data.length
-        this.playerStats.average = (this.playerStats.winCount / this.playerStats.gamesCount ).toFixed(2)
+        if (this.playerStats.winCount && this.playerStats.gamesCount) {
+          this.playerStats.average = (this.playerStats.winCount / this.playerStats.gamesCount ).toFixed(2)
+        } else {
+          this.playerStats.average = 0
+        }
       },
       async getPlayerLossCount() {
         const response = await GameLogsService.getPlayerLossCount({
@@ -302,6 +307,12 @@
             datasets: [winsData, lossesData]
           },
           options: {
+            plugins: {
+              deferred: {
+                xOffset: 150,
+                delay: 250
+              }
+            },
             title: {
               display: true,
               text: this.player.name + '\'s Win Loss Data',
@@ -329,6 +340,12 @@
             }]
           },
           options: {
+            plugins: {
+              deferred: {
+                xOffset: 150,
+                delay: 250
+              }
+            },
             title: {
               display: true,
               text: this.player.name + '\'s Most Thrown Hand',
