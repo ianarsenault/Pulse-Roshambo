@@ -40,4 +40,52 @@ module.exports = (app) => {
       return error
     })
   })
+
+  // Fetch a single players wins
+  app.get(`${apiPrefix}/gamelogs/player/wins/:id`, (req, res) => {
+    GameLogs.fetchPlayerWins(req.params.id).then(
+      (gamelogs) => {
+        res.send(gamelogs)
+      },
+      (err) => {
+        console.error(err)
+      }
+    )
+  })
+
+  // Fetch a single players losses
+  app.get(`${apiPrefix}/gamelogs/player/losses/:id`, (req, res) => {
+    GameLogs.fetchPlayerLosses(req.params.id).then(
+      (gamelogs) => {
+        res.send(gamelogs)
+      },
+      (err) => {
+        console.error(err)
+      }
+    )
+  })
+
+  // Fetch player throws
+  app.get(`${apiPrefix}/gamelogs/player/throws/:id`, (req, res) => {
+    GameLogs.fetchPlayerThrows(req.params.id).then(
+      (throwCount) => {
+        res.send(throwCount)
+      },
+      (err) => {
+        console.error(err)
+      }
+    )
+  })
+
+  // Fetch a players game count
+  app.get(`${apiPrefix}/gamelogs/player/games/count/:id`, (req, res) => {
+    GameLogs.fetchPlayerGameCount(req.params.id).then(
+      (gamelogs) => {
+        res.send(gamelogs)
+      },
+      (err) => {
+        console.error(err)
+      }
+    )
+  })
 }

@@ -26,14 +26,6 @@
                     <label class="label">Chant: </label>
                     {{ player.chant }}
                   </div>
-                  <!--<div class="field">-->
-                  <!--<label class="label">Conquered: </label>-->
-                  <!--&lt;!&ndash; {{ conquered }} &ndash;&gt;-->
-                  <!--</div>-->
-                  <!--<div class="field">-->
-                  <!--<label class="label">Nemesis: </label>-->
-                  <!--&lt;!&ndash; {{ nemesis }} &ndash;&gt;-->
-                  <!--</div>-->
                 </div>
               </div>
               <footer class="card-footer">
@@ -53,7 +45,7 @@
                     Player Overview
                   </h1>
                   <h2 class="subtitle">
-                    Most Recent Battles and more!
+                    Most Recent Battles and Player Statistics!
                   </h2>
                 </div>
               </div>
@@ -61,35 +53,89 @@
 
             <div class="tabs is-boxed">
               <ul>
-                <li class="is-active">
-                  <a>
+                <li v-for="tab in tabs" v-bind:class="{'is-active': tab.isActive}">
+                  <a @click="selectTab(tab)">
                     <span class="icon is-small">
-                      <i class="fas fa-list-alt" aria-hidden="true"></i>
+                      <i  v-bind:class=[tab.icon]  aria-hidden="true"></i>
                     </span>
-                    <span>Recent Battles</span>
+                    <span> {{ tab.displayName }} </span>
                   </a>
                 </li>
               </ul>
             </div>
 
             <loading-indicator :data-loaded="dataLoaded"></loading-indicator>
-            <div v-if="games && games.length > 0"
-                 v-for="game in games"
-                 class="columns is-centered">
-              <div class="column is-11">
-                <game-card :game="game"></game-card>
-              </div>
-            </div>
 
-            <div v-else>
-              <div class="columns is-centered">
-                <div class="column is-half">
-                  <figure class="image">
-                    <img src="../assets/images/nothing2see.gif" alt="Nothing Here">
-                  </figure>
+            <div v-if="!showStats">
+              <div v-if="(games && games.length > 0)"
+                   v-for="game in games"
+                   class="columns is-centered">
+                <div class="column is-11">
+                  <game-card :game="game"></game-card>
+                </div>
+              </div>
+              <div v-else>
+                <div class="columns is-centered">
+                  <div class="column is-half">
+                    <figure class="image">
+                      <img src="../assets/images/nothing2see.gif" alt="Nothing Here">
+                    </figure>
+                  </div>
                 </div>
               </div>
             </div>
+
+            <div v-show="showStats">
+              <div class="columns">
+                <div class="column is-4">
+                  <div class="card">
+                    <div class="card-content has-text-centered">
+                      <p class="title is-5">
+                        Games Played
+                      </p>
+                      <p class="subtitle">
+                        {{ playerStats.gamesCount }}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div class="column is-4">
+                  <div class="card">
+                    <div class="card-content has-text-centered">
+                      <p class="title is-5">
+                        Games Won
+                      </p>
+                      <p class="subtitle">
+                        {{ playerStats.winCount }}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div class="column is-4">
+                  <div class="card">
+                    <div class="card-content has-text-centered">
+                      <p class="title is-5">
+                        Overall Average
+                      </p>
+                      <p class="subtitle">
+                        {{ playerStats.average }}%
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="columns is-centered">
+                <div class="column is-11">
+                  <div class="card bottom-space">
+                    <canvas id="barChart" width="400" height="200"></canvas>
+                  </div>
+                  <div class="card bottom-space">
+                    <canvas id="pieChart" width="400" height="200"></canvas>
+                  </div>
+                </div>
+              </div>
+            </div>
+
           </div>
         </div>
       </div>
@@ -103,6 +149,8 @@
   import moment from 'moment'
   import LoadingIndicator from "./LoadingIndicator.vue"
   import GameCard from "./GameCard.vue"
+  import chartjs from 'chart.js'
+  import chartsdefered from 'chartjs-plugin-deferred'
 
   import defaultImage from '@/assets/images/default-avatar.png'
 
@@ -115,11 +163,40 @@
         games: [],
         errors: [],
         dataLoaded: false,
+        isActive: false,
+        showStats: false,
+        tabs: [
+          {
+            name: 'battles',
+            displayName: 'Recent Battles',
+            icon: 'fas fa-list-alt'
+
+          }, {
+            name: 'stats',
+            displayName: 'Player Statistics',
+            icon: 'fas fa-signal'
+          }
+        ],
+        playerStats: {
+          gamesCount: 0,
+          winCount: 0,
+          lossCount: 0,
+          rockCount: 0,
+          scissorCount: 0,
+          paperCount: 0,
+          average: 0,
+          stats: null
+        }
       }
     },
     mounted() {
       this.getPlayer()
       this.getPlayerGames()
+      this.getPlayerGameCount()
+      this.getPlayerWinCount()
+      this.getPlayerLossCount()
+      this.getPlayerThrows()
+      this.tabs[0].isActive = true
     },
     methods: {
       moment: function (date) {
@@ -137,6 +214,35 @@
         })
         this.games = response.data
         this.dataLoaded = true
+      },
+      async getPlayerGameCount() {
+        const response = await GameLogsService.getPlayerGameCount({
+          id: this.$route.params.id,
+        })
+        this.playerStats.gamesCount = response.data.count
+      },
+      async getPlayerWinCount() {
+        const response = await GameLogsService.getPlayerWinsCount({
+          id: this.$route.params.id,
+        })
+        this.playerStats.winCount = response.data.length
+        if (this.playerStats.winCount && this.playerStats.gamesCount) {
+          this.playerStats.average = (this.playerStats.winCount / this.playerStats.gamesCount ).toFixed(2)
+        } else {
+          this.playerStats.average = 0
+        }
+      },
+      async getPlayerLossCount() {
+        const response = await GameLogsService.getPlayerLossCount({
+          id: this.$route.params.id,
+        })
+        this.playerStats.lossCount = response.data.length
+      },
+      async getPlayerThrows() {
+        const response = await GameLogsService.getPlayerThrows({
+          id: this.$route.params.id,
+        })
+        this.playerStats.stats = response.data
       },
       async deletePlayer(id) {
         await PlayerService.deletePlayer(id)
@@ -161,6 +267,96 @@
       },
       playerImage(image) {
         return image ? `/static/uploads/${image}` : defaultImage
+      },
+      selectTab(selectedTab) {
+        this.tabs.forEach(
+          function(tab){
+            tab.isActive = (selectedTab.name === tab.name)
+          }
+        )
+        if (selectedTab.name === 'stats') {
+          this.showStats = true
+          this.loadGraphs()
+        } else {
+          this.showStats = false
+        }
+      },
+      loadGraphs() {
+        let barchart = document.getElementById("barChart").getContext("2d")
+        let winsData = {
+          label: '# of Wins',
+          data: [this.playerStats.winCount],
+          backgroundColor: 'rgba(0, 128, 0, 1)',
+          borderColor: 'rgba(0, 128, 0, 0.2)',
+          borderWidth: 3
+        }
+        let lossesData = {
+          label: '# of Losses',
+          data: [this.playerStats.lossCount],
+          backgroundColor: 'rgba(190, 67, 78, 1)',
+          borderColor: 'rgba(190, 67, 78, 0.2)',
+          borderWidth: 3
+        }
+        let barChart = new Chart(barchart, {
+          type: 'bar',
+          data: {
+            datasets: [winsData, lossesData]
+          },
+          options: {
+            plugins: {
+              deferred: {
+                xOffset: 150,
+                delay: 250
+              }
+            },
+            title: {
+              display: true,
+              text: this.player.name + '\'s Win Loss Data',
+              fontSize: 18
+            },
+            scales: {
+              yAxes: [{
+                ticks: {
+                  beginAtZero: true,
+                  stepSize: 1
+                }
+              }]
+            }
+          }
+        })
+
+        let piechart = document.getElementById("pieChart").getContext("2d")
+        let pieChart = new Chart(piechart, {
+          type: 'pie',
+          data: {
+            labels: ["Rock", "Paper", "Scissors"],
+            datasets: [{
+              backgroundColor: ['#d62d1e', '#ff634a', '#ff9300'],
+              data: [
+                this.playerStats.stats[0].Rock,
+                this.playerStats.stats[0].Paper,
+                this.playerStats.stats[0].Scissors
+              ]
+            }]
+          },
+          options: {
+            plugins: {
+              deferred: {
+                xOffset: 150,
+                delay: 250
+              }
+            },
+            title: {
+              display: true,
+              text: this.player.name + '\'s Most Thrown Hand',
+              fontSize: 18
+            }
+          }
+        })
+
+        pieChart.update()
+        barChart.update()
+
       }
     }
   }
