@@ -195,9 +195,7 @@
       this.getPlayerGameCount()
       this.getPlayerWinCount()
       this.getPlayerLossCount()
-      /** WIP **/
       this.getPlayerThrows()
-      /** END WIP **/
       this.tabs[0].isActive = true
     },
     methods: {

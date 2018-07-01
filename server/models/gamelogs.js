@@ -120,9 +120,8 @@ function fetchPlayerThrows(id) {
       }},
       {
         $group: {
-          _id: '$player.id',
-          player: {
-            $first: "$player.id" },
+            _id: '$player.id',
+            player: { $first: "$player.id" },
             Paper: {$sum: {$cond: [{$eq: ['$player.threw', 'Paper']}, 1, 0]}},
             Rock: {$sum: {$cond: [{$eq: ['$player.threw', 'Rock']}, 1, 0]}},
             Scissors: {$sum: {$cond: [{$eq: ['$player.threw', 'Scissors']}, 1, 0]}}
