@@ -32,17 +32,17 @@ module.exports = (app) => {
     )
   })
 
-  // Fetch single player
-  app.get(`${apiPrefix}/player/:id`, (req, res) => {
-    Players.fetchOne(req.params.id).then(
-      (player) => {
-        res.send(player)
-      },
-      (err) => {
-        console.error(err)
-      }
-    )
-  })
+  // // Fetch single player
+  // app.get(`${apiPrefix}/player/:id`, (req, res) => {
+  //   Players.fetchOne(req.params.id).then(
+  //     (player) => {
+  //       res.send(player)
+  //     },
+  //     (err) => {
+  //       console.error(err)
+  //     }
+  //   )
+  // })
 
   // Update a player
   app.put(`${apiPrefix}/players/:id`, (req, res) => {

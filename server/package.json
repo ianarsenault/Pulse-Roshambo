@@ -18,6 +18,8 @@
     "cors": "^2.8.4",
     "dotenv": "^5.0.1",
     "express": "^4.16.3",
+    "express-session": "^1.15.6",
+    "keycloak-connect": "^4.1.0",
     "mocha": "^5.1.1",
     "moment": "^2.22.0",
     "mongodb": "^3.1.0",
