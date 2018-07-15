@@ -11,3 +11,11 @@
     }
   }
 }
+#player .column .card {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+#player .column .card-footer {
+  margin-top: auto;
+}

@@ -21,8 +21,8 @@
         </router-link>
 
         <div class="container">
-          <div class="columns is-multiline">
-            <div class="column is-4" v-for="(player, index) in players">
+          <div id="player" class="columns is-multiline">
+            <div class="column is-4" v-for="(player) in players">
               <div class="card bottom-space shadow-animate">
                 <div class="card-image">
                   <div class="image players-avatar">
@@ -33,10 +33,6 @@
                 <div class="card-content has-text-centered">
                   <p><strong class="title is-2 is-primary card-name">{{ player.name }}</strong></p>
                   <p><strong>Nickname:</strong> {{ player.nickname }}</p>
-                  <!--<p>-->
-                    <!--<strong>Wins:</strong> 1-->
-                    <!--<strong>Losses:</strong> 1-->
-                  <!--</p>-->
                 </div>
                 <footer class="card-footer">
                   <router-link v-bind:to="{ name: 'PlayerProfile', params: { id: player._id } }"
